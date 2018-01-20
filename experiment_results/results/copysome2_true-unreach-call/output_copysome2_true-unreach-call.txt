@@ -1,0 +1,120 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-programs/copysome2_true-unreach-call.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int a1_var[200000];
+  int a2_var[200000];
+  int a3_var[200000];
+  int i;
+  int z;
+  z = 150000;
+  i = 0;
+  while (i < 200000)
+  {
+    a1_var[i] = __VERIFIER_nondet_int();
+    a2_var[i] = __VERIFIER_nondet_int();
+    a3_var[i] = __VERIFIER_nondet_int();
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 200000)
+  {
+    if (i != z)
+    {
+      a2_var[i] = a1_var[i];
+    }
+
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 200000)
+  {
+    if (i != z)
+    {
+      a3_var[i] = a2_var[i];
+    }
+    else
+    {
+      a3_var[i] = a1_var[i];
+    }
+
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < 200000)
+  {
+    _1_PROVE[x] = a1_var[x] == a3_var[x];
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a3_var:array a1_var:array i:int _1_PROVE:array RET:int a2_var:array x:int z:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+a2_var1 = a2_var
+a3_var1 = a3_var
+a1_var1 = a1_var
+
+2. Output equations:
+i1 = (_N3+0)
+x1 = (_N4+0)
+d1array1(_x1,_x2) = d1array13(_x1,_x2,_N4)
+z1 = 150000
+main = 0
+
+3. Other axioms:
+d1array4(_x1,_x2,(_n1+1)) = ite(((_x1=a3_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int4(_n1),ite(((_x1=a2_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int3(_n1),ite(((_x1=a1_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int2(_n1),d1array4(_x1,_x2,_n1))))
+d1array4(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+200000))
+(_n1<_N1) -> ((_n1+0)<200000)
+d1array7(_x1,_x2,(_n2+1)) = ite(((_n2+0)!=150000),ite(((_x1=a2_var) and (_x2=(_n2+0))),d1array7(a1_var,(_n2+0),_n2),d1array7(_x1,_x2,_n2)),d1array7(_x1,_x2,_n2))
+d1array7(_x1,_x2,0) = d1array4(_x1,_x2,_N1)
+(_N2>=(-(0)+200000))
+(_n2<_N2) -> ((_n2+0)<200000)
+d1array11(_x1,_x2,(_n3+1)) = ite(((_n3+0)!=150000),ite(((_x1=a3_var) and (_x2=(_n3+0))),d1array11(a2_var,(_n3+0),_n3),d1array11(_x1,_x2,_n3)),ite(((_x1=a3_var) and (_x2=(_n3+0))),d1array11(a1_var,(_n3+0),_n3),d1array11(_x1,_x2,_n3)))
+d1array11(_x1,_x2,0) = d1array7(_x1,_x2,_N2)
+(_N3>=(-(0)+200000))
+(_n3<_N3) -> ((_n3+0)<200000)
+d1array13(_x1,_x2,(_n4+1)) = d1array13(_x1,_x2,_n4)
+d1array13(_x1,_x2,0) = d1array11(_x1,_x2,_N3)
+(_N4>=(-(0)+200000))
+(_n4<_N4) -> ((_n4+0)<200000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array13(a1_var,(_n4+0),_N4)==d1array13(a3_var,(_n4+0),_N4))
+
+Axiomes Added
+
+d1array4(a1_var,(_n1+0),_N1) = __VERIFIER_nondet_int2(_n1)
+d1array13(a2_var,(_n2+0),_N4) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)))
+d1array7(a1_var,(_n1+0),_N2) = ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1))
+d1array13(a3_var,(_n3+0),_N4) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)))
+d1array11(a2_var,(_n2+0),_N3) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)))
+d1array13(a1_var,(_n1+0),_N4) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)))
+d1array7(a2_var,(_n2+0),_N2) = ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1))
+d1array4(a3_var,(_n1+0),_N1) = __VERIFIER_nondet_int4(_n1)
+d1array11(a3_var,(_n3+0),_N3) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int3(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)))
+d1array7(a3_var,(_n1+0),_N2) = ite(((_n2+0)!=150000),__VERIFIER_nondet_int4(_n1),__VERIFIER_nondet_int4(_n1))
+d1array11(a1_var,(_n1+0),_N3) = ite(((_n3+0)!=150000),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)),ite(((_n2+0)!=150000),__VERIFIER_nondet_int2(_n1),__VERIFIER_nondet_int2(_n1)))
+d1array4(a2_var,(_n1+0),_N1) = __VERIFIER_nondet_int3(_n1)
+
+VIAP_STANDARD_OUTPUT_True

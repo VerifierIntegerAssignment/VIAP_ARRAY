@@ -1,0 +1,140 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-tiling/pnr5_true-unreach-call.i
+Program Body
+{
+  int SIZE;
+  int RET;
+  RET = 0;
+  int _1_ASSUME;
+  _1_ASSUME = 0;
+  int _1_PROVE[1000000];
+  SIZE = __VERIFIER_nondet_int();
+  if (SIZE > 1)
+  {
+    int i;
+    int value;
+    int a[SIZE];
+    int DEFAULTVAL;
+    DEFAULTVAL = 0;
+    int FIXEDVAL;
+    FIXEDVAL = 10;
+    if ((SIZE % 5) != 0)
+    {
+      RET = 1;
+    }
+
+    if ((SIZE % 5) == 0)
+    {
+      _1_ASSUME = (SIZE % 5) == 0;
+      i = 1;
+      while (i <= (SIZE / 5))
+      {
+        value = ReadFromPort();
+        if (value != DEFAULTVAL)
+        {
+          a[(i * 5) - 5] = value;
+        }
+        else
+        {
+          a[(i * 5) - 5] = FIXEDVAL;
+        }
+
+        value = ReadFromPort();
+        if (value != DEFAULTVAL)
+        {
+          a[(i * 5) - 4] = value;
+        }
+        else
+        {
+          a[(i * 5) - 4] = FIXEDVAL;
+        }
+
+        value = ReadFromPort();
+        if (value != DEFAULTVAL)
+        {
+          a[(i * 5) - 3] = value;
+        }
+        else
+        {
+          a[(i * 5) - 3] = FIXEDVAL;
+        }
+
+        value = ReadFromPort();
+        if (value != DEFAULTVAL)
+        {
+          a[(i * 5) - 2] = value;
+        }
+        else
+        {
+          a[(i * 5) - 2] = FIXEDVAL;
+        }
+
+        value = ReadFromPort();
+        if (value != DEFAULTVAL)
+        {
+          a[(i * 5) - 1] = value;
+        }
+        else
+        {
+          a[(i * 5) - 1] = FIXEDVAL;
+        }
+
+        i = i + 1;
+      }
+
+      i = 0;
+      while (i < SIZE)
+      {
+        _1_PROVE[i] = a[i] != DEFAULTVAL;
+        i = i + 1;
+      }
+
+    }
+
+  }
+
+  if (((SIZE % 5) == 0) || (SIZE <= 1))
+  {
+    RET = 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a:array FIXEDVAL:int i:int _1_PROVE:array RET:int value:int DEFAULTVAL:int _1_ASSUME:int SIZE:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+a1 = a
+
+2. Output equations:
+FIXEDVAL1 = ite((__VERIFIER_nondet_int2>1),10,FIXEDVAL)
+i1 = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%5)==0),(_N2+0),i),i)
+d1array1(_x1,_x2) = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%5)==0),d1array24(_x1,_x2,_N2),d1array(_x1,_x2)),d1array(_x1,_x2))
+main = ite((((__VERIFIER_nondet_int2%5)==0) or (__VERIFIER_nondet_int2<=1)),1,ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%5)!=0),1,0),0))
+value1 = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%5)==0),ReadFromPort_4,value),value)
+DEFAULTVAL1 = ite((__VERIFIER_nondet_int2>1),0,DEFAULTVAL)
+SIZE1 = __VERIFIER_nondet_int2
+
+3. Other axioms:
+d1array22(_x1,_x2,(_n1+1)) = ite((ReadFromPort_4!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-1))),ReadFromPort_4,ite((ReadFromPort_3!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-2))),ReadFromPort_3,ite((ReadFromPort_2!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),ReadFromPort_2,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),10,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-2))),10,ite((ReadFromPort_2!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),ReadFromPort_2,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),10,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-1))),10,ite((ReadFromPort_3!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-2))),ReadFromPort_3,ite((ReadFromPort_2!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),ReadFromPort_2,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),10,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-2))),10,ite((ReadFromPort_2!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),ReadFromPort_2,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-3))),10,ite((ReadFromPort_1!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),ReadFromPort_1,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))),ite(((_x1=a) and (_x2=(((_n1+1)*5)-4))),10,ite((ReadFromPort!=0),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),ReadFromPort,d1array22(_x1,_x2,_n1)),ite(((_x1=a) and (_x2=(((_n1+1)*5)-5))),10,d1array22(_x1,_x2,_n1)))))))))))
+d1array22(_x1,_x2,0) = d1array(_x1,_x2)
+((_N1+1)>(__VERIFIER_nondet_int2/5))
+(_n1<_N1) -> ((_n1+1)<=(__VERIFIER_nondet_int2/5))
+d1array24(_x1,_x2,(_n2+1)) = d1array24(_x1,_x2,_n2)
+d1array24(_x1,_x2,0) = d1array22(_x1,_x2,_N1)
+(_N2>=(__VERIFIER_nondet_int2-0))
+(_n2<_N2) -> ((_n2+0)<__VERIFIER_nondet_int2)
+
+4. Assumption :
+ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%5)==0),((__VERIFIER_nondet_int2%5)==0),0),0)
+
+5. Assertion :
+((__VERIFIER_nondet_int2%5)==0) -> (d1array24(a,(_n2+0),_N2)!=0)
+VIAP_STANDARD_OUTPUT_True

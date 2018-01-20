@@ -1,0 +1,57 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_sentinel_true-unreach-call_true-termination.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE = 0;
+  int a[100000];
+  int marker;
+  marker = __VERIFIER_nondet_int();
+  int pos;
+  pos = __VERIFIER_nondet_int();
+  if ((pos >= 0) && (pos < 100000))
+  {
+    a[pos] = marker;
+    int i;
+    i = 0;
+    while (a[i] != marker)
+    {
+      i = i + 1;
+    }
+
+    _1_PROVE = i <= pos;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a:array i:int _1_PROVE:int pos:int RET:int marker:int}
+
+Output in normal notation:
+1. Frame axioms:
+a1 = a
+
+2. Output equations:
+i1 = ite(((__VERIFIER_nondet_int3>=0) and (__VERIFIER_nondet_int3<100000)),(_N1+0),i)
+marker1 = __VERIFIER_nondet_int2
+d1array1(_x1,_x2) = ite(((__VERIFIER_nondet_int3>=0) and (__VERIFIER_nondet_int3<100000)),ite(((_x1=a) and (_x2=__VERIFIER_nondet_int3)),__VERIFIER_nondet_int2,d1array(_x1,_x2)),d1array(_x1,_x2))
+pos1 = __VERIFIER_nondet_int3
+main = 0
+
+3. Other axioms:
+(ite(((a=a) and ((_N1+0)=__VERIFIER_nondet_int3)),__VERIFIER_nondet_int2,d1array(a,(_N1+0)))==__VERIFIER_nondet_int2)
+(_n1<_N1) -> (ite(((a=a) and ((_n1+0)=__VERIFIER_nondet_int3)),__VERIFIER_nondet_int2,d1array(a,(_n1+0)))!=__VERIFIER_nondet_int2)
+
+4. Assumption :
+
+5. Assertion :
+ite(((__VERIFIER_nondet_int3>=0) and (__VERIFIER_nondet_int3<100000)),((_N1+0)<=__VERIFIER_nondet_int3),0)
+
+VIAP_STANDARD_OUTPUT_True

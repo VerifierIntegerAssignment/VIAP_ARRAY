@@ -1,0 +1,114 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-tiling/nr4_true-unreach-call.i
+Program Body
+{
+  int CELLCOUNT;
+  int RET;
+  RET = 0;
+  int _1_ASSUME;
+  _1_ASSUME = 0;
+  int _1_PROVE[1000000];
+  CELLCOUNT = __VERIFIER_nondet_int();
+  if (CELLCOUNT > 1)
+  {
+    int MINVAL;
+    MINVAL = 2;
+    int i;
+    int j;
+    int volArray[CELLCOUNT];
+    if ((CELLCOUNT % 4) != 0)
+    {
+      RET = 1;
+    }
+
+    if ((CELLCOUNT % 4) == 0)
+    {
+      _1_ASSUME = (CELLCOUNT % 4) == 0;
+      i = 1;
+      while (i <= (CELLCOUNT / 4))
+      {
+        j = 4;
+        while (j >= 1)
+        {
+          if (j >= MINVAL)
+          {
+            volArray[(i * 4) - j] = j;
+          }
+          else
+          {
+            volArray[(i * 4) - j] = 0;
+          }
+
+          j = j - 1;
+        }
+
+        i = i + 1;
+      }
+
+      i = 0;
+      while (i < CELLCOUNT)
+      {
+        _1_PROVE[i] = (volArray[i] >= MINVAL) || (volArray[i] == 0);
+        i = i + 1;
+      }
+
+    }
+
+  }
+
+  if (((CELLCOUNT % 4) == 0) || (CELLCOUNT <= 1))
+  {
+    RET = 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ j:int MINVAL:int CELLCOUNT:int _1_PROVE:array RET:int i:int volArray:array _1_ASSUME:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+volArray1 = volArray
+
+2. Output equations:
+j1 = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%4)==0),j8(_N2),j),j)
+MINVAL1 = ite((__VERIFIER_nondet_int2>1),2,MINVAL)
+CELLCOUNT1 = __VERIFIER_nondet_int2
+d1array1(_x1,_x2) = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%4)==0),d1array10(_x1,_x2,_N3),d1array(_x1,_x2)),d1array(_x1,_x2))
+main = ite((((__VERIFIER_nondet_int2%4)==0) or (__VERIFIER_nondet_int2<=1)),1,ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%4)!=0),1,0),0))
+i1 = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%4)==0),(_N3+0),i),i)
+
+3. Other axioms:
+d1array5(_x1,_x2,(_n1+1),_n2) = ite(((-(_n1)+4)>=2),ite(((_x1=volArray) and (_x2=(((_n2+1)*4)-(-(_n1)+4)))),(-(_n1)+4),d1array5(_x1,_x2,_n1,_n2)),ite(((_x1=volArray) and (_x2=(((_n2+1)*4)-(-(_n1)+4)))),0,d1array5(_x1,_x2,_n1,_n2)))
+d1array5(_x1,_x2,0,_n2) = d1array8(_x1,_x2,_n2)
+((-(_N1(_n2))+4)<1)
+(_n1<_N1(_n2)) -> ((-(_n1)+4)>=1)
+d1array8(_x1,_x2,(_n2+1)) = d1array5(_x1,_x2,_N1(_n2),_n2)
+j8((_n2+1)) = (-(_N1(_n2))+4)
+d1array8(_x1,_x2,0) = d1array(_x1,_x2)
+j8(0) = j
+((_N2+1)>(__VERIFIER_nondet_int2/4))
+(_n2<_N2) -> ((_n2+1)<=(__VERIFIER_nondet_int2/4))
+d1array10(_x1,_x2,(_n3+1)) = d1array10(_x1,_x2,_n3)
+d1array10(_x1,_x2,0) = d1array8(_x1,_x2,_N2)
+(_N3>=(__VERIFIER_nondet_int2-0))
+(_n3<_N3) -> ((_n3+0)<__VERIFIER_nondet_int2)
+
+4. Assumption :
+ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%4)==0),((__VERIFIER_nondet_int2%4)==0),0),0)
+
+5. Assertion :
+((__VERIFIER_nondet_int2%4)==0) -> ((d1array10(volArray,(_n3+0),_N3)>=2) or (d1array10(volArray,(_n3+0),_N3)==0))
+
+Axiomes Added
+
+d1array10(volArray,(((_n2+1)*4)-(-(_n1)+4)),_N3) = ite(((-(_n1)+4)>=2),(-(_n1)+4),0)
+d1array8(volArray,(((_n2+1)*4)-(-(_n1)+4)),_N2) = ite(((-(_n1)+4)>=2),(-(_n1)+4),0)
+d1array5(volArray,(((_n2+1)*4)-(-(_n1)+4)),_N1(_n2),_n2) = ite(((-(_n1)+4)>=2),(-(_n1)+4),0)
+VIAP_STANDARD_OUTPUT_True

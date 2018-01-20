@@ -1,0 +1,131 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/sanfoundry_43_true-unreach-call_ground.i
+Program Body
+{
+  int _1DUMMY;
+  _1DUMMY = 0;
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int src[100000];
+  int dst[100000];
+  int i;
+  i = 0;
+  while (i < 100000)
+  {
+    dst[i] = src[i] + 1;
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < 100000)
+  {
+    src[x] = dst[x] - 1;
+    x = x + 1;
+  }
+
+  x = 0;
+  while (x < 100000)
+  {
+    _1_PROVE[x] = src[x] == (dst[x] - 1);
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ src:array i:int dst:array _1_PROVE:array RET:int _1DUMMY:int x:int}
+Program Body
+{
+  int i;
+  i = 0;
+  while (i < 100000)
+  {
+    dst[i] = src[i] + 1;
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+incrementArray
+Return Type:
+void
+Input Variables:
+{ src:array dst:array}
+Local Variables:
+{ i:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+src1 = src
+dst1 = dst
+
+2. Output equations:
+i1 = (_N1+0)
+x1 = (_N3+0)
+d1array1(_x1,_x2) = d1array6(_x1,_x2,_N3)
+main = 0
+_1DUMMY1 = 0
+
+3. Other axioms:
+d1array2(_x1,_x2,(_n1+1)) = ite(((_x1=dst) and (_x2=(_n1+0))),(d1array2(src,(_n1+0),_n1)+1),d1array2(_x1,_x2,_n1))
+d1array2(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+d1array4(_x1,_x2,(_n2+1)) = ite(((_x1=src) and (_x2=(_n2+0))),(d1array4(dst,(_n2+0),_n2)-1),d1array4(_x1,_x2,_n2))
+d1array4(_x1,_x2,0) = d1array2(_x1,_x2,_N1)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+d1array6(_x1,_x2,(_n3+1)) = d1array6(_x1,_x2,_n3)
+d1array6(_x1,_x2,0) = d1array4(_x1,_x2,_N2)
+(_N3>=(-(0)+100000))
+(_n3<_N3) -> ((_n3+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array6(src,(_n3+0),_N3)==(d1array6(dst,(_n3+0),_N3)-1))
+
+Output in normal notation:
+1. Frame axioms:
+src1(src) = src
+dst1(dst) = dst
+
+2. Output equations:
+i1 = (_N4+0)
+d1array1(_x1,_x2,dst,src) = d1array16(_x1,_x2,_N4,dst,src)
+
+3. Other axioms:
+d1array16(_x1,_x2,(_n4+1),dst,src) = ite(((_x1=dst) and (_x2=(_n4+0))),(d1array16(src,(_n4+0),_n4,dst,src)+1),d1array16(_x1,_x2,_n4,dst,src))
+d1array16(_x1,_x2,0,dst,src) = d1array(_x1,_x2)
+(_N4>=(-(0)+100000))
+(_n4<_N4) -> ((_n4+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+
+Axiomes Added
+
+d1array2(dst,(_n1+0),_N1) = (d1array2(src,(_n1+0),_N1)+1)
+d1array4(src,(_n2+0),_N2) = ((d1array(src,(_n2+0))+1)-1)
+d1array6(dst,(_n1+0),_N3) = (d1array(src,(_n1+0))+1)
+d1array4(src,(_n2+0),_N2) = ((d1array4(src,(_n2+0),_N2)+1)-1)
+d1array6(src,(_n2+0),_N3) = ((d1array6(src,(_n2+0),_N3)+1)-1)
+d1array2(src,_x2,_N1) = d1array2(src,_x2,_N1)
+d1array4(dst,(_n1+0),_N2) = (d1array(src,(_n1+0))+1)
+d1array6(src,(_n2+0),_N3) = ((d1array(src,(_n2+0))+1)-1)
+d1array4(dst,(_n1+0),_N2) = (d1array4(src,(_n1+0),_N2)+1)
+d1array2(src,_x2,_N1) = d1array(src,_x2)
+d1array6(dst,(_n1+0),_N3) = (d1array6(src,(_n1+0),_N3)+1)
+d1array2(dst,(_n1+0),_N1) = (d1array(src,(_n1+0))+1)
+VIAP_STANDARD_OUTPUT_True

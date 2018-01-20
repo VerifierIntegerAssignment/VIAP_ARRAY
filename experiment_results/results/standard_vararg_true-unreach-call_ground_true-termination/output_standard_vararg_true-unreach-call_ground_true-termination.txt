@@ -1,0 +1,64 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_vararg_true-unreach-call_ground_true-termination.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int aa[100000];
+  int a;
+  a = 0;
+  while (aa[a] >= 0)
+  {
+    a = a + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < a)
+  {
+    _1_PROVE[x] = aa[x] >= 0;
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ aa:array a:int _1_PROVE:array RET:int x:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+aa1 = aa
+
+2. Output equations:
+a1 = (_N1+0)
+x1 = (_N2+0)
+d1array1(_x1,_x2) = d1array3(_x1,_x2,_N2)
+main = 0
+
+3. Other axioms:
+(d1array(aa,(_N1+0))<0)
+(_n1<_N1) -> (d1array(aa,(_n1+0))>=0)
+d1array3(_x1,_x2,(_n2+1)) = d1array3(_x1,_x2,_n2)
+d1array3(_x1,_x2,0) = d1array(_x1,_x2)
+(_N2>=((_N1+0)-0))
+(_n2<_N2) -> ((_n2+0)<(_N1+0))
+
+4. Assumption :
+
+5. Assertion :
+(d1array3(aa,(_n2+0),_N2)>=0)
+
+Axiomes Added
+
+d1array3(aa,_x2,_N2) = d1array3(aa,_x2,_N2)
+d1array3(aa,_x2,_N2) = d1array(aa,_x2)
+1
+VIAP_STANDARD_OUTPUT_True

@@ -1,0 +1,130 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp multidimensional/init-3-u.c
+Program Body
+{
+  int _1_PROVE[100000][100000][100000];
+  int i;
+  int j;
+  int k;
+  int n;
+  int A[n][n][n];
+  int C;
+  i = 0;
+  j = 0;
+  k = 0;
+  while (i < n)
+  {
+    j = 0;
+    k = 0;
+    while (j < n)
+    {
+      k = 0;
+      while (k < n)
+      {
+        A[i][j][k] = C;
+        k = k + 1;
+      }
+
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+  i = 0;
+  j = 0;
+  k = 0;
+  while (i < n)
+  {
+    j = 0;
+    k = 0;
+    while (j < n)
+    {
+      k = 0;
+      while (k < n)
+      {
+        _1_PROVE[i][k][j] = A[i][j][k] == C;
+        k = k + 1;
+      }
+
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array C:int j:int i:int k:int _1_PROVE:array n:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+C1 = C
+n1 = n
+
+2. Output equations:
+i1 = (_N6+0)
+k1 = k18(_N6)
+j1 = j18(_N6)
+d3array1(_x1,_x2,_x3,_x4) = d3array18(_x1,_x2,_x3,_x4,_N6)
+
+3. Other axioms:
+d3array2(_x1,_x2,_x3,_x4,(_n1+1),_n2,_n3) = ite(((_x1=A) and (_x2=(_n3+0)) and (_x3=(_n2+0)) and (_x4=(_n1+0))),C,d3array2(_x1,_x2,_x3,_x4,_n1,_n2,_n3))
+d3array2(_x1,_x2,_x3,_x4,0,_n2,_n3) = d3array5(_x1,_x2,_x3,_x4,_n2,_n3)
+(_N1(_n2,_n3)>=(-(0)+n))
+(_n1<_N1(_n2,_n3)) -> ((_n1+0)<n)
+k5((_n2+1),_n3) = (_N1(_n2,_n3)+0)
+d3array5(_x1,_x2,_x3,_x4,(_n2+1),_n3) = d3array2(_x1,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3)
+k5(0,_n3) = 0
+d3array5(_x1,_x2,_x3,_x4,0,_n3) = d3array9(_x1,_x2,_x3,_x4,_n3)
+(_N2(_n3)>=(-(0)+n))
+(_n2<_N2(_n3)) -> ((_n2+0)<n)
+k9((_n3+1)) = k5(_N2(_n3),_n3)
+j9((_n3+1)) = (_N2(_n3)+0)
+d3array9(_x1,_x2,_x3,_x4,(_n3+1)) = d3array5(_x1,_x2,_x3,_x4,_N2(_n3),_n3)
+k9(0) = 0
+j9(0) = 0
+d3array9(_x1,_x2,_x3,_x4,0) = d3array(_x1,_x2,_x3,_x4)
+(_N3>=(-(0)+n))
+(_n3<_N3) -> ((_n3+0)<n)
+d3array11(_x1,_x2,_x3,_x4,(_n4+1),_n5,_n6) = d3array11(_x1,_x2,_x3,_x4,_n4,_n5,_n6)
+d3array11(_x1,_x2,_x3,_x4,0,_n5,_n6) = d3array14(_x1,_x2,_x3,_x4,_n5,_n6)
+(_N4(_n5,_n6)>=(-(0)+n))
+(_n4<_N4(_n5,_n6)) -> ((_n4+0)<n)
+k14((_n5+1),_n6) = (_N4(_n5,_n6)+0)
+d3array14(_x1,_x2,_x3,_x4,(_n5+1),_n6) = d3array11(_x1,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6)
+k14(0,_n6) = 0
+d3array14(_x1,_x2,_x3,_x4,0,_n6) = d3array18(_x1,_x2,_x3,_x4,_n6)
+(_N5(_n6)>=(-(0)+n))
+(_n5<_N5(_n6)) -> ((_n5+0)<n)
+k18((_n6+1)) = k14(_N5(_n6),_n6)
+j18((_n6+1)) = (_N5(_n6)+0)
+d3array18(_x1,_x2,_x3,_x4,(_n6+1)) = d3array14(_x1,_x2,_x3,_x4,_N5(_n6),_n6)
+k18(0) = 0
+j18(0) = 0
+d3array18(_x1,_x2,_x3,_x4,0) = d3array9(_x1,_x2,_x3,_x4,_N3)
+(_N6>=(-(0)+n))
+(_n6<_N6) -> ((_n6+0)<n)
+
+4. Assumption :
+
+5. Assertion :
+(d3array18(A,(_n6+0),(_n5+0),(_n4+0),_N6)==C)
+
+Axiomes Added
+
+d3array11(A,(_n3+0),(_n2+0),(_n1+0),_N4(_n5,_n6),_n5,_n6) = C
+d3array9(A,(_n3+0),(_n2+0),(_n1+0),_N3) = C
+d3array2(A,(_n3+0),(_n2+0),(_n1+0),_N1(_n2,_n3),_n2,_n3) = C
+d3array14(A,(_n3+0),(_n2+0),(_n1+0),_N5(_n6),_n6) = C
+d3array5(A,(_n3+0),(_n2+0),(_n1+0),_N2(_n3),_n3) = C
+d3array18(A,(_n3+0),(_n2+0),(_n1+0),_N6) = C
+VIAP_STANDARD_OUTPUT_True

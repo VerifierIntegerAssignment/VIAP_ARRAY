@@ -1,0 +1,105 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp multidimensional/max-2-n-u.c
+Program Body
+{
+  int _1_PROVE[100000][100000];
+  int i;
+  int j;
+  int m;
+  int n;
+  int p;
+  int A[m][n];
+  int m;
+  i = 0;
+  j = 0;
+  m = A[0][0];
+  while (i < m)
+  {
+    j = 0;
+    while (j < n)
+    {
+      if (A[i][j] > m)
+      {
+        m = A[i][j];
+      }
+
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+  i = 0;
+  j = 0;
+  while (i < m)
+  {
+    j = 0;
+    while (j < n)
+    {
+      _1_PROVE[i][j] = A[i][j] <= m;
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array j:int i:int _1_PROVE:array m:int n:int p:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+p1 = p
+n1 = n
+
+2. Output equations:
+i1 = (_N4+0)
+j1 = j11(_N4)
+m1 = m6(_N2)
+d2array1(_x1,_x2,_x3) = d2array11(_x1,_x2,_x3,_N4)
+
+3. Other axioms:
+m3((_n1+1),_n2) = ite((d2array(A,(_n2+0),(_n1+0))>m3(_n1,_n2)),d2array(A,(_n2+0),(_n1+0)),m3(_n1,_n2))
+m3(0,_n2) = m6(_n2)
+(_N1(_n2)>=(-(0)+n))
+(_n1<_N1(_n2)) -> ((_n1+0)<n)
+j6((_n2+1)) = (_N1(_n2)+0)
+m6((_n2+1)) = m3(_N1(_n2),_n2)
+j6(0) = 0
+m6(0) = d2array(A,0,0)
+(_N2>=(-(0)+m6(_N2)))
+(_n2<_N2) -> ((_n2+0)<m6(_n2))
+d2array8(_x1,_x2,_x3,(_n3+1),_n4) = d2array8(_x1,_x2,_x3,_n3,_n4)
+d2array8(_x1,_x2,_x3,0,_n4) = d2array11(_x1,_x2,_x3,_n4)
+(_N3(_n4)>=(-(0)+n))
+(_n3<_N3(_n4)) -> ((_n3+0)<n)
+j11((_n4+1)) = (_N3(_n4)+0)
+d2array11(_x1,_x2,_x3,(_n4+1)) = d2array8(_x1,_x2,_x3,_N3(_n4),_n4)
+j11(0) = 0
+d2array11(_x1,_x2,_x3,0) = d2array(_x1,_x2,_x3)
+(_N4>=(-(0)+m6(_N2)))
+(_n4<_N4) -> ((_n4+0)<m6(_N2))
+
+4. Assumption :
+
+5. Assertion :
+(d2array11(A,(_n4+0),(_n3+0),_N4)<=m6(_N2))
+
+       
+
+Axiomes Added
+
+d2array11(A,_x2,_x3,_N4) = d2array(A,_x2,_x3)
+d2array11(A,_x2,_x3,_N4) = d2array11(A,_x2,_x3,(_n4+1))
+d2array8(A,_x2,_x3,_N3(_n4),_n4) = d2array8(A,_x2,_x3,_N3(_n4),_n4)
+d2array8(A,_x2,_x3,_N3(_n4),_n4) = d2array(A,_x2,_x3)
+
+VIAP_STANDARD_OUTPUT_True

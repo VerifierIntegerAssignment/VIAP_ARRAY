@@ -1,0 +1,129 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_copy5_false-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int a1_var[100000];
+  int a2_var[100000];
+  int a3_var[100000];
+  int a4_var[100000];
+  int a5_var[100000];
+  int a6_var[100000];
+  int a;
+  a = 0;
+  while (a < 100000)
+  {
+    a1_var[a] = __VERIFIER_nondet_int();
+    a5_var[a] = __VERIFIER_nondet_int();
+    a = a + 1;
+  }
+
+  int i;
+  i = 0;
+  while (i < 100000)
+  {
+    a2_var[i] = a1_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a3_var[i] = a2_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a4_var[i] = a3_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a6_var[i] = a4_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a6_var[i] = a5_var[i];
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < 100000)
+  {
+    _1_PROVE[x] = a1_var[x] == a6_var[x];
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a:int a3_var:array a1_var:array i:int _1_PROVE:array RET:int a4_var:array a2_var:array a5_var:array x:int a6_var:array}
+
+
+Output in normal notation:
+1. Frame axioms:
+a3_var1 = a3_var
+a1_var1 = a1_var
+a4_var1 = a4_var
+a2_var1 = a2_var
+a5_var1 = a5_var
+a6_var1 = a6_var
+
+2. Output equations:
+a1 = (_N1+0)
+i1 = (_N6+0)
+d1array1(_x1,_x2) = d1array15(_x1,_x2,_N7)
+main = 0
+x1 = (_N7+0)
+
+3. Other axioms:
+d1array3(_x1,_x2,(_n1+1)) = ite(((_x1=a5_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int3(_n1),ite(((_x1=a1_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int2(_n1),d1array3(_x1,_x2,_n1)))
+d1array3(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+d1array5(_x1,_x2,(_n2+1)) = ite(((_x1=a2_var) and (_x2=(_n2+0))),d1array5(a1_var,(_n2+0),_n2),d1array5(_x1,_x2,_n2))
+d1array5(_x1,_x2,0) = d1array3(_x1,_x2,_N1)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+d1array7(_x1,_x2,(_n3+1)) = ite(((_x1=a3_var) and (_x2=(_n3+0))),d1array7(a2_var,(_n3+0),_n3),d1array7(_x1,_x2,_n3))
+d1array7(_x1,_x2,0) = d1array5(_x1,_x2,_N2)
+(_N3>=(-(0)+100000))
+(_n3<_N3) -> ((_n3+0)<100000)
+d1array9(_x1,_x2,(_n4+1)) = ite(((_x1=a4_var) and (_x2=(_n4+0))),d1array9(a3_var,(_n4+0),_n4),d1array9(_x1,_x2,_n4))
+d1array9(_x1,_x2,0) = d1array7(_x1,_x2,_N3)
+(_N4>=(-(0)+100000))
+(_n4<_N4) -> ((_n4+0)<100000)
+d1array11(_x1,_x2,(_n5+1)) = ite(((_x1=a6_var) and (_x2=(_n5+0))),d1array11(a4_var,(_n5+0),_n5),d1array11(_x1,_x2,_n5))
+d1array11(_x1,_x2,0) = d1array9(_x1,_x2,_N4)
+(_N5>=(-(0)+100000))
+(_n5<_N5) -> ((_n5+0)<100000)
+d1array13(_x1,_x2,(_n6+1)) = ite(((_x1=a6_var) and (_x2=(_n6+0))),d1array13(a5_var,(_n6+0),_n6),d1array13(_x1,_x2,_n6))
+d1array13(_x1,_x2,0) = d1array11(_x1,_x2,_N5)
+(_N6>=(-(0)+100000))
+(_n6<_N6) -> ((_n6+0)<100000)
+d1array15(_x1,_x2,(_n7+1)) = d1array15(_x1,_x2,_n7)
+d1array15(_x1,_x2,0) = d1array13(_x1,_x2,_N6)
+(_N7>=(-(0)+100000))
+(_n7<_N7) -> ((_n7+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array15(a1_var,(_n7+0),_N7)==d1array15(a6_var,(_n7+0),_N7))
+VIAP_STANDARD_OUTPUT_False

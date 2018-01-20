@@ -1,0 +1,166 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp multidimensional/add-3-n-u.c
+Program Body
+{
+  int _1_PROVE[100000][100000][100000];
+  int i;
+  int j;
+  int k;
+  int m;
+  int n;
+  int p;
+  int A[m][n][p];
+  int B[m][n][p];
+  int C[m][n][p];
+  i = 0;
+  j = 0;
+  k = 0;
+  while (i < m)
+  {
+    j = 0;
+    k = 0;
+    while (j < n)
+    {
+      k = 0;
+      while (k < p)
+      {
+        C[i][j][k] = A[i][j][k] + B[i][j][k];
+        k = k + 1;
+      }
+
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+  i = 0;
+  j = 0;
+  k = 0;
+  while (i < m)
+  {
+    j = 0;
+    k = 0;
+    while (j < n)
+    {
+      k = 0;
+      while (k < p)
+      {
+        _1_PROVE[i][k][j] = C[i][j][k] == (A[i][j][k] + B[i][j][k]);
+        k = k + 1;
+      }
+
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array C:array j:int i:int k:int _1_PROVE:array m:int n:int p:int B:array}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+C1 = C
+B1 = B
+m1 = m
+n1 = n
+p1 = p
+
+2. Output equations:
+i1 = (_N6+0)
+k1 = k18(_N6)
+j1 = j18(_N6)
+d3array1(_x1,_x2,_x3,_x4) = d3array18(_x1,_x2,_x3,_x4,_N6)
+
+3. Other axioms:
+d3array2(_x1,_x2,_x3,_x4,(_n1+1),_n2,_n3) = ite(((_x1=C) and (_x2=(_n3+0)) and (_x3=(_n2+0)) and (_x4=(_n1+0))),(d3array2(A,(_n3+0),(_n2+0),(_n1+0),_n1,_n2,_n3)+d3array2(B,(_n3+0),(_n2+0),(_n1+0),_n1,_n2,_n3)),d3array2(_x1,_x2,_x3,_x4,_n1,_n2,_n3))
+d3array2(_x1,_x2,_x3,_x4,0,_n2,_n3) = d3array5(_x1,_x2,_x3,_x4,_n2,_n3)
+(_N1(_n2,_n3)>=(-(0)+p))
+(_n1<_N1(_n2,_n3)) -> ((_n1+0)<p)
+k5((_n2+1),_n3) = (_N1(_n2,_n3)+0)
+d3array5(_x1,_x2,_x3,_x4,(_n2+1),_n3) = d3array2(_x1,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3)
+k5(0,_n3) = 0
+d3array5(_x1,_x2,_x3,_x4,0,_n3) = d3array9(_x1,_x2,_x3,_x4,_n3)
+(_N2(_n3)>=(-(0)+n))
+(_n2<_N2(_n3)) -> ((_n2+0)<n)
+k9((_n3+1)) = k5(_N2(_n3),_n3)
+j9((_n3+1)) = (_N2(_n3)+0)
+d3array9(_x1,_x2,_x3,_x4,(_n3+1)) = d3array5(_x1,_x2,_x3,_x4,_N2(_n3),_n3)
+k9(0) = 0
+j9(0) = 0
+d3array9(_x1,_x2,_x3,_x4,0) = d3array(_x1,_x2,_x3,_x4)
+(_N3>=(-(0)+m))
+(_n3<_N3) -> ((_n3+0)<m)
+d3array11(_x1,_x2,_x3,_x4,(_n4+1),_n5,_n6) = d3array11(_x1,_x2,_x3,_x4,_n4,_n5,_n6)
+d3array11(_x1,_x2,_x3,_x4,0,_n5,_n6) = d3array14(_x1,_x2,_x3,_x4,_n5,_n6)
+(_N4(_n5,_n6)>=(-(0)+p))
+(_n4<_N4(_n5,_n6)) -> ((_n4+0)<p)
+k14((_n5+1),_n6) = (_N4(_n5,_n6)+0)
+d3array14(_x1,_x2,_x3,_x4,(_n5+1),_n6) = d3array11(_x1,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6)
+k14(0,_n6) = 0
+d3array14(_x1,_x2,_x3,_x4,0,_n6) = d3array18(_x1,_x2,_x3,_x4,_n6)
+(_N5(_n6)>=(-(0)+n))
+(_n5<_N5(_n6)) -> ((_n5+0)<n)
+k18((_n6+1)) = k14(_N5(_n6),_n6)
+j18((_n6+1)) = (_N5(_n6)+0)
+d3array18(_x1,_x2,_x3,_x4,(_n6+1)) = d3array14(_x1,_x2,_x3,_x4,_N5(_n6),_n6)
+k18(0) = 0
+j18(0) = 0
+d3array18(_x1,_x2,_x3,_x4,0) = d3array9(_x1,_x2,_x3,_x4,_N3)
+(_N6>=(-(0)+m))
+(_n6<_N6) -> ((_n6+0)<m)
+
+4. Assumption :
+
+5. Assertion :
+(d3array18(C,(_n6+0),(_n5+0),(_n4+0),_N6)==(d3array18(A,(_n6+0),(_n5+0),(_n4+0),_N6)+d3array18(B,(_n6+0),(_n5+0),(_n4+0),_N6)))
+
+Axiomes Added
+
+d3array11(A,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6) = d3array11(A,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6)
+d3array14(A,_x2,_x3,_x4,_N5(_n6),_n6) = d3array14(A,_x2,_x3,_x4,(_n5+1),_n6)
+d3array14(C,(_n3+0),(_n2+0),(_n1+0),_N5(_n6),_n6) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array11(B,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6) = d3array(B,_x2,_x3,_x4)
+d3array18(B,_x2,_x3,_x4,_N6) = d3array18(B,_x2,_x3,_x4,(_n6+1))
+d3array2(A,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3) = d3array2(A,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3)
+d3array11(C,(_n3+0),(_n2+0),(_n1+0),_N4(_n5,_n6),_n5,_n6) = (d3array11(A,(_n3+0),(_n2+0),(_n1+0),_N4(_n5,_n6),_n5,_n6)+d3array11(B,(_n3+0),(_n2+0),(_n1+0),_N4(_n5,_n6),_n5,_n6))
+d3array5(C,(_n3+0),(_n2+0),(_n1+0),_N2(_n3),_n3) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array14(B,_x2,_x3,_x4,_N5(_n6),_n6) = d3array(B,_x2,_x3,_x4)
+d3array9(A,_x2,_x3,_x4,_N3) = d3array9(A,_x2,_x3,_x4,(_n3+1))
+d3array9(A,_x2,_x3,_x4,_N3) = d3array(A,_x2,_x3,_x4)
+d3array2(B,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3) = d3array2(B,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3)
+d3array2(B,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3) = d3array(B,_x2,_x3,_x4)
+d3array11(C,(_n3+0),(_n2+0),(_n1+0),_N4(_n5,_n6),_n5,_n6) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array11(A,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6) = d3array(A,_x2,_x3,_x4)
+d3array18(B,_x2,_x3,_x4,_N6) = d3array(B,_x2,_x3,_x4)
+d3array18(C,(_n3+0),(_n2+0),(_n1+0),_N6) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array14(A,_x2,_x3,_x4,_N5(_n6),_n6) = d3array(A,_x2,_x3,_x4)
+d3array18(C,(_n3+0),(_n2+0),(_n1+0),_N6) = (d3array18(C,(_n3+0),(_n2+0),(_n1+0),(_n6+1))+d3array18(C,(_n3+0),(_n2+0),(_n1+0),(_n6+1)))
+d3array2(C,(_n3+0),(_n2+0),(_n1+0),_N1(_n2,_n3),_n2,_n3) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array14(B,_x2,_x3,_x4,_N5(_n6),_n6) = d3array14(B,_x2,_x3,_x4,(_n5+1),_n6)
+d3array5(A,_x2,_x3,_x4,_N2(_n3),_n3) = d3array(A,_x2,_x3,_x4)
+d3array9(C,(_n3+0),(_n2+0),(_n1+0),_N3) = (d3array9(C,(_n3+0),(_n2+0),(_n1+0),(_n3+1))+d3array9(C,(_n3+0),(_n2+0),(_n1+0),(_n3+1)))
+d3array18(A,_x2,_x3,_x4,_N6) = d3array(A,_x2,_x3,_x4)
+d3array5(B,_x2,_x3,_x4,_N2(_n3),_n3) = d3array5(B,_x2,_x3,_x4,(_n2+1),_n3)
+d3array14(C,(_n3+0),(_n2+0),(_n1+0),_N5(_n6),_n6) = (d3array14(C,(_n3+0),(_n2+0),(_n1+0),(_n5+1),_n6)+d3array14(C,(_n3+0),(_n2+0),(_n1+0),(_n5+1),_n6))
+d3array9(B,_x2,_x3,_x4,_N3) = d3array(B,_x2,_x3,_x4)
+d3array11(B,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6) = d3array11(B,_x2,_x3,_x4,_N4(_n5,_n6),_n5,_n6)
+d3array9(B,_x2,_x3,_x4,_N3) = d3array9(B,_x2,_x3,_x4,(_n3+1))
+d3array2(A,_x2,_x3,_x4,_N1(_n2,_n3),_n2,_n3) = d3array(A,_x2,_x3,_x4)
+d3array2(C,(_n3+0),(_n2+0),(_n1+0),_N1(_n2,_n3),_n2,_n3) = (d3array2(A,(_n3+0),(_n2+0),(_n1+0),_N1(_n2,_n3),_n2,_n3)+d3array2(B,(_n3+0),(_n2+0),(_n1+0),_N1(_n2,_n3),_n2,_n3))
+d3array5(A,_x2,_x3,_x4,_N2(_n3),_n3) = d3array5(A,_x2,_x3,_x4,(_n2+1),_n3)
+d3array9(C,(_n3+0),(_n2+0),(_n1+0),_N3) = (d3array(A,(_n3+0),(_n2+0),(_n1+0))+d3array(B,(_n3+0),(_n2+0),(_n1+0)))
+d3array5(C,(_n3+0),(_n2+0),(_n1+0),_N2(_n3),_n3) = (d3array5(C,(_n3+0),(_n2+0),(_n1+0),(_n2+1),_n3)+d3array5(C,(_n3+0),(_n2+0),(_n1+0),(_n2+1),_n3))
+d3array18(A,_x2,_x3,_x4,_N6) = d3array18(A,_x2,_x3,_x4,(_n6+1))
+d3array5(B,_x2,_x3,_x4,_N2(_n3),_n3) = d3array(B,_x2,_x3,_x4)
+VIAP_STANDARD_OUTPUT_True

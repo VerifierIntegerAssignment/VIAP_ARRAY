@@ -1,0 +1,68 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_palindrome_true-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int A[100000];
+  int i;
+  i = 0;
+  while (i < (100000 / 2))
+  {
+    A[i] = A[(100000 - i) - 1];
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < (100000 / 2))
+  {
+    _1_PROVE[x] = A[x] == A[(100000 - x) - 1];
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array i:int _1_PROVE:array RET:int x:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+
+2. Output equations:
+i1 = (_N1+0)
+x1 = (_N2+0)
+d1array1(_x1,_x2) = d1array4(_x1,_x2,_N2)
+main = 0
+
+3. Other axioms:
+d1array2(_x1,_x2,(_n1+1)) = ite(((_x1=A) and (_x2=(_n1+0))),d1array2(A,((100000-(_n1+0))-1),_n1),d1array2(_x1,_x2,_n1))
+d1array2(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+50000))
+(_n1<_N1) -> ((_n1+0)<(100000/2))
+d1array4(_x1,_x2,(_n2+1)) = d1array4(_x1,_x2,_n2)
+d1array4(_x1,_x2,0) = d1array2(_x1,_x2,_N1)
+(_N2>=(-(0)+50000))
+(_n2<_N2) -> ((_n2+0)<(100000/2))
+
+4. Assumption :
+
+5. Assertion :
+(d1array4(A,(_n2+0),_N2)==d1array4(A,((100000-(_n2+0))-1),_N2))
+
+Axiomes Added
+
+d1array4(A,(_n1+0),_N2) = d1array4(A,((100000-(_n1+0))-1),_N2)
+d1array4(A,(_n1+0),_N2) = d1array(A,((100000-(_n1+0))-1))
+d1array2(A,(_n1+0),_N1) = d1array(A,((100000-(_n1+0))-1))
+d1array2(A,(_n1+0),_N1) = d1array2(A,((100000-(_n1+0))-1),_N1)
+VIAP_STANDARD_OUTPUT_True

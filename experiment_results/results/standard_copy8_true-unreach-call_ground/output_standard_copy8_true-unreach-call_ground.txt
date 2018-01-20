@@ -1,0 +1,297 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_copy8_true-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int a1_var[100000];
+  int a2_var[100000];
+  int a3_var[100000];
+  int a4_var[100000];
+  int a5_var[100000];
+  int a6_var[100000];
+  int a7_var[100000];
+  int a8_var[100000];
+  int a9_var[100000];
+  int a;
+  a = 0;
+  while (a < 100000)
+  {
+    a1_var[a] = __VERIFIER_nondet_int();
+    a = a + 1;
+  }
+
+  int i;
+  i = 0;
+  while (i < 100000)
+  {
+    a2_var[i] = a1_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a3_var[i] = a2_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a4_var[i] = a3_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a5_var[i] = a4_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a6_var[i] = a5_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a7_var[i] = a6_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a8_var[i] = a7_var[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while (i < 100000)
+  {
+    a9_var[i] = a8_var[i];
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < 100000)
+  {
+    _1_PROVE[x] = a1_var[x] == a9_var[x];
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a7_var:array a:int a8_var:array a3_var:array a1_var:array i:int _1_PROVE:array RET:int a4_var:array a2_var:array a5_var:array x:int a6_var:array a9_var:array}
+
+
+Output in normal notation:
+1. Frame axioms:
+a7_var1 = a7_var
+a3_var1 = a3_var
+a1_var1 = a1_var
+a8_var1 = a8_var
+a4_var1 = a4_var
+a2_var1 = a2_var
+a5_var1 = a5_var
+a6_var1 = a6_var
+a9_var1 = a9_var
+
+2. Output equations:
+a1 = (_N1+0)
+i1 = (_N9+0)
+d1array1(_x1,_x2) = d1array20(_x1,_x2,_N10)
+main = 0
+x1 = (_N10+0)
+
+3. Other axioms:
+d1array2(_x1,_x2,(_n1+1)) = ite(((_x1=a1_var) and (_x2=(_n1+0))),__VERIFIER_nondet_int2(_n1),d1array2(_x1,_x2,_n1))
+d1array2(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+d1array4(_x1,_x2,(_n2+1)) = ite(((_x1=a2_var) and (_x2=(_n2+0))),d1array4(a1_var,(_n2+0),_n2),d1array4(_x1,_x2,_n2))
+d1array4(_x1,_x2,0) = d1array2(_x1,_x2,_N1)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+d1array6(_x1,_x2,(_n3+1)) = ite(((_x1=a3_var) and (_x2=(_n3+0))),d1array6(a2_var,(_n3+0),_n3),d1array6(_x1,_x2,_n3))
+d1array6(_x1,_x2,0) = d1array4(_x1,_x2,_N2)
+(_N3>=(-(0)+100000))
+(_n3<_N3) -> ((_n3+0)<100000)
+d1array8(_x1,_x2,(_n4+1)) = ite(((_x1=a4_var) and (_x2=(_n4+0))),d1array8(a3_var,(_n4+0),_n4),d1array8(_x1,_x2,_n4))
+d1array8(_x1,_x2,0) = d1array6(_x1,_x2,_N3)
+(_N4>=(-(0)+100000))
+(_n4<_N4) -> ((_n4+0)<100000)
+d1array10(_x1,_x2,(_n5+1)) = ite(((_x1=a5_var) and (_x2=(_n5+0))),d1array10(a4_var,(_n5+0),_n5),d1array10(_x1,_x2,_n5))
+d1array10(_x1,_x2,0) = d1array8(_x1,_x2,_N4)
+(_N5>=(-(0)+100000))
+(_n5<_N5) -> ((_n5+0)<100000)
+d1array12(_x1,_x2,(_n6+1)) = ite(((_x1=a6_var) and (_x2=(_n6+0))),d1array12(a5_var,(_n6+0),_n6),d1array12(_x1,_x2,_n6))
+d1array12(_x1,_x2,0) = d1array10(_x1,_x2,_N5)
+(_N6>=(-(0)+100000))
+(_n6<_N6) -> ((_n6+0)<100000)
+d1array14(_x1,_x2,(_n7+1)) = ite(((_x1=a7_var) and (_x2=(_n7+0))),d1array14(a6_var,(_n7+0),_n7),d1array14(_x1,_x2,_n7))
+d1array14(_x1,_x2,0) = d1array12(_x1,_x2,_N6)
+(_N7>=(-(0)+100000))
+(_n7<_N7) -> ((_n7+0)<100000)
+d1array16(_x1,_x2,(_n8+1)) = ite(((_x1=a8_var) and (_x2=(_n8+0))),d1array16(a7_var,(_n8+0),_n8),d1array16(_x1,_x2,_n8))
+d1array16(_x1,_x2,0) = d1array14(_x1,_x2,_N7)
+(_N8>=(-(0)+100000))
+(_n8<_N8) -> ((_n8+0)<100000)
+d1array18(_x1,_x2,(_n9+1)) = ite(((_x1=a9_var) and (_x2=(_n9+0))),d1array18(a8_var,(_n9+0),_n9),d1array18(_x1,_x2,_n9))
+d1array18(_x1,_x2,0) = d1array16(_x1,_x2,_N8)
+(_N9>=(-(0)+100000))
+(_n9<_N9) -> ((_n9+0)<100000)
+d1array20(_x1,_x2,(_n10+1)) = d1array20(_x1,_x2,_n10)
+d1array20(_x1,_x2,0) = d1array18(_x1,_x2,_N9)
+(_N10>=(-(0)+100000))
+(_n10<_N10) -> ((_n10+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array20(a1_var,(_n10+0),_N10)==d1array20(a9_var,(_n10+0),_N10))
+
+Axiomes Added
+
+d1array2(a7_var,_x2,_N1) = d1array(a7_var,_x2)
+d1array4(a3_var,_x2,_N2) = d1array4(a3_var,_x2,_N2)
+d1array8(a6_var,_x2,_N4) = d1array8(a6_var,_x2,_N4)
+d1array10(a2_var,(_n2+0),_N5) = __VERIFIER_nondet_int2(_n1)
+d1array20(a6_var,(_n6+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array4(a8_var,_x2,_N2) = d1array(a8_var,_x2)
+d1array6(a5_var,_x2,_N3) = d1array(a5_var,_x2)
+d1array18(a6_var,(_n6+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array12(a3_var,(_n3+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array16(a1_var,(_n1+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array12(a6_var,(_n6+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array8(a5_var,_x2,_N4) = d1array(a5_var,_x2)
+d1array18(a5_var,(_n5+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array10(a6_var,_x2,_N5) = d1array10(a6_var,_x2,_N5)
+d1array12(a1_var,(_n1+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array18(a7_var,(_n7+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array16(a8_var,(_n8+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array6(a9_var,_x2,_N3) = d1array6(a9_var,_x2,_N3)
+d1array18(a8_var,(_n8+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array10(a1_var,(_n1+0),_N5) = __VERIFIER_nondet_int2(_n1)
+d1array4(a6_var,_x2,_N2) = d1array(a6_var,_x2)
+d1array16(a9_var,_x2,_N8) = d1array16(a9_var,_x2,_N8)
+d1array4(a2_var,(_n2+0),_N2) = __VERIFIER_nondet_int2(_n1)
+d1array4(a9_var,_x2,_N2) = d1array(a9_var,_x2)
+d1array14(a8_var,_x2,_N7) = d1array(a8_var,_x2)
+d1array2(a9_var,_x2,_N1) = d1array2(a9_var,_x2,_N1)
+d1array20(a7_var,(_n7+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array4(a3_var,_x2,_N2) = d1array(a3_var,_x2)
+d1array12(a8_var,_x2,_N6) = d1array12(a8_var,_x2,_N6)
+d1array2(a3_var,_x2,_N1) = d1array(a3_var,_x2)
+d1array4(a9_var,_x2,_N2) = d1array4(a9_var,_x2,_N2)
+d1array4(a4_var,_x2,_N2) = d1array4(a4_var,_x2,_N2)
+d1array18(a1_var,(_n1+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array8(a1_var,(_n1+0),_N4) = __VERIFIER_nondet_int2(_n1)
+d1array2(a2_var,_x2,_N1) = d1array(a2_var,_x2)
+d1array4(a5_var,_x2,_N2) = d1array(a5_var,_x2)
+d1array14(a6_var,(_n6+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array14(a7_var,(_n7+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array10(a4_var,(_n4+0),_N5) = __VERIFIER_nondet_int2(_n1)
+d1array12(a9_var,_x2,_N6) = d1array(a9_var,_x2)
+d1array14(a4_var,(_n4+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array20(a4_var,(_n4+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array14(a9_var,_x2,_N7) = d1array(a9_var,_x2)
+d1array14(a9_var,_x2,_N7) = d1array14(a9_var,_x2,_N7)
+d1array2(a2_var,_x2,_N1) = d1array2(a2_var,_x2,_N1)
+d1array18(a3_var,(_n3+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array8(a7_var,_x2,_N4) = d1array(a7_var,_x2)
+d1array16(a2_var,(_n2+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array16(a5_var,(_n5+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array20(a8_var,(_n8+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array10(a7_var,_x2,_N5) = d1array(a7_var,_x2)
+d1array6(a6_var,_x2,_N3) = d1array(a6_var,_x2)
+d1array6(a3_var,(_n3+0),_N3) = __VERIFIER_nondet_int2(_n1)
+d1array6(a7_var,_x2,_N3) = d1array(a7_var,_x2)
+d1array2(a6_var,_x2,_N1) = d1array(a6_var,_x2)
+d1array4(a4_var,_x2,_N2) = d1array(a4_var,_x2)
+d1array8(a5_var,_x2,_N4) = d1array8(a5_var,_x2,_N4)
+d1array16(a9_var,_x2,_N8) = d1array(a9_var,_x2)
+d1array16(a3_var,(_n3+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array10(a9_var,_x2,_N5) = d1array10(a9_var,_x2,_N5)
+d1array2(a5_var,_x2,_N1) = d1array(a5_var,_x2)
+d1array2(a7_var,_x2,_N1) = d1array2(a7_var,_x2,_N1)
+d1array14(a3_var,(_n3+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array16(a4_var,(_n4+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array10(a5_var,(_n5+0),_N5) = __VERIFIER_nondet_int2(_n1)
+d1array4(a5_var,_x2,_N2) = d1array4(a5_var,_x2,_N2)
+d1array14(a8_var,_x2,_N7) = d1array14(a8_var,_x2,_N7)
+d1array6(a8_var,_x2,_N3) = d1array(a8_var,_x2)
+d1array6(a8_var,_x2,_N3) = d1array6(a8_var,_x2,_N3)
+d1array12(a9_var,_x2,_N6) = d1array12(a9_var,_x2,_N6)
+d1array2(a4_var,_x2,_N1) = d1array2(a4_var,_x2,_N1)
+d1array12(a5_var,(_n5+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array16(a6_var,(_n6+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array14(a2_var,(_n2+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array18(a2_var,(_n2+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array10(a6_var,_x2,_N5) = d1array(a6_var,_x2)
+d1array10(a9_var,_x2,_N5) = d1array(a9_var,_x2)
+d1array14(a5_var,(_n5+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array4(a7_var,_x2,_N2) = d1array(a7_var,_x2)
+d1array14(a1_var,(_n1+0),_N7) = __VERIFIER_nondet_int2(_n1)
+d1array6(a2_var,(_n2+0),_N3) = __VERIFIER_nondet_int2(_n1)
+d1array12(a4_var,(_n4+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array4(a1_var,(_n1+0),_N2) = __VERIFIER_nondet_int2(_n1)
+d1array6(a1_var,(_n1+0),_N3) = __VERIFIER_nondet_int2(_n1)
+d1array8(a4_var,(_n4+0),_N4) = __VERIFIER_nondet_int2(_n1)
+d1array2(a1_var,(_n1+0),_N1) = __VERIFIER_nondet_int2(_n1)
+d1array20(a3_var,(_n3+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array2(a9_var,_x2,_N1) = d1array(a9_var,_x2)
+d1array18(a9_var,(_n9+0),_N9) = __VERIFIER_nondet_int2(_n1)
+d1array6(a7_var,_x2,_N3) = d1array6(a7_var,_x2,_N3)
+d1array2(a4_var,_x2,_N1) = d1array(a4_var,_x2)
+d1array2(a8_var,_x2,_N1) = d1array2(a8_var,_x2,_N1)
+d1array10(a8_var,_x2,_N5) = d1array(a8_var,_x2)
+d1array4(a7_var,_x2,_N2) = d1array4(a7_var,_x2,_N2)
+d1array20(a2_var,(_n2+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array10(a7_var,_x2,_N5) = d1array10(a7_var,_x2,_N5)
+d1array4(a8_var,_x2,_N2) = d1array4(a8_var,_x2,_N2)
+d1array12(a2_var,(_n2+0),_N6) = __VERIFIER_nondet_int2(_n1)
+d1array6(a9_var,_x2,_N3) = d1array(a9_var,_x2)
+d1array8(a8_var,_x2,_N4) = d1array8(a8_var,_x2,_N4)
+d1array6(a4_var,_x2,_N3) = d1array6(a4_var,_x2,_N3)
+d1array12(a8_var,_x2,_N6) = d1array(a8_var,_x2)
+d1array8(a2_var,(_n2+0),_N4) = __VERIFIER_nondet_int2(_n1)
+d1array4(a6_var,_x2,_N2) = d1array4(a6_var,_x2,_N2)
+d1array8(a8_var,_x2,_N4) = d1array(a8_var,_x2)
+d1array12(a7_var,_x2,_N6) = d1array(a7_var,_x2)
+d1array8(a7_var,_x2,_N4) = d1array8(a7_var,_x2,_N4)
+d1array10(a8_var,_x2,_N5) = d1array10(a8_var,_x2,_N5)
+d1array20(a1_var,(_n1+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array8(a6_var,_x2,_N4) = d1array(a6_var,_x2)
+d1array20(a9_var,(_n9+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array2(a5_var,_x2,_N1) = d1array2(a5_var,_x2,_N1)
+d1array8(a9_var,_x2,_N4) = d1array8(a9_var,_x2,_N4)
+d1array12(a7_var,_x2,_N6) = d1array12(a7_var,_x2,_N6)
+d1array6(a4_var,_x2,_N3) = d1array(a4_var,_x2)
+d1array10(a3_var,(_n3+0),_N5) = __VERIFIER_nondet_int2(_n1)
+d1array2(a6_var,_x2,_N1) = d1array2(a6_var,_x2,_N1)
+d1array2(a3_var,_x2,_N1) = d1array2(a3_var,_x2,_N1)
+d1array16(a7_var,(_n7+0),_N8) = __VERIFIER_nondet_int2(_n1)
+d1array2(a8_var,_x2,_N1) = d1array(a8_var,_x2)
+d1array6(a5_var,_x2,_N3) = d1array6(a5_var,_x2,_N3)
+d1array20(a5_var,(_n5+0),_N10) = __VERIFIER_nondet_int2(_n1)
+d1array8(a9_var,_x2,_N4) = d1array(a9_var,_x2)
+d1array6(a6_var,_x2,_N3) = d1array6(a6_var,_x2,_N3)
+d1array8(a3_var,(_n3+0),_N4) = __VERIFIER_nondet_int2(_n1)
+d1array18(a4_var,(_n4+0),_N9) = __VERIFIER_nondet_int2(_n1)
+1
+VIAP_STANDARD_OUTPUT_True

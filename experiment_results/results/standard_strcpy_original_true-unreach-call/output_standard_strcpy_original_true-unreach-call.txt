@@ -1,0 +1,85 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_strcpy_original_true-unreach-call.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int src[100000];
+  int dst[100000];
+  int i;
+  i = 0;
+  int j;
+  j = 0;
+  while (j < 100000)
+  {
+    src[j] = __VERIFIER_nondet_int();
+    j = j + 1;
+  }
+
+  while ((i < 100000) && (src[i] != 0))
+  {
+    dst[i] = src[i];
+    i = i + 1;
+  }
+
+  i = 0;
+  while ((i < 100000) && (src[i] != 0))
+  {
+    _1_PROVE[i] = dst[i] == src[i];
+    i = i + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ src:array j:int i:int dst:array _1_PROVE:array RET:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+src1 = src
+dst1 = dst
+
+2. Output equations:
+i1 = (_N3+0)
+d1array1(_x1,_x2) = d1array6(_x1,_x2,_N3)
+main = 0
+j1 = (_N1+0)
+
+3. Other axioms:
+d1array2(_x1,_x2,(_n1+1)) = ite(((_x1=src) and (_x2=(_n1+0))),__VERIFIER_nondet_int2(_n1),d1array2(_x1,_x2,_n1))
+d1array2(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+d1array4(_x1,_x2,(_n2+1)) = ite(((_x1=dst) and (_x2=(_n2+0))),d1array4(src,(_n2+0),_n2),d1array4(_x1,_x2,_n2))
+d1array4(_x1,_x2,0) = d1array2(_x1,_x2,_N1)
+(((_N2+0)>=100000) or (d1array4(src,(_N2+0),_N2)==0))
+(_n2<_N2) -> (((_n2+0)<100000) and (d1array4(src,(_n2+0),_n2)!=0))
+d1array6(_x1,_x2,(_n3+1)) = d1array6(_x1,_x2,_n3)
+d1array6(_x1,_x2,0) = d1array4(_x1,_x2,_N2)
+(((_N3+0)>=100000) or (d1array6(src,(_N3+0),_N3)==0))
+(_n3<_N3) -> (((_n3+0)<100000) and (d1array6(src,(_n3+0),_n3)!=0))
+
+4. Assumption :
+
+5. Assertion :
+(d1array6(dst,(_n3+0),_N3)==d1array6(src,(_n3+0),_N3))
+
+Axiomes Added
+
+d1array6(src,(_n1+0),_N3) = __VERIFIER_nondet_int2(_n1)
+d1array6(dst,(_n2+0),_N3) = __VERIFIER_nondet_int2(_n1)
+d1array4(src,(_n1+0),_N2) = __VERIFIER_nondet_int2(_n1)
+d1array2(src,(_n1+0),_N1) = __VERIFIER_nondet_int2(_n1)
+d1array2(dst,_x2,_N1) = d1array(dst,_x2)
+d1array2(dst,_x2,_N1) = d1array2(dst,_x2,_N1)
+d1array4(dst,(_n2+0),_N2) = __VERIFIER_nondet_int2(_n1)
+1
+VIAP_STANDARD_OUTPUT_True

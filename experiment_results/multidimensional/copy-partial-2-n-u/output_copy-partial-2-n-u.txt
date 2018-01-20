@@ -1,0 +1,120 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp multidimensional/copy-partial-2-n-u.c
+Program Body
+{
+  int _1_ASSUME;
+  _1_ASSUME = 0;
+  int _2_ASSUME;
+  _2_ASSUME = 0;
+  int _1_PROVE[100000][100000];
+  int i;
+  int j;
+  int m;
+  int n;
+  int q;
+  int s;
+  int A[m][n];
+  int B[m][n];
+  i = 0;
+  j = 0;
+  _1_ASSUME = q < m;
+  _2_ASSUME = s < n;
+  while (i < q)
+  {
+    j = 0;
+    while (j < s)
+    {
+      A[i][j] = B[i][j];
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+  i = 0;
+  j = 0;
+  while (i < q)
+  {
+    j = 0;
+    while (j < s)
+    {
+      _1_PROVE[i][j] = A[i][j] == B[i][j];
+      j = j + 1;
+    }
+
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array j:int i:int _1_PROVE:array m:int n:int q:int _2_ASSUME:int s:int B:array _1_ASSUME:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+B1 = B
+m1 = m
+n1 = n
+q1 = q
+s1 = s
+
+2. Output equations:
+i1 = (_N4+0)
+j1 = j10(_N4)
+d2array1(_x1,_x2,_x3) = d2array10(_x1,_x2,_x3,_N4)
+
+3. Other axioms:
+d2array2(_x1,_x2,_x3,(_n1+1),_n2) = ite(((_x1=A) and (_x2=(_n2+0)) and (_x3=(_n1+0))),d2array2(B,(_n2+0),(_n1+0),_n1,_n2),d2array2(_x1,_x2,_x3,_n1,_n2))
+d2array2(_x1,_x2,_x3,0,_n2) = d2array5(_x1,_x2,_x3,_n2)
+(_N1(_n2)>=(-(0)+s))
+(_n1<_N1(_n2)) -> ((_n1+0)<s)
+j5((_n2+1)) = (_N1(_n2)+0)
+d2array5(_x1,_x2,_x3,(_n2+1)) = d2array2(_x1,_x2,_x3,_N1(_n2),_n2)
+j5(0) = 0
+d2array5(_x1,_x2,_x3,0) = d2array(_x1,_x2,_x3)
+(_N2>=(-(0)+q))
+(_n2<_N2) -> ((_n2+0)<q)
+d2array7(_x1,_x2,_x3,(_n3+1),_n4) = d2array7(_x1,_x2,_x3,_n3,_n4)
+d2array7(_x1,_x2,_x3,0,_n4) = d2array10(_x1,_x2,_x3,_n4)
+(_N3(_n4)>=(-(0)+s))
+(_n3<_N3(_n4)) -> ((_n3+0)<s)
+j10((_n4+1)) = (_N3(_n4)+0)
+d2array10(_x1,_x2,_x3,(_n4+1)) = d2array7(_x1,_x2,_x3,_N3(_n4),_n4)
+j10(0) = 0
+d2array10(_x1,_x2,_x3,0) = d2array5(_x1,_x2,_x3,_N2)
+(_N4>=(-(0)+q))
+(_n4<_N4) -> ((_n4+0)<q)
+
+4. Assumption :
+(s<n)
+(q<m)
+
+5. Assertion :
+(d2array10(A,(_n4+0),(_n3+0),_N4)==d2array10(B,(_n4+0),(_n3+0),_N4))
+
+Axiomes Added
+
+d2array5(A,(_n2+0),(_n1+0),_N2) = d2array5(A,(_n2+0),(_n1+0),(_n2+1))
+d2array10(B,_x2,_x3,_N4) = d2array10(B,_x2,_x3,(_n4+1))
+d2array5(B,_x2,_x3,_N2) = d2array(B,_x2,_x3)
+d2array7(B,_x2,_x3,_N3(_n4),_n4) = d2array(B,_x2,_x3)
+d2array5(B,_x2,_x3,_N2) = d2array5(B,_x2,_x3,(_n2+1))
+d2array7(A,(_n2+0),(_n1+0),_N3(_n4),_n4) = d2array(B,(_n2+0),(_n1+0))
+d2array10(B,_x2,_x3,_N4) = d2array(B,_x2,_x3)
+d2array2(A,(_n2+0),(_n1+0),_N1(_n2),_n2) = d2array2(B,(_n2+0),(_n1+0),_N1(_n2),_n2)
+d2array2(A,(_n2+0),(_n1+0),_N1(_n2),_n2) = d2array(B,(_n2+0),(_n1+0))
+d2array5(A,(_n2+0),(_n1+0),_N2) = d2array(B,(_n2+0),(_n1+0))
+d2array7(A,(_n2+0),(_n1+0),_N3(_n4),_n4) = d2array7(B,(_n2+0),(_n1+0),_N3(_n4),_n4)
+d2array2(B,_x2,_x3,_N1(_n2),_n2) = d2array2(B,_x2,_x3,_N1(_n2),_n2)
+d2array10(A,(_n2+0),(_n1+0),_N4) = d2array(B,(_n2+0),(_n1+0))
+d2array2(B,_x2,_x3,_N1(_n2),_n2) = d2array(B,_x2,_x3)
+d2array10(A,(_n2+0),(_n1+0),_N4) = d2array10(A,(_n2+0),(_n1+0),(_n4+1))
+d2array7(B,_x2,_x3,_N3(_n4),_n4) = d2array7(B,_x2,_x3,_N3(_n4),_n4)
+VIAP_STANDARD_OUTPUT_True

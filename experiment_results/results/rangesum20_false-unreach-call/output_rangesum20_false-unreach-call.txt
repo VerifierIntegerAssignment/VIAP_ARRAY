@@ -1,0 +1,299 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp reducercommutativity/rangesum20_false-unreach-call.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int i;
+  long long ret;
+  ret = 0;
+  int cnt;
+  cnt = 0;
+  i = 0;
+  while (i < 20)
+  {
+    if (i > (20 / 2))
+    {
+      ret = ret + x[i];
+      cnt = cnt + 1;
+    }
+
+    i = i + 1;
+  }
+
+  if (cnt != 0)
+  {
+    RET = ret / cnt;
+  }
+  else
+  {
+    RET = 0;
+  }
+
+}
+
+Function Name:
+rangesum
+Return Type:
+int
+Input Variables:
+{ x:array}
+Local Variables:
+{ i:int cnt:int ret:long RET:int}
+Program Body
+{
+  int _1DUMMY;
+  _1DUMMY = 0;
+  int RET;
+  RET = 0;
+  int _1_FAILED;
+  _1_FAILED = 0;
+  int x[20];
+  int f1_1_i;
+  f1_1_i = 0;
+  while (f1_1_i < 20)
+  {
+    x[i] = __VERIFIER_nondet_int();
+    f1_1_i = f1_1_i + 1;
+  }
+
+  int temp;
+  int ret;
+  int ret2_var;
+  int ret5_var;
+  int f2_1_RET;
+  f2_1_RET = 0;
+  int f2_1_i;
+  long long f2_1_ret;
+  f2_1_ret = 0;
+  int cnt;
+  cnt = 0;
+  f2_1_i = 0;
+  while (f2_1_i < 20)
+  {
+    if (f2_1_i > (20 / 2))
+    {
+      f2_1_ret = f2_1_ret + x[f2_1_i];
+      cnt = cnt + 1;
+    }
+
+    f2_1_i = f2_1_i + 1;
+  }
+
+  if (cnt != 0)
+  {
+    f2_1_RET = f2_1_ret / cnt;
+  }
+  else
+  {
+    f2_1_RET = 0;
+  }
+
+  ret = f2_1_RET;
+  temp = x[0];
+  x[0] = x[1];
+  x[1] = temp;
+  int f2_2_RET;
+  f2_2_RET = 0;
+  int f2_2_i;
+  long long f2_2_ret;
+  f2_2_ret = 0;
+  int cnt;
+  cnt = 0;
+  f2_2_i = 0;
+  while (f2_2_i < 20)
+  {
+    if (f2_2_i > (20 / 2))
+    {
+      f2_2_ret = f2_2_ret + x[f2_2_i];
+      cnt = cnt + 1;
+    }
+
+    f2_2_i = f2_2_i + 1;
+  }
+
+  if (cnt != 0)
+  {
+    f2_2_RET = f2_2_ret / cnt;
+  }
+  else
+  {
+    f2_2_RET = 0;
+  }
+
+  ret2_var = f2_2_RET;
+  temp = x[0];
+  int i;
+  i = 0;
+  while (i < (20 - 1))
+  {
+    x[i] = x[i + 1];
+    i = i + 1;
+  }
+
+  x[20 - 1] = temp;
+  int f2_3_RET;
+  f2_3_RET = 0;
+  int f2_3_i;
+  long long f2_3_ret;
+  f2_3_ret = 0;
+  int cnt;
+  cnt = 0;
+  f2_3_i = 0;
+  while (f2_3_i < 20)
+  {
+    if (f2_3_i > (20 / 2))
+    {
+      f2_3_ret = f2_3_ret + x[f2_3_i];
+      cnt = cnt + 1;
+    }
+
+    f2_3_i = f2_3_i + 1;
+  }
+
+  if (cnt != 0)
+  {
+    f2_3_RET = f2_3_ret / cnt;
+  }
+  else
+  {
+    f2_3_RET = 0;
+  }
+
+  ret5_var = f2_3_RET;
+  if ((ret != ret2_var) || (ret != ret5_var))
+  {
+    _1_FAILED = 1;
+  }
+
+  RET = 1;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ cnt:int i:int temp:int f2_2_RET:int ret5_var:int _1_FAILED:int f2_2_ret:long RET:int _1DUMMY:int f2_3_i:int f2_1_ret:long ret2_var:int ret:int f2_2_i:int f2_1_RET:int x:array f2_3_RET:int f2_3_ret:long f1_1_i:int f2_1_i:int}
+Program Body
+{
+  int i;
+  i = 0;
+  while (i < 20)
+  {
+    x[i] = __VERIFIER_nondet_int();
+    i = i + 1;
+  }
+
+}
+
+Function Name:
+init_nondet
+Return Type:
+void
+Input Variables:
+{ x:array}
+Local Variables:
+{ i:int}
+
+Output in normal notation:
+1. Frame axioms:
+x1(x) = x
+d1array1(_x1,_x2) = d1array(_x1,_x2)
+
+2. Output equations:
+i1 = (_N1+0)
+cnt1 = cnt4(_N1)
+rangesum(x) = ite((cnt4(_N1)!=0),(ret4(_N1,x)/cnt4(_N1)),0)
+ret1(x) = ret4(_N1,x)
+
+3. Other axioms:
+cnt4((_n1+1)) = ite(((_n1+0)>(20/2)),(cnt4(_n1)+1),cnt4(_n1))
+ret4((_n1+1),x) = ite(((_n1+0)>(20/2)),(ret4(_n1,x)+d1array(x,(_n1+0))),ret4(_n1,x))
+cnt4(0) = 0
+ret4(0,x) = 0
+(_N1>=(-(0)+20))
+(_n1<_N1) -> ((_n1+0)<20)
+
+4. Assumption :
+
+5. Assertion :
+
+Output in normal notation:
+1. Frame axioms:
+x1 = x
+
+2. Output equations:
+f2_2_ret1 = f2_2_ret23(_N4)
+cnt1 = cnt31(_N6)
+temp1 = ite(((x=x) and (0=1)),d1array13(x,0,_N2),ite(((x=x) and (0=0)),d1array13(x,1,_N2),d1array13(x,0,_N2)))
+f2_2_RET1 = ite((cnt23(_N4)!=0),(f2_2_ret23(_N4)/cnt23(_N4)),0)
+i1 = (_N5+0)
+_1_FAILED1 = ite(((ite((cnt17(_N3)!=0),(f2_1_ret17(_N3)/cnt17(_N3)),0)!=ite((cnt23(_N4)!=0),(f2_2_ret23(_N4)/cnt23(_N4)),0)) or (ite((cnt17(_N3)!=0),(f2_1_ret17(_N3)/cnt17(_N3)),0)!=ite((cnt31(_N6)!=0),(f2_3_ret31(_N6)/cnt31(_N6)),0))),1,0)
+d1array1(_x1,_x2) = ite(((_x1=x) and (_x2=(20-1))),ite(((x=x) and (0=1)),d1array13(x,0,_N2),ite(((x=x) and (0=0)),d1array13(x,1,_N2),d1array13(x,0,_N2))),d1array27(_x1,_x2,_N5))
+f2_1_RET1 = ite((cnt17(_N3)!=0),(f2_1_ret17(_N3)/cnt17(_N3)),0)
+main = 1
+_1DUMMY1 = 0
+f2_3_i1 = (_N6+0)
+ret5_var1 = ite((cnt31(_N6)!=0),(f2_3_ret31(_N6)/cnt31(_N6)),0)
+ret2_var1 = ite((cnt23(_N4)!=0),(f2_2_ret23(_N4)/cnt23(_N4)),0)
+ret1 = ite((cnt17(_N3)!=0),(f2_1_ret17(_N3)/cnt17(_N3)),0)
+f1_1_i1 = (_N2+0)
+f2_1_ret1 = f2_1_ret17(_N3)
+f2_2_i1 = (_N4+0)
+f2_3_RET1 = ite((cnt31(_N6)!=0),(f2_3_ret31(_N6)/cnt31(_N6)),0)
+f2_3_ret1 = f2_3_ret31(_N6)
+f2_1_i1 = (_N3+0)
+
+3. Other axioms:
+d1array13(_x1,_x2,(_n2+1)) = ite(((_x1=x) and (_x2=i)),__VERIFIER_nondet_int2(_n2),d1array13(_x1,_x2,_n2))
+d1array13(_x1,_x2,0) = d1array(_x1,_x2)
+(_N2>=(-(0)+20))
+(_n2<_N2) -> ((_n2+0)<20)
+f2_1_ret17((_n3+1)) = ite(((_n3+0)>(20/2)),(f2_1_ret17(_n3)+d1array13(x,(_n3+0),_N2)),f2_1_ret17(_n3))
+cnt17((_n3+1)) = ite(((_n3+0)>(20/2)),(cnt17(_n3)+1),cnt17(_n3))
+f2_1_ret17(0) = 0
+cnt17(0) = 0
+(_N3>=(-(0)+20))
+(_n3<_N3) -> ((_n3+0)<20)
+cnt23((_n4+1)) = ite(((_n4+0)>(20/2)),(cnt23(_n4)+1),cnt23(_n4))
+f2_2_ret23((_n4+1)) = ite(((_n4+0)>(20/2)),(f2_2_ret23(_n4)+ite(((x=x) and ((_n4+0)=1)),d1array13(x,0,_N2),ite(((x=x) and ((_n4+0)=0)),d1array13(x,1,_N2),d1array13(x,(_n4+0),_N2)))),f2_2_ret23(_n4))
+cnt23(0) = 0
+f2_2_ret23(0) = 0
+(_N4>=(-(0)+20))
+(_n4<_N4) -> ((_n4+0)<20)
+d1array27(_x1,_x2,(_n5+1)) = ite(((_x1=x) and (_x2=(_n5+0))),d1array27(x,((_n5+0)+1),_n5),d1array27(_x1,_x2,_n5))
+d1array27(_x1,_x2,0) = ite(((_x1=x) and (_x2=1)),d1array13(x,0,_N2),ite(((_x1=x) and (_x2=0)),d1array13(x,1,_N2),d1array13(_x1,_x2,_N2)))
+(_N5>=(-(0)+19))
+(_n5<_N5) -> ((_n5+0)<(20-1))
+cnt31((_n6+1)) = ite(((_n6+0)>(20/2)),(cnt31(_n6)+1),cnt31(_n6))
+f2_3_ret31((_n6+1)) = ite(((_n6+0)>(20/2)),(f2_3_ret31(_n6)+ite(((x=x) and ((_n6+0)=(20-1))),ite(((x=x) and (0=1)),d1array13(x,0,_N2),ite(((x=x) and (0=0)),d1array13(x,1,_N2),d1array13(x,0,_N2))),d1array27(x,(_n6+0),_N5))),f2_3_ret31(_n6))
+cnt31(0) = 0
+f2_3_ret31(0) = 0
+(_N6>=(-(0)+20))
+(_n6<_N6) -> ((_n6+0)<20)
+
+4. Assumption :
+
+5. Assertion :
+(_1_FAILED1==0)
+
+Output in normal notation:
+1. Frame axioms:
+x1(x) = x
+
+2. Output equations:
+i1 = (_N7+0)
+d1array1(_x1,_x2,x) = d1array70(_x1,_x2,_N7,x)
+
+3. Other axioms:
+d1array70(_x1,_x2,(_n7+1),x) = ite(((_x1=x) and (_x2=(_n7+0))),__VERIFIER_nondet_int3(_n7),d1array70(_x1,_x2,_n7,x))
+d1array70(_x1,_x2,0,x) = d1array(_x1,_x2)
+(_N7>=(-(0)+20))
+(_n7<_N7) -> ((_n7+0)<20)
+
+4. Assumption :
+
+5. Assertion :
+VIAP_STANDARD_OUTPUT_False

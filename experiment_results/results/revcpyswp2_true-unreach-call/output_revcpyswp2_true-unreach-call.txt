@@ -1,0 +1,141 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-tiling/revcpyswp2_true-unreach-call.i
+Program Body
+{
+  int SIZE;
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  SIZE = __VERIFIER_nondet_int();
+  if (SIZE > 1)
+  {
+    int i;
+    int tmp;
+    int a[SIZE];
+    int b[SIZE];
+    int a_copy[SIZE];
+    int b_copy[SIZE];
+    i = 0;
+    while (i < SIZE)
+    {
+      a[i] = a_copy[(SIZE - i) - 1];
+      b[i] = b_copy[(SIZE - i) - 1];
+      i = i + 1;
+    }
+
+    i = 0;
+    while (i < SIZE)
+    {
+      tmp = a[i];
+      a[i] = b[i];
+      b[i] = tmp;
+      i = i + 1;
+    }
+
+    i = 0;
+    while (i < SIZE)
+    {
+      tmp = a[i];
+      a[i] = b[i];
+      b[i] = tmp;
+      i = i + 1;
+    }
+
+    i = 0;
+    while (i < SIZE)
+    {
+      _1_PROVE[i] = a[i] == a_copy[(SIZE - i) - 1];
+      i = i + 1;
+    }
+
+  }
+
+  RET = 1;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ tmp:int b_copy:array b:array i:int a_copy:array _1_PROVE:array RET:int a:array SIZE:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+b_copy1 = b_copy
+a1 = a
+b1 = b
+a_copy1 = a_copy
+
+2. Output equations:
+tmp1 = ite((__VERIFIER_nondet_int2>1),tmp11(_N3),tmp)
+i1 = ite((__VERIFIER_nondet_int2>1),(_N4+0),i)
+d1array1(_x1,_x2) = ite((__VERIFIER_nondet_int2>1),d1array13(_x1,_x2,_N4),d1array(_x1,_x2))
+main = 1
+SIZE1 = __VERIFIER_nondet_int2
+
+3. Other axioms:
+d1array3(_x1,_x2,(_n1+1)) = ite(((_x1=b) and (_x2=(_n1+0))),ite(((b_copy=a) and (((__VERIFIER_nondet_int2-(_n1+0))-1)=(_n1+0))),d1array3(a_copy,((__VERIFIER_nondet_int2-(_n1+0))-1),_n1),d1array3(b_copy,((__VERIFIER_nondet_int2-(_n1+0))-1),_n1)),ite(((_x1=a) and (_x2=(_n1+0))),d1array3(a_copy,((__VERIFIER_nondet_int2-(_n1+0))-1),_n1),d1array3(_x1,_x2,_n1)))
+d1array3(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(__VERIFIER_nondet_int2-0))
+(_n1<_N1) -> ((_n1+0)<__VERIFIER_nondet_int2)
+tmp7((_n2+1)) = d1array7(a,(_n2+0),_n2)
+d1array7(_x1,_x2,(_n2+1)) = ite(((_x1=b) and (_x2=(_n2+0))),d1array7(a,(_n2+0),_n2),ite(((_x1=a) and (_x2=(_n2+0))),d1array7(b,(_n2+0),_n2),d1array7(_x1,_x2,_n2)))
+tmp7(0) = tmp
+d1array7(_x1,_x2,0) = d1array3(_x1,_x2,_N1)
+(_N2>=(__VERIFIER_nondet_int2-0))
+(_n2<_N2) -> ((_n2+0)<__VERIFIER_nondet_int2)
+tmp11((_n3+1)) = d1array11(a,(_n3+0),_n3)
+d1array11(_x1,_x2,(_n3+1)) = ite(((_x1=b) and (_x2=(_n3+0))),d1array11(a,(_n3+0),_n3),ite(((_x1=a) and (_x2=(_n3+0))),d1array11(b,(_n3+0),_n3),d1array11(_x1,_x2,_n3)))
+tmp11(0) = tmp7(_N2)
+d1array11(_x1,_x2,0) = d1array7(_x1,_x2,_N2)
+(_N3>=(__VERIFIER_nondet_int2-0))
+(_n3<_N3) -> ((_n3+0)<__VERIFIER_nondet_int2)
+d1array13(_x1,_x2,(_n4+1)) = d1array13(_x1,_x2,_n4)
+d1array13(_x1,_x2,0) = d1array11(_x1,_x2,_N3)
+(_N4>=(__VERIFIER_nondet_int2-0))
+(_n4<_N4) -> ((_n4+0)<__VERIFIER_nondet_int2)
+
+4. Assumption :
+
+5. Assertion :
+(__VERIFIER_nondet_int2>1) -> (d1array13(a,(_n4+0),_N4)==d1array13(a_copy,((__VERIFIER_nondet_int2-(_n4+0))-1),_N4))
+
+Axiomes Added
+
+d1array11(a,(_n3+0),_N3) = d1array11(a_copy,(_n3+0),_N3)
+d1array13(b,(_n3+0),_N4) = d1array(b_copy,(_n3+0))
+d1array3(b_copy,_x2,_N1) = d1array3(b_copy,_x2,_N1)
+d1array11(a,(_n3+0),_N3) = d1array(a_copy,(_n3+0))
+d1array3(b_copy,_x2,_N1) = d1array(b_copy,_x2)
+d1array3(b,(_n1+0),_N1) = d1array(b_copy,((__VERIFIER_nondet_int2-(_n1+0))-1))
+d1array13(a_copy,_x2,_N4) = d1array(a_copy,_x2)
+d1array11(a_copy,_x2,_N3) = d1array(a_copy,_x2)
+d1array3(a_copy,_x2,_N1) = d1array(a_copy,_x2)
+d1array7(a,(_n2+0),_N2) = d1array(b_copy,(_n2+0))
+d1array7(a_copy,_x2,_N2) = d1array7(a_copy,_x2,_N2)
+d1array11(a_copy,_x2,_N3) = d1array11(a_copy,_x2,_N3)
+d1array13(a_copy,_x2,_N4) = d1array13(a_copy,_x2,_N4)
+d1array3(b,(_n1+0),_N1) = d1array3(b_copy,((__VERIFIER_nondet_int2-(_n1+0))-1),_N1)
+d1array7(b_copy,_x2,_N2) = d1array(b_copy,_x2)
+d1array13(b,(_n3+0),_N4) = d1array13(b_copy,(_n3+0),_N4)
+d1array3(a,(_n1+0),_N1) = d1array(a_copy,((__VERIFIER_nondet_int2-(_n1+0))-1))
+d1array13(b_copy,_x2,_N4) = d1array13(b_copy,_x2,_N4)
+d1array11(b,(_n3+0),_N3) = d1array(b_copy,(_n3+0))
+d1array7(b,(_n2+0),_N2) = d1array7(a_copy,(_n2+0),_N2)
+d1array3(a_copy,_x2,_N1) = d1array3(a_copy,_x2,_N1)
+d1array3(a,(_n1+0),_N1) = d1array3(a_copy,((__VERIFIER_nondet_int2-(_n1+0))-1),_N1)
+d1array11(b_copy,_x2,_N3) = d1array11(b_copy,_x2,_N3)
+d1array11(b,(_n3+0),_N3) = d1array11(b_copy,(_n3+0),_N3)
+d1array7(b_copy,_x2,_N2) = d1array7(b_copy,_x2,_N2)
+d1array13(a,(_n3+0),_N4) = d1array(a_copy,(_n3+0))
+d1array11(b_copy,_x2,_N3) = d1array(b_copy,_x2)
+d1array7(b,(_n2+0),_N2) = d1array(a_copy,(_n2+0))
+d1array7(a_copy,_x2,_N2) = d1array(a_copy,_x2)
+d1array7(a,(_n2+0),_N2) = d1array7(b_copy,(_n2+0),_N2)
+d1array13(b_copy,_x2,_N4) = d1array(b_copy,_x2)
+d1array13(a,(_n3+0),_N4) = d1array13(a_copy,(_n3+0),_N4)
+
+VIAP_STANDARD_OUTPUT_True

@@ -1,0 +1,158 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-tiling/mbpr3_true-unreach-call.i
+Program Body
+{
+  int CELLCOUNT;
+  int RET;
+  RET = 0;
+  int _1_ASSUME;
+  _1_ASSUME = 0;
+  int _1_PROVE[1000000];
+  CELLCOUNT = __VERIFIER_nondet_int();
+  if (CELLCOUNT > 1)
+  {
+    int MINVAL;
+    MINVAL = 2;
+    int i;
+    int volArray[CELLCOUNT];
+    int CCCELVOL3_var;
+    CCCELVOL3_var = 7;
+    int CCCELVOL2_var;
+    CCCELVOL2_var = 3;
+    int CCCELVOL1_var;
+    CCCELVOL1_var = 1;
+    if ((CELLCOUNT % 3) != 0)
+    {
+      RET = 1;
+    }
+
+    if ((CELLCOUNT % 3) == 0)
+    {
+      _1_ASSUME = (CELLCOUNT % 3) == 0;
+      i = 1;
+      while (i <= (CELLCOUNT / 3))
+      {
+        if (CCCELVOL3_var >= MINVAL)
+        {
+          volArray[(i * 3) - 3] = CCCELVOL3_var;
+        }
+        else
+        {
+          volArray[(i * 3) - 3] = 0;
+        }
+
+        volArray[(i * 3) - 2] = volArray[(i * 3) - 2];
+        volArray[(i * 3) - 1] = volArray[(i * 3) - 1];
+        i = i + 1;
+      }
+
+      i = 1;
+      while (i <= (CELLCOUNT / 3))
+      {
+        if (CCCELVOL2_var >= MINVAL)
+        {
+          volArray[(i * 3) - 2] = CCCELVOL2_var;
+        }
+        else
+        {
+          volArray[(i * 3) - 2] = 0;
+        }
+
+        volArray[(i * 3) - 3] = volArray[(i * 3) - 3];
+        volArray[(i * 3) - 1] = volArray[(i * 3) - 1];
+        i = i + 1;
+      }
+
+      i = 1;
+      while (i <= (CELLCOUNT / 3))
+      {
+        if (CCCELVOL1_var >= MINVAL)
+        {
+          volArray[(i * 3) - 1] = CCCELVOL1_var;
+        }
+        else
+        {
+          volArray[(i * 3) - 1] = 0;
+        }
+
+        volArray[(i * 3) - 2] = volArray[(i * 3) - 2];
+        volArray[(i * 3) - 3] = volArray[(i * 3) - 3];
+        i = i + 1;
+      }
+
+      i = 0;
+      while (i < CELLCOUNT)
+      {
+        _1_PROVE[i] = (volArray[i] >= MINVAL) || (volArray[i] == 0);
+        i = i + 1;
+      }
+
+    }
+
+  }
+
+  if (((CELLCOUNT % 3) == 0) || (CELLCOUNT <= 1))
+  {
+    RET = 1;
+  }
+
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ CCCELVOL2_var:int MINVAL:int CELLCOUNT:int _1_PROVE:array RET:int i:int CCCELVOL1_var:int volArray:array CCCELVOL3_var:int _1_ASSUME:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+volArray1 = volArray
+
+2. Output equations:
+CCCELVOL2_var1 = ite((__VERIFIER_nondet_int2>1),3,CCCELVOL2_var)
+MINVAL1 = ite((__VERIFIER_nondet_int2>1),2,MINVAL)
+CELLCOUNT1 = __VERIFIER_nondet_int2
+d1array1(_x1,_x2) = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%3)==0),d1array21(_x1,_x2,_N4),d1array(_x1,_x2)),d1array(_x1,_x2))
+main = ite((((__VERIFIER_nondet_int2%3)==0) or (__VERIFIER_nondet_int2<=1)),1,ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%3)!=0),1,0),0))
+i1 = ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%3)==0),(_N4+0),i),i)
+CCCELVOL1_var1 = ite((__VERIFIER_nondet_int2>1),1,CCCELVOL1_var)
+CCCELVOL3_var1 = ite((__VERIFIER_nondet_int2>1),7,CCCELVOL3_var)
+
+3. Other axioms:
+d1array7(_x1,_x2,(_n1+1)) = ite(((_x1=volArray) and (_x2=(((_n1+1)*3)-1))),ite(((volArray=volArray) and ((((_n1+1)*3)-1)=(((_n1+1)*3)-2))),ite((7>=2),ite(((volArray=volArray) and ((((_n1+1)*3)-2)=(((_n1+1)*3)-3))),7,d1array7(volArray,(((_n1+1)*3)-2),_n1)),ite(((volArray=volArray) and ((((_n1+1)*3)-2)=(((_n1+1)*3)-3))),0,d1array7(volArray,(((_n1+1)*3)-2),_n1))),ite((7>=2),ite(((volArray=volArray) and ((((_n1+1)*3)-1)=(((_n1+1)*3)-3))),7,d1array7(volArray,(((_n1+1)*3)-1),_n1)),ite(((volArray=volArray) and ((((_n1+1)*3)-1)=(((_n1+1)*3)-3))),0,d1array7(volArray,(((_n1+1)*3)-1),_n1)))),ite(((_x1=volArray) and (_x2=(((_n1+1)*3)-2))),ite((7>=2),ite(((volArray=volArray) and ((((_n1+1)*3)-2)=(((_n1+1)*3)-3))),7,d1array7(volArray,(((_n1+1)*3)-2),_n1)),ite(((volArray=volArray) and ((((_n1+1)*3)-2)=(((_n1+1)*3)-3))),0,d1array7(volArray,(((_n1+1)*3)-2),_n1))),ite((7>=2),ite(((_x1=volArray) and (_x2=(((_n1+1)*3)-3))),7,d1array7(_x1,_x2,_n1)),ite(((_x1=volArray) and (_x2=(((_n1+1)*3)-3))),0,d1array7(_x1,_x2,_n1)))))
+d1array7(_x1,_x2,0) = d1array(_x1,_x2)
+((_N1+1)>(__VERIFIER_nondet_int2/3))
+(_n1<_N1) -> ((_n1+1)<=(__VERIFIER_nondet_int2/3))
+d1array13(_x1,_x2,(_n2+1)) = ite(((_x1=volArray) and (_x2=(((_n2+1)*3)-1))),ite(((volArray=volArray) and ((((_n2+1)*3)-1)=(((_n2+1)*3)-3))),ite((3>=2),ite(((volArray=volArray) and ((((_n2+1)*3)-3)=(((_n2+1)*3)-2))),3,d1array13(volArray,(((_n2+1)*3)-3),_n2)),ite(((volArray=volArray) and ((((_n2+1)*3)-3)=(((_n2+1)*3)-2))),0,d1array13(volArray,(((_n2+1)*3)-3),_n2))),ite((3>=2),ite(((volArray=volArray) and ((((_n2+1)*3)-1)=(((_n2+1)*3)-2))),3,d1array13(volArray,(((_n2+1)*3)-1),_n2)),ite(((volArray=volArray) and ((((_n2+1)*3)-1)=(((_n2+1)*3)-2))),0,d1array13(volArray,(((_n2+1)*3)-1),_n2)))),ite(((_x1=volArray) and (_x2=(((_n2+1)*3)-3))),ite((3>=2),ite(((volArray=volArray) and ((((_n2+1)*3)-3)=(((_n2+1)*3)-2))),3,d1array13(volArray,(((_n2+1)*3)-3),_n2)),ite(((volArray=volArray) and ((((_n2+1)*3)-3)=(((_n2+1)*3)-2))),0,d1array13(volArray,(((_n2+1)*3)-3),_n2))),ite((3>=2),ite(((_x1=volArray) and (_x2=(((_n2+1)*3)-2))),3,d1array13(_x1,_x2,_n2)),ite(((_x1=volArray) and (_x2=(((_n2+1)*3)-2))),0,d1array13(_x1,_x2,_n2)))))
+d1array13(_x1,_x2,0) = d1array7(_x1,_x2,_N1)
+((_N2+1)>(__VERIFIER_nondet_int2/3))
+(_n2<_N2) -> ((_n2+1)<=(__VERIFIER_nondet_int2/3))
+d1array19(_x1,_x2,(_n3+1)) = ite(((_x1=volArray) and (_x2=(((_n3+1)*3)-3))),ite(((volArray=volArray) and ((((_n3+1)*3)-3)=(((_n3+1)*3)-2))),ite((1>=2),ite(((volArray=volArray) and ((((_n3+1)*3)-2)=(((_n3+1)*3)-1))),1,d1array19(volArray,(((_n3+1)*3)-2),_n3)),ite(((volArray=volArray) and ((((_n3+1)*3)-2)=(((_n3+1)*3)-1))),0,d1array19(volArray,(((_n3+1)*3)-2),_n3))),ite((1>=2),ite(((volArray=volArray) and ((((_n3+1)*3)-3)=(((_n3+1)*3)-1))),1,d1array19(volArray,(((_n3+1)*3)-3),_n3)),ite(((volArray=volArray) and ((((_n3+1)*3)-3)=(((_n3+1)*3)-1))),0,d1array19(volArray,(((_n3+1)*3)-3),_n3)))),ite(((_x1=volArray) and (_x2=(((_n3+1)*3)-2))),ite((1>=2),ite(((volArray=volArray) and ((((_n3+1)*3)-2)=(((_n3+1)*3)-1))),1,d1array19(volArray,(((_n3+1)*3)-2),_n3)),ite(((volArray=volArray) and ((((_n3+1)*3)-2)=(((_n3+1)*3)-1))),0,d1array19(volArray,(((_n3+1)*3)-2),_n3))),ite((1>=2),ite(((_x1=volArray) and (_x2=(((_n3+1)*3)-1))),1,d1array19(_x1,_x2,_n3)),ite(((_x1=volArray) and (_x2=(((_n3+1)*3)-1))),0,d1array19(_x1,_x2,_n3)))))
+d1array19(_x1,_x2,0) = d1array13(_x1,_x2,_N2)
+((_N3+1)>(__VERIFIER_nondet_int2/3))
+(_n3<_N3) -> ((_n3+1)<=(__VERIFIER_nondet_int2/3))
+d1array21(_x1,_x2,(_n4+1)) = d1array21(_x1,_x2,_n4)
+d1array21(_x1,_x2,0) = d1array19(_x1,_x2,_N3)
+(_N4>=(__VERIFIER_nondet_int2-0))
+(_n4<_N4) -> ((_n4+0)<__VERIFIER_nondet_int2)
+
+4. Assumption :
+ite((__VERIFIER_nondet_int2>1),ite(((__VERIFIER_nondet_int2%3)==0),((__VERIFIER_nondet_int2%3)==0),0),0)
+
+5. Assertion :
+((__VERIFIER_nondet_int2%3)==0) -> ((d1array21(volArray,(_n4+0),_N4)>=2) or (d1array21(volArray,(_n4+0),_N4)==0))
+
+Axiomes Added
+
+d1array21(volArray,(((_n3+1)*3)-1),_N4) = ite((1>=2),ite((3>=2),ite((7>=2),d1array21(volArray,(((_n3+1)*3)-3),_N4),d1array21(volArray,(((_n3+1)*3)-3),_N4)),ite((7>=2),d1array21(volArray,(((_n3+1)*3)-3),_N4),d1array21(volArray,(((_n3+1)*3)-3),_N4))),ite((3>=2),ite((7>=2),d1array21(volArray,(((_n3+1)*3)-3),_N4),d1array21(volArray,(((_n3+1)*3)-3),_N4)),ite((7>=2),d1array21(volArray,(((_n3+1)*3)-3),_N4),d1array21(volArray,(((_n3+1)*3)-3),_N4))))
+d1array7(volArray,(((_n1+1)*3)-3),_N1) = ite((7>=2),d1array(volArray,(((_n1+1)*3)-1)),d1array(volArray,(((_n1+1)*3)-1)))
+d1array13(volArray,(((_n2+1)*3)-2),_N2) = ite((3>=2),ite((7>=2),d1array13(volArray,(((_n2+1)*3)-1),_N2),d1array13(volArray,(((_n2+1)*3)-1),_N2)),ite((7>=2),d1array13(volArray,(((_n2+1)*3)-1),_N2),d1array13(volArray,(((_n2+1)*3)-1),_N2)))
+d1array19(volArray,(((_n3+1)*3)-1),_N3) = ite((1>=2),ite((3>=2),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3))),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3)))),ite((3>=2),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3))),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3)))))
+d1array7(volArray,(((_n1+1)*3)-3),_N1) = ite((7>=2),d1array7(volArray,(((_n1+1)*3)-1),_N1),d1array7(volArray,(((_n1+1)*3)-1),_N1))
+d1array21(volArray,(((_n3+1)*3)-1),_N4) = ite((1>=2),ite((3>=2),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3))),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3)))),ite((3>=2),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3))),ite((7>=2),d1array(volArray,(((_n3+1)*3)-3)),d1array(volArray,(((_n3+1)*3)-3)))))
+d1array13(volArray,(((_n2+1)*3)-2),_N2) = ite((3>=2),ite((7>=2),d1array(volArray,(((_n2+1)*3)-1)),d1array(volArray,(((_n2+1)*3)-1))),ite((7>=2),d1array(volArray,(((_n2+1)*3)-1)),d1array(volArray,(((_n2+1)*3)-1))))
+d1array19(volArray,(((_n3+1)*3)-1),_N3) = ite((1>=2),ite((3>=2),ite((7>=2),d1array19(volArray,(((_n3+1)*3)-3),_N3),d1array19(volArray,(((_n3+1)*3)-3),_N3)),ite((7>=2),d1array19(volArray,(((_n3+1)*3)-3),_N3),d1array19(volArray,(((_n3+1)*3)-3),_N3))),ite((3>=2),ite((7>=2),d1array19(volArray,(((_n3+1)*3)-3),_N3),d1array19(volArray,(((_n3+1)*3)-3),_N3)),ite((7>=2),d1array19(volArray,(((_n3+1)*3)-3),_N3),d1array19(volArray,(((_n3+1)*3)-3),_N3))))
+VIAP_STANDARD_OUTPUT_True

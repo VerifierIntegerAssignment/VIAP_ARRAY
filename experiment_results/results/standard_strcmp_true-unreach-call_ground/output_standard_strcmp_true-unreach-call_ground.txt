@@ -1,0 +1,175 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_strcmp_true-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int a[100000];
+  int b[100000];
+  int c;
+  int break_1_flag;
+  break_1_flag = 0;
+  int f2_1_RET;
+  f2_1_RET = 0;
+  int i;
+  i = 0;
+  while ((i < 100000) && (break_1_flag == 0))
+  {
+    break_1_flag = 0;
+    if (dst[i] != src[i])
+    {
+      f2_1_RET = 1;
+    }
+
+    if (dst[i] == src[i])
+    {
+      i = i + 1;
+    }
+
+    if (dst[i] != src[i])
+    {
+      break_1_flag = 1;
+    }
+
+  }
+
+  if (dst[i] == src[i])
+  {
+    f2_1_RET = 0;
+  }
+
+  c = f2_1_RET;
+  if (c == 0)
+  {
+    int x;
+    x = 0;
+    while (x < 100000)
+    {
+      _1_PROVE[x] = a[x] == b[x];
+      x = x + 1;
+    }
+
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a:array c:int b:array i:int _1_PROVE:array RET:int break_1_flag:int f2_1_RET:int x:int}
+Program Body
+{
+  int break_1_flag;
+  break_1_flag = 0;
+  int RET;
+  RET = 0;
+  int i;
+  i = 0;
+  while ((i < 100000) && (break_1_flag == 0))
+  {
+    break_1_flag = 0;
+    if (dst[i] != src[i])
+    {
+      RET = 1;
+    }
+
+    if (dst[i] == src[i])
+    {
+      i = i + 1;
+    }
+
+    if (dst[i] != src[i])
+    {
+      break_1_flag = 1;
+    }
+
+  }
+
+  if (dst[i] == src[i])
+  {
+    RET = 0;
+  }
+
+}
+
+Function Name:
+_strcmp
+Return Type:
+int
+Input Variables:
+{ src:array dst:array}
+Local Variables:
+{ i:int RET:int break_1_flag:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+a1 = a
+b1 = b
+
+2. Output equations:
+c1 = ite((d1array(dst,i7(_N1))==d1array(src,i7(_N1))),0,f2_1_RET7(_N1))
+i1 = i7(_N1)
+d1array1(_x1,_x2) = ite((ite((d1array(dst,i7(_N1))==d1array(src,i7(_N1))),0,f2_1_RET7(_N1))==0),d1array10(_x1,_x2,_N2),d1array(_x1,_x2))
+main = 0
+break_1_flag1 = break_1_flag7(_N1)
+f2_1_RET1 = ite((d1array(dst,i7(_N1))==d1array(src,i7(_N1))),0,f2_1_RET7(_N1))
+x1 = ite((ite((d1array(dst,i7(_N1))==d1array(src,i7(_N1))),0,f2_1_RET7(_N1))==0),(_N2+0),x)
+
+3. Other axioms:
+i7((_n1+1)) = ite((d1array(dst,i7(_n1))==d1array(src,i7(_n1))),(i7(_n1)+1),i7(_n1))
+f2_1_RET7((_n1+1)) = ite((d1array(dst,i7(_n1))!=d1array(src,i7(_n1))),1,f2_1_RET7(_n1))
+break_1_flag7((_n1+1)) = ite((d1array(dst,ite((d1array(dst,i7(_n1))==d1array(src,i7(_n1))),(i7(_n1)+1),i7(_n1)))!=d1array(src,ite((d1array(dst,i7(_n1))==d1array(src,i7(_n1))),(i7(_n1)+1),i7(_n1)))),1,0)
+i7(0) = 0
+f2_1_RET7(0) = 0
+break_1_flag7(0) = 0
+((i7(_N1)>=100000) or (break_1_flag7(_N1)!=0))
+(_n1<_N1) -> ((i7(_n1)<100000) and (break_1_flag7(_n1)==0))
+d1array10(_x1,_x2,(_n2+1)) = d1array10(_x1,_x2,_n2)
+d1array10(_x1,_x2,0) = d1array(_x1,_x2)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(ite((d1array(dst,i7(_N1))==d1array(src,i7(_N1))),0,f2_1_RET7(_N1))==0) -> (d1array10(a,(_n2+0),_N2)==d1array10(b,(_n2+0),_N2))
+
+Output in normal notation:
+1. Frame axioms:
+src1(src) = src
+dst1(dst) = dst
+d1array1(_x1,_x2) = d1array(_x1,_x2)
+
+2. Output equations:
+i1(dst,src) = i27(_N3(dst,src),dst,src)
+break_1_flag1(dst,src) = break_1_flag27(_N3(dst,src),dst,src)
+_strcmp(dst,src) = ite((d1array(dst,i27(_N3(dst,src),dst,src))==d1array(src,i27(_N3(dst,src),dst,src))),0,RET27(_N3(dst,src),dst,src))
+
+3. Other axioms:
+i27((_n3+1),dst,src) = ite((d1array(dst,i27(_n3,dst,src))==d1array(src,i27(_n3,dst,src))),(i27(_n3,dst,src)+1),i27(_n3,dst,src))
+RET27((_n3+1),dst,src) = ite((d1array(dst,i27(_n3,dst,src))!=d1array(src,i27(_n3,dst,src))),1,RET27(_n3,dst,src))
+break_1_flag27((_n3+1),dst,src) = ite((d1array(dst,ite((d1array(dst,i27(_n3,dst,src))==d1array(src,i27(_n3,dst,src))),(i27(_n3,dst,src)+1),i27(_n3,dst,src)))!=d1array(src,ite((d1array(dst,i27(_n3,dst,src))==d1array(src,i27(_n3,dst,src))),(i27(_n3,dst,src)+1),i27(_n3,dst,src)))),1,0)
+i27(0,dst,src) = 0
+RET27(0,dst,src) = 0
+break_1_flag27(0,dst,src) = 0
+((i27(_N3(dst,src),dst,src)>=100000) or (break_1_flag27(_N3(dst,src),dst,src)!=0))
+(_n3<_N3(dst,src)) -> ((i27(_n3,dst,src)<100000) and (break_1_flag27(_n3,dst,src)==0))
+
+4. Assumption :
+
+5. Assertion :
+
+Axiomes Added
+
+d1array10(a,_x2,_N2) = d1array(a,_x2)
+d1array10(b,_x2,_N2) = d1array10(b,_x2,_N2)
+d1array10(b,_x2,_N2) = d1array(b,_x2)
+d1array10(a,_x2,_N2) = d1array10(a,_x2,_N2)
+
+VIAP_STANDARD_OUTPUT_True

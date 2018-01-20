@@ -1,0 +1,188 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp reducercommutativity/avg40_true-unreach-call.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_FAILED;
+  _1_FAILED = 0;
+  int x[10];
+  int temp;
+  int ret;
+  int ret2_var;
+  int ret5_var;
+  int i;
+  i = 0;
+  while (i < 10)
+  {
+    x[i] = __VERIFIER_nondet_int();
+    i = i + 1;
+  }
+
+  int f1_1_RET;
+  f1_1_RET = 0;
+  int f1_1_i;
+  long long f1_1_ret;
+  f1_1_ret = 0;
+  f1_1_i = 0;
+  while (f1_1_i < 10)
+  {
+    f1_1_ret = f1_1_ret + x[f1_1_i];
+    f1_1_i = f1_1_i + 1;
+  }
+
+  f1_1_RET = f1_1_ret / 10;
+  ret = f1_1_RET;
+  temp = x[0];
+  x[0] = x[1];
+  x[1] = temp;
+  int f1_2_RET;
+  f1_2_RET = 0;
+  int f1_2_i;
+  long long f1_2_ret;
+  f1_2_ret = 0;
+  f1_2_i = 0;
+  while (f1_2_i < 10)
+  {
+    f1_2_ret = f1_2_ret + x[f1_2_i];
+    f1_2_i = f1_2_i + 1;
+  }
+
+  f1_2_RET = f1_2_ret / 10;
+  ret2_var = f1_2_RET;
+  temp = x[0];
+  int i;
+  i = 0;
+  while (i < (10 - 1))
+  {
+    x[i] = x[i + 1];
+    i = i + 1;
+  }
+
+  x[10 - 1] = temp;
+  int f1_3_RET;
+  f1_3_RET = 0;
+  int f1_3_i;
+  long long f1_3_ret;
+  f1_3_ret = 0;
+  f1_3_i = 0;
+  while (f1_3_i < 10)
+  {
+    f1_3_ret = f1_3_ret + x[f1_3_i];
+    f1_3_i = f1_3_i + 1;
+  }
+
+  f1_3_RET = f1_3_ret / 10;
+  ret5_var = f1_3_RET;
+  if ((ret != ret2_var) || (ret != ret5_var))
+  {
+    _1_FAILED = 1;
+  }
+
+  RET = 1;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ f1_2_i:int f1_1_ret:long temp:int ret5_var:int _1_FAILED:int f1_3_i:int ret:int i:int ret2_var:int f1_2_RET:int RET:int f1_3_RET:int x:array f1_3_ret:long f1_1_i:int f1_2_ret:long f1_1_RET:int}
+Program Body
+{
+  int RET;
+  RET = 0;
+  int i;
+  long long ret;
+  ret = 0;
+  i = 0;
+  while (i < 40)
+  {
+    ret = ret + x[i];
+    i = i + 1;
+  }
+
+  RET = ret / 40;
+}
+
+Function Name:
+avg
+Return Type:
+int
+Input Variables:
+{ x:array}
+Local Variables:
+{ i:int ret:long RET:int}
+
+Output in normal notation:
+1. Frame axioms:
+x1 = x
+
+2. Output equations:
+f1_2_i1 = (_N3+0)
+f1_3_i1 = (_N5+0)
+temp1 = ite(((x=x) and (0=1)),d1array2(x,0,_N1),ite(((x=x) and (0=0)),d1array2(x,1,_N1),d1array2(x,0,_N1)))
+ret5_var1 = (f1_3_ret10(_N5)/10)
+_1_FAILED1 = ite((((f1_1_ret4(_N2)/10)!=(f1_2_ret6(_N3)/10)) or ((f1_1_ret4(_N2)/10)!=(f1_3_ret10(_N5)/10))),1,0)
+d1array1(_x1,_x2) = ite(((_x1=x) and (_x2=(10-1))),ite(((x=x) and (0=1)),d1array2(x,0,_N1),ite(((x=x) and (0=0)),d1array2(x,1,_N1),d1array2(x,0,_N1))),d1array8(_x1,_x2,_N4))
+ret1 = (f1_1_ret4(_N2)/10)
+f1_1_i1 = (_N2+0)
+i1 = (_N4+0)
+ret2_var1 = (f1_2_ret6(_N3)/10)
+f1_2_ret1 = f1_2_ret6(_N3)
+main = 1
+f1_3_RET1 = (f1_3_ret10(_N5)/10)
+f1_2_RET1 = (f1_2_ret6(_N3)/10)
+f1_1_ret1 = f1_1_ret4(_N2)
+f1_3_ret1 = f1_3_ret10(_N5)
+f1_1_RET1 = (f1_1_ret4(_N2)/10)
+
+3. Other axioms:
+d1array2(_x1,_x2,(_n1+1)) = ite(((_x1=x) and (_x2=(_n1+0))),__VERIFIER_nondet_int2(_n1),d1array2(_x1,_x2,_n1))
+d1array2(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=(-(0)+10))
+(_n1<_N1) -> ((_n1+0)<10)
+f1_1_ret4((_n2+1)) = (f1_1_ret4(_n2)+d1array2(x,(_n2+0),_N1))
+f1_1_ret4(0) = 0
+(_N2>=(-(0)+10))
+(_n2<_N2) -> ((_n2+0)<10)
+f1_2_ret6((_n3+1)) = (f1_2_ret6(_n3)+ite(((x=x) and ((_n3+0)=1)),d1array2(x,0,_N1),ite(((x=x) and ((_n3+0)=0)),d1array2(x,1,_N1),d1array2(x,(_n3+0),_N1))))
+f1_2_ret6(0) = 0
+(_N3>=(-(0)+10))
+(_n3<_N3) -> ((_n3+0)<10)
+d1array8(_x1,_x2,(_n4+1)) = ite(((_x1=x) and (_x2=(_n4+0))),d1array8(x,((_n4+0)+1),_n4),d1array8(_x1,_x2,_n4))
+d1array8(_x1,_x2,0) = ite(((_x1=x) and (_x2=1)),d1array2(x,0,_N1),ite(((_x1=x) and (_x2=0)),d1array2(x,1,_N1),d1array2(_x1,_x2,_N1)))
+(_N4>=(-(0)+9))
+(_n4<_N4) -> ((_n4+0)<(10-1))
+f1_3_ret10((_n5+1)) = (f1_3_ret10(_n5)+ite(((x=x) and ((_n5+0)=(10-1))),ite(((x=x) and (0=1)),d1array2(x,0,_N1),ite(((x=x) and (0=0)),d1array2(x,1,_N1),d1array2(x,0,_N1))),d1array8(x,(_n5+0),_N4)))
+f1_3_ret10(0) = 0
+(_N5>=(-(0)+10))
+(_n5<_N5) -> ((_n5+0)<10)
+
+4. Assumption :
+
+5. Assertion :
+(_1_FAILED1==0)
+
+Output in normal notation:
+1. Frame axioms:
+x1(x) = x
+d1array1(_x1,_x2) = d1array(_x1,_x2)
+
+2. Output equations:
+i1 = (_N6+0)
+avg(x) = (ret43(_N6,x)/40)
+ret1(x) = ret43(_N6,x)
+
+3. Other axioms:
+ret43((_n6+1),x) = (ret43(_n6,x)+d1array(x,(_n6+0)))
+ret43(0,x) = 0
+(_N6>=(-(0)+40))
+(_n6<_N6) -> ((_n6+0)<40)
+
+4. Assumption :
+
+5. Assertion :
+
+VIAP_STANDARD_OUTPUT_True
