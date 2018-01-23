@@ -4,6 +4,10 @@
 Verifier Integer Assignment Program(VIAP) translates a program to first-order logic with
 quantifiers on natural numbers following the method proposed recently by [Professor Fangzhen Lin](http://www.cs.ust.hk/~flin/). Once translated to a first-order theory, properties of the program can then be proved using induction (because of the quantifiers on natural numbers) and other methods.
 
+### Awards & Achievements
+1. [VIAP was second in the ReachSafety-Arrays sub-category of ReachSafety category](https://sv-comp.sosy-lab.org/2018/results/results-verified/)
+
+Many more to come..
 
 See below for system requirements, installation, usage, and everything else.
 
@@ -22,7 +26,7 @@ See below for system requirements, installation, usage, and everything else.
 
 1. [VIAP - automated system for verifying integer assignment programs with loops](https://github.com/VerifierIntegerAssignment/sv-comp/blob/master/viap-automated-system.pdf),Pritom Rajkhowa, Fangzhen Lin, 19th International Symposium on Symbolic and Numeric Algorithms for Scientific Computing,SYNASC 2017, Timisoara, Romania, September 21-24, 2017
 
-1. [VIAP-Automated System for Verifying Integer Assignment Programs with Loops(Competition Contribution)](http://dl.acm.org/citation.cfm?id=2908126), Pritom Rajkhowa, Fangzhen Lin, 7th International Competition on Software Verification (2018)(not part of TACAS proceeding)
+1. [VIAP-Automated System for Verifying Integer Assignment Programs with Loops(Competition Contribution)](https://github.com/VerifierIntegerAssignment/sv-comp-1/blob/master/viap-automated-system.pdf), Pritom Rajkhowa, Fangzhen Lin, 7th International Competition on Software Verification (2018)(not part of TACAS proceeding)
 
 
 ### System Requirements and Installation
