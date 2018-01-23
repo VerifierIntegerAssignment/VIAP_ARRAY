@@ -99,6 +99,15 @@ ParserElement.enablePackrat()
 
 sys.setrecursionlimit(100000)
 
+def is_empty(any_structure):
+    if any_structure:
+        return False
+    else:
+        return True
+
+
+
+
 def is_number(s):
     if s=='j':
     	return False
@@ -3436,21 +3445,21 @@ def translate1(p,v,flag):
 	    a_map[fn]=a
             cm_map[fn]=cm
             
-            #output_axioms_fn(f,o,a)
-            #print('\n4. Assumption :')
-            #for x in assume_list:
-            #	if x[0]=='i1':
-	    # 		print 'ForAll '+x[2]+' ( '+ expr2string1(x[4])+' ) '
-	    #	else:
-	    # 		if x[0]!='i0':
-            #        		print wff2string1(x)
-            #print('\n5. Assertion :')
-            #for x in assert_list:
-            #    if x[0]=='i1':
-            #        print 'ForAll '+x[2]+' ( '+ expr2string1(x[4])+' ) '
-            #    else:
-            #    	if x[0]!='i0':
-            #        		print wff2string1(x)
+            output_axioms_fn(f,o,a)
+            print('\n4. Assumption :')
+            for x in assume_list:
+            	if x[0]=='i1':
+	     		print 'ForAll '+x[2]+' ( '+ expr2string1(x[4])+' ) '
+	    	else:
+	     		if x[0]!='i0':
+                    		print wff2string1(x)
+            print('\n5. Assertion :')
+            for x in assert_list:
+                if x[0]=='i1':
+                    print 'ForAll '+x[2]+' ( '+ expr2string1(x[4])+' ) '
+                else:
+                	if x[0]!='i0':
+                    		print wff2string1(x)
         return f_map,o_map,a_map,cm_map,assert_list_map,assume_list_map,assert_key_map
         
     elif p[1]=='fun':
@@ -7084,8 +7093,8 @@ Construction Parser
 #p = plyj.parser.Parser()
 
 #def getParser():
-#	global p
-#	return p
+	#global p
+	#return p
 
 
 
@@ -7512,7 +7521,6 @@ def prove_auto_process(program,property,program_analysis,program_analysis_decl):
                                             return
 
                                     
-                                        
                                         status=prove_assert_tactic1(axiom,witnessXml)
                                         if "Successfully Proved" in status:
                                             main_status="True"
@@ -7526,6 +7534,24 @@ def prove_auto_process(program,property,program_analysis,program_analysis_decl):
                                                     #print "Error Witness Generated"
                                                     writtingFile( "correctnessWitness.graphml" , result )
                                                     writeLogFile( "j2llogs.logs" , "\ncorrectnessWitness \n"+str(result)+"\n" )
+                                                else:
+                                                   if property is None:
+                                                        property="CHECK( init(main()), LTL(G ! call(__VERIFIER_error())) )"
+                                                   else:
+                                                        
+                                                        if '=' in property:
+                                                            value_names=property.split('=')
+                                                            fd = open(value_names[1])
+                                                            property = "".join(fd.readlines())
+                                                        else:
+                                                            property="CHECK( init(main()), LTL(G ! call(__VERIFIER_error())) )"
+            
+                                                   hashcode=sha1(program.getFilename())
+                                                   violation_witness1="<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"+"<graphml xmlns=\"http://graphml.graphdrawing.org/xmlns\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">\n"+"<key attr.name=\"originFileName\" attr.type=\"string\" for=\"edge\" id=\"originfile\">\n"+"<default>"+program.getFilename()+"</default>\n"+"</key>\n"+"<key attr.name=\"invariant\" attr.type=\"string\" for=\"node\" id=\"invariant\"/>\n"+"<key attr.name=\"invariant.scope\" attr.type=\"string\" for=\"node\" id=\"invariant.scope\"/>\n"+"<key attr.name=\"namedValue\" attr.type=\"string\" for=\"node\" id=\"named\"/>\n"+"<key attr.name=\"nodeType\" attr.type=\"string\" for=\"node\" id=\"nodetype\">\n"+"<default>path</default>\n"+"</key>"+"<key attr.name=\"isFrontierNode\" attr.type=\"boolean\" for=\"node\" id=\"frontier\">"+"<default>false</default>"+"</key>\n"+"<key attr.name=\"isViolationNode\" attr.type=\"boolean\" for=\"node\" id=\"violation\">\n"+"<default>false</default>\n"+"</key>\n"+"<key attr.name=\"isEntryNode\" attr.type=\"boolean\" for=\"node\" id=\"entry\">\n"+"<default>false</default>\n"+"</key>\n"+"<key attr.name=\"isSinkNode\" attr.type=\"boolean\" for=\"node\" id=\"sink\">\n"+"<default>false</default>"+"</key>"+"<key attr.name=\"isLoopHead\" attr.type=\"boolean\" for=\"node\" id=\"loopHead\">\n"+"<default>false</default>"+"</key>"+"<key attr.name=\"violatedProperty\" attr.type=\"string\" for=\"node\" id=\"violatedProperty\"/>\n"+"<key attr.name=\"threadId\" attr.type=\"string\" for=\"edge\" id=\"threadId\"/>\n"+"<key attr.name=\"sourcecodeLanguage\" attr.type=\"string\" for=\"graph\" id=\"sourcecodelang\"/>\n"+"<key attr.name=\"programFile\" attr.type=\"string\" for=\"graph\" id=\"programfile\"/>\n"+"<key attr.name=\"programHash\" attr.type=\"string\" for=\"graph\" id=\"programhash\"/>\n"+"<key attr.name=\"specification\" attr.type=\"string\" for=\"graph\" id=\"specification\"/>\n"+"<key attr.name=\"memoryModel\" attr.type=\"string\" for=\"graph\" id=\"memorymodel\"/>\n"+"<key attr.name=\"architecture\" attr.type=\"string\" for=\"graph\" id=\"architecture\"/>\n"+"<key attr.name=\"producer\" attr.type=\"string\" for=\"graph\" id=\"producer\"/>\n"+"<key attr.name=\"sourcecode\" attr.type=\"string\" for=\"edge\" id=\"sourcecode\"/>\n"+"<key attr.name=\"startline\" attr.type=\"int\" for=\"edge\" id=\"startline\"/>\n"+"<key attr.name=\"endline\" attr.type=\"int\" for=\"edge\" id=\"endline\"/>\n"+"<key attr.name=\"lineColSet\" attr.type=\"string\" for=\"edge\" id=\"lineCols\"/>\n"+"<key attr.name=\"control\" attr.type=\"string\" for=\"edge\" id=\"control\"/>\n"+"<key attr.name=\"assumption\" attr.type=\"string\" for=\"edge\" id=\"assumption\"/>\n"+"<key attr.name=\"assumption.scope\" attr.type=\"string\" for=\"edge\" id=\"assumption.scope\"/>\n"+"<key attr.name=\"enterFunction\" attr.type=\"string\" for=\"edge\" id=\"enterFunction\"/>\n"+"<key attr.name=\"returnFromFunction\" attr.type=\"string\" for=\"edge\" id=\"returnFrom\"/>"+"<key attr.name=\"predecessor\" attr.type=\"string\" for=\"edge\" id=\"predecessor\"/>\n"+"<key attr.name=\"successor\" attr.type=\"string\" for=\"edge\" id=\"successor\"/>\n"+"<key attr.name=\"witness-type\" attr.type=\"string\" for=\"graph\" id=\"witness-type\"/>\n"+"<graph edgedefault=\"directed\">\n"+"<data key=\"witness-type\">correctness_witness</data>\n"+"<data key=\"sourcecodelang\">C</data>"+"<data key=\"producer\">VIAP</data>"+"<data key=\"specification\">"+property+"</data>"+"<data key=\"programfile\">"+program.getFilename()+"</data>\n"+"<data key=\"programhash\">"+hashcode+"</data>\n"+"<data key=\"memorymodel\">precise</data>\n"+"<data key=\"architecture\">32bit</data>\n"+"\n<node id=\"sink\"><data key=\"sink\">true</data></node>\n"
+                                                    
+                                                   writtingFile( "correctnessWitness.graphml" , violation_witness1+'\n'+"\n</graph>\n</graphml>\n"  )
+                                                   writeLogFile( "j2llogs.logs" , "\ncorrectnessWitness \n"+str(violation_witness1+'\n'+"\n</graph>\n</graphml>\n" )+"\n" )
+
                                         #elif "Counter Example" in status:
                                         #    main_status="Unknown"
                                             #print status
@@ -7718,6 +7744,9 @@ def prove_assert_tactic1(axiom,witnessXml):
 		temp_post_condition.append(x)
 		if post_condition is not None:
 			start_time=current_milli_time()
+                        #print '----------------@@@@@@@@@'
+                        #print axiom.getOther_axioms()
+                        #print '----------------@@@@@@@@@'
 			writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+x+"\n Strategy--Direct")
 			status=tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),axiom.getOther_axioms(),pre_condition,temp_post_condition,axiom.getVfact(),axiom.getInputvariable(),axiom.getConstraints(),witnessXml)
 			#status=tactic2_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),axiom.getOther_axioms(),pre_condition,temp_post_condition,axiom.getVfact(),axiom.getInputvariable(),axiom.getConstraints(),axiom.getConst_var_map())
@@ -8375,6 +8404,8 @@ def prove_assert_tactic8(axiom,witnessXml):
 	str_value,word=axiom.getAsserts()        
         
         getAllCondtion_tactic8(word,condition_map)
+        
+        
         for x in axiom.getOther_axioms():
             getAllCondtion_tactic8(x,condition_map)
         if len(condition_map.keys())>0:
@@ -8392,6 +8423,16 @@ def prove_assert_tactic8(axiom,witnessXml):
                     if x[0] == 'e' or x[0] == 'i0' or x[0] == 'i1' or x[0] == 's0':
                         x[-1] = simplify_ind_equation_tactic8(x[-1],condition_map[condition])
                         x[-1] = simplify_ind_condition_tactic8(x[-1],axiom.getVfact())
+                
+                small_macro_eq = update_assertion1(axiom,witnessXml,inst_other_axioms,inst_output_equations)
+    
+                
+                if len(small_macro_eq)>0:
+                    for y in small_macro_eq:
+                        for x in inst_other_axioms:
+                            if x[0]=='i1':
+                                x[-1]=expr_replace(x[-1],y[1],y[0])
+                
                 f,inst_output_equations,inst_other_axioms,cm,inst_word = rec_solver_tactic8(axiom.getFrame_axioms(),inst_output_equations,inst_other_axioms,inst_word)
                 #post_condition.append(str_value)
                 post_condition.append(wff2z3_update1(inst_word,axiom.getConst_var_map()))
@@ -8464,7 +8505,22 @@ def prove_assert_tactic8(axiom,witnessXml):
  
 def getAllCondtion_tactic8(w,condition_map):
 	if w[0] == 'e' or w[0] == 'i0' or w[0] == 'i1' or w[0] == 's0':
-                get_conditions_tactic8(w[-1],condition_map)
+                condition_map_temp={}
+                get_conditions_tactic8(w[-1],condition_map_temp)
+                if len(condition_map_temp.values())>0:
+                    t_a=condition_map_temp.values()[0]
+                    if len(condition_map_temp.values())>1:
+                        for e in condition_map_temp.values()[1:]:
+                            t_b=[]
+                            t_b.append('and')
+                            t_b.append(t_a)
+                            t_b.append(e)
+                            t_a=t_b
+                    key = expr2string1(t_a)
+                    if key not in condition_map.keys():
+                        condition_map[key]=t_a
+                    
+                
 
 
 def getConcreteValue(condition_map):
@@ -8689,6 +8745,129 @@ def update_assertion(axiom,witnessXml):
                                 small_macro_eq.append(result_list)
 
         return small_macro_eq
+    
+    
+    
+    
+def update_assertion1(axiom,witnessXml,inst_other_axioms,inst_output_equations):
+        global fun_call_map
+	pre_condition=[]
+	post_condition=[]
+        constraint_list=[]
+        condition_map={}
+        update_equation=[]
+        
+        small_macro_eq=[]
+        
+        
+	for w in axiom.getAssumes():
+		if w[0]=='i1':
+			var_cstr_map={}
+			rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+			list_var_str=qualifier_list(var_cstr_map.keys())
+			list_cstr_str=cstr_list(var_cstr_map.values())
+			if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+				rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+			if list_var_str is not None and list_cstr_str is not None:
+				if w[0] == 'i1':
+					pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+				else:
+					pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+			else:
+                		pre_condition.append(rhs)
+		elif w[0]=='c1':
+			var_cstr_map={}
+			rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+			list_var_str=qualifier_list(var_cstr_map.keys())
+			list_cstr_str=cstr_list(var_cstr_map.values())
+			if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+				rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+			if list_var_str is not None and list_cstr_str is not None:
+				if w[0] == 'c1':
+					pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+				else:
+					pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+			else:
+                		pre_condition.append(rhs)
+		else:
+			if w[0]!='i0':
+				var_cstr_map={}
+				rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+				list_var_str=qualifier_list(var_cstr_map.keys())
+				list_cstr_str=cstr_list(var_cstr_map.values())
+				if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+					rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+				if list_var_str is not None and list_cstr_str is not None:
+					if w[0] == 'i1':
+						pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+					else:
+					        pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+				else:
+                			pre_condition.append(rhs)
+	
+
+	str_value,word=axiom.getAsserts()
+        
+	frame_axioms=eqset2constraintlist_update(axiom.getFrame_axioms())
+	for x in frame_axioms:
+		constraint_list.append(x)
+	out_axioms=eqset2constraintlist_update(inst_output_equations)
+
+	subs_list=eqset2subs_list(inst_output_equations)
+        for x in axiom.getOutput_equations():
+            if axiom.getOutput_equations()[x][1][0]!='main':
+                getAllCondtion_tactic8(inst_output_equations[x],condition_map)
+	for x in out_axioms:
+		constraint_list.append(x)
+        if len(condition_map)==1:
+            for x in condition_map:
+                temp_temp=[]
+                temp_temp.append('s0')
+                temp_temp.append(condition_map[x])
+                constraint_list.append(wff2z3_update(temp_temp))
+
+	for x in inst_other_axioms: 
+        	equations=wff2z3_update(x)
+        	equations_sp=None
+                if x[0]=='s0':
+                    if 'Implies' not in equations and 'If' not in equations and 'And' not in  equations and 'Or' not in  equations and 'Not' not in  equations and 'ForAll' and 'Exists' not in  equations and 'Implies' not in equations:
+                        if simplify(equations)!=False:
+                            constraint_list.append(equations)
+                    else:
+                        constraint_list.append(equations)
+                else:
+                    constraint_list.append(equations)
+                if x[0]=='s1':
+        		equations_sp=wff2z3SC_update(x)
+        		if equations_sp is not None:
+        			constraint_list.append(equations_sp)        		
+	for x in axiom.getConstraints():
+		constraint_list.append(x)
+	for x in pre_condition:
+        	constraint_list.append(x)
+	
+        for x in inst_other_axioms:
+            if x[0]=='s0':
+                if x[-1][0]=='>=' or x[-1][0]=='<=':
+                    if isMacroPresent(expr2string1(x[-1][1]),axiom.getConst_var_map().values())==True:
+                        #print constraint_list
+                        x_new=copy.deepcopy(x)
+                        x_new[-1][0]='=='
+                        status=query2z3_cond(constraint_list,wff2z3_update1(x_new,axiom.getConst_var_map()),axiom.getVfact())
+                        if 'Successfully' in status:
+                                expression=expr2string1(x_new[-1][1])+"="+str(simplify(expr2string1(x_new[-1][2])))
+				fun_call_map={}
+				parser = c_parser.CParser()
+                                ast = parser.parse("void test(){"+expression+";}")
+                                statement_temp=ast.ext[0].body.block_items[0]
+                                #assertion[-1]=expr_replace(assertion[-1],expr_replace_power(eval(expressionCreator_C(statement_temp.rvalue))),expr_replace_power(eval(expressionCreator_C(statement_temp.lvalue))))
+                                result_list=[]
+                                result_list.append(expr_replace_power(eval(expressionCreator_C(statement_temp.rvalue))))
+                                result_list.append(expr_replace_power(eval(expressionCreator_C(statement_temp.lvalue))))
+                                small_macro_eq.append(result_list)
+
+        return small_macro_eq
+    
 
 def isMacroPresent(value,Const_var_map):
     for x in Const_var_map:
@@ -8704,6 +8883,11 @@ def prove_assert_tactic9(axiom,witnessXml):
     
     small_macro_eq = update_assertion(axiom,witnessXml)
     
+    #print '####################'
+    
+    #print small_macro_eq
+    
+    #print '####################'
     
     str_value,word=axiom.getAsserts() 
 
@@ -9337,9 +9521,12 @@ def prove_assert_tactic4_update1(axiom,witnessXml):
                 new_instant_eq = copy.deepcopy(instant_eq)
                 for e in more_addition_eq:
                     new_instant_eq.append(e)
-		#print '\nAxiomes Added\n'
-		#for e in more_addition_eq:
-		#	print wff2string1(e)
+		print '\nAxiomes Added\n'
+                print_map={}
+		for e in more_addition_eq:
+                        print_map[wff2string1(e)]= wff2string1(e)
+                for e in print_map:
+			print e
                         
 		temp_post_condition=[]
 
@@ -9366,7 +9553,9 @@ def prove_assert_tactic4_update1(axiom,witnessXml):
                 
                 #status=tactic4_update(axiom.getFrame_axioms(),o_instant_eq,instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,axiom.getVariables(),axiom.getConst_var_map(),witnessXml)	
 
+                #print status
                 
+                return status
                 
                 #status="Failed To prove"
                 writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
@@ -9374,14 +9563,20 @@ def prove_assert_tactic4_update1(axiom,witnessXml):
                 #print '=============================================================='
                 if 'Successfully Proved' not in status:
                     status=prove_assert_tactic5(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                    print '----1'
+                    print status
                     if status is None:
                         status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                        print '----2'
+                        print status
                         if status is None or "Failed to prove" in status:
                             return "Failed to prove"
                         else:
                             return status
                     elif "Failed to prove" in status:
                         status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                        print '----3'
+                        print status
                         if status is None or "Failed to prove" in status:
                             return "Failed to prove"
                         else:
@@ -11210,21 +11405,21 @@ def prove_assert_tactic4_update4(axiom,witnessXml):
                 
                 #print '=============================================================='
                 if 'Successfully Proved' not in status:
-                    #status=prove_assert_tactic5(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
-                    #if status is None:
-                    #    status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
-                    #    if status is None or "Failed to prove" in status:
-                    #        return "Failed to prove"
-                    #    else:
-                    #        return status
-                    #elif "Failed to prove" in status:
-                    #    status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
-                    #    if status is None or "Failed to prove" in status:
-                    #        return "Failed to prove"
-                    #    else:
-                    #        return status
-                    #else:
-                    #    return status
+                    status=prove_assert_tactic5(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                    if status is None:
+                        status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                        if status is None or "Failed to prove" in status:
+                            return "Failed to prove"
+                        else:
+                            return status
+                    elif "Failed to prove" in status:
+                        status=prove_assert_tactic12(axiom,instant_eq,post_condition[postcondition],axiom.getConst_var_map(),witnessXml)
+                        if status is None or "Failed to prove" in status:
+                            return "Failed to prove"
+                        else:
+                            return status
+                    else:
+                        return status
                     return status
                 else:
                     return status
@@ -16066,7 +16261,7 @@ def query2z3(constraint_list,conclusion,vfact,inputmap,witnessXml):
 	finalProgram+="\t_s.add(Not("+str(conclusion)+"))\n"
         finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"+"\n\tsys.exit(1)\n"
         finalProgram+="\ntry:\n"
-        finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
+        finalProgram+="\tresult=_s.check()\n\tif sat==result:\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==result:\n"+"\t\tresult\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
 	finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"
 	#finalProgram+="if sat==_s.check():\n"+"\tprint \"Counter Example\"\n"+"\tprint _s.model()\n"+"\twitnessXmlStr="+str(witnessXml)+"\n"+"\tmiddle=''\n"+"\tfor element in _s.model():\n"+"\t\tif str(element)==witnessXmlStr[2]:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\tfile.close()\n"+"elif unsat==_s.check():\n"+"\t_s.check()\n"+"\ttry:\n"+"\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\telse:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\texcept Exception as e:\n"+"\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\tfile.close()\n"+"\tprint \"Successfully Proved\"\n"+"else:\n"+"\tprint \"Failed To Prove\""
 	#finalProgram+="if sat==_s.check():\n"+"\tprint \"Counter Example\"\n"+"\tprint _s.model()\n"+"\twitnessXmlStr="+str(witnessXml)+"\n"+"\tmiddle=''\n"+"\tfor element in _s.model():\n"+"\t\tif str(element)!=witnessXmlStr[2]:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+str(element)[:-1]+'=='+str(_s.model()[element])+'</data>'\n"+"\t\telse:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\tfile.close()\n"+"elif unsat==_s.check():\n"+"\t_s.check()\n"+"\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\tfile.close()\n"+"\telse:\n"+"\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\tfile.close()\n"+"\tprint \"Successfully Proved\"\n"+"else:\n"+"\tprint \"Failed To Prove\""
@@ -16180,7 +16375,7 @@ def query2z3_termination(constraint_list,vfact,inputmap,witnessXml):
 	#finalProgram+="\t_s.add(Not("+str(conclusion)+"))\n"
         finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"+"\n\tsys.exit(1)\n"
         finalProgram+="\ntry:\n"
-        finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
+        finalProgram+="\tresult=_s.check()\n\tif sat==result:\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==result:\n"+"\t\tresult\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
 	finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"
 	#finalProgram+="if sat==_s.check():\n"+"\tprint \"Counter Example\"\n"+"\tprint _s.model()\n"+"\twitnessXmlStr="+str(witnessXml)+"\n"+"\tmiddle=''\n"+"\tfor element in _s.model():\n"+"\t\tif str(element)==witnessXmlStr[2]:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\tfile.close()\n"+"elif unsat==_s.check():\n"+"\t_s.check()\n"+"\ttry:\n"+"\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\telse:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\texcept Exception as e:\n"+"\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\tfile.close()\n"+"\tprint \"Successfully Proved\"\n"+"else:\n"+"\tprint \"Failed To Prove\""
 	#finalProgram+="if sat==_s.check():\n"+"\tprint \"Counter Example\"\n"+"\tprint _s.model()\n"+"\twitnessXmlStr="+str(witnessXml)+"\n"+"\tmiddle=''\n"+"\tfor element in _s.model():\n"+"\t\tif str(element)!=witnessXmlStr[2]:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+str(element)[:-1]+'=='+str(_s.model()[element])+'</data>'\n"+"\t\telse:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\tfile.close()\n"+"elif unsat==_s.check():\n"+"\t_s.check()\n"+"\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\tfile.close()\n"+"\telse:\n"+"\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\tfile.close()\n"+"\tprint \"Successfully Proved\"\n"+"else:\n"+"\tprint \"Failed To Prove\""
@@ -16321,7 +16516,7 @@ def query2z3_update(constraint_list,conclusion,vfact,witnessXml):
 	finalProgram+="\t_s.add(Not("+str(conclusion)+"))\n"
         finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"+"\n\tsys.exit(1)\n"
         finalProgram+="\ntry:\n"
-        finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
+        finalProgram+="\tresult=_s.check()\n\tif sat==result:\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==result:\n"+"\t\tresult\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
         #finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\t\twitnessXmlStr="+str(witnessXml)+"\n"+"\t\tmiddle=''\n"+"\t\tfor element in _s.model():\n"+"\t\t\tif str(element)==witnessXmlStr[2]:\n"+"\t\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\t\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\t\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\t\tfile.close()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
 	finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"
 	#finalProgram+="if sat==_s.check():\n"+"\tprint \"Counter Example\"\n"+"\tprint _s.model()\n"+"\twitnessXmlStr="+str(witnessXml)+"\n"+"\tmiddle=''\n"+"\tfor element in _s.model():\n"+"\t\tif str(element)==witnessXmlStr[2]:\n"+"\t\t\tmiddle+='<data key=\"assumption\">'+'\\\\'+'result=='+str(_s.model()[element])+'</data>'\n"+"\tfile = open(witnessXmlStr[3]+'_witness.graphml', 'w')\n"+"\tfile.write(witnessXmlStr[0]+middle+witnessXmlStr[1])\n"+"\tfile.close()\n"+"elif unsat==_s.check():\n"+"\t_s.check()\n"+"\ttry:\n"+"\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\telse:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\texcept Exception as e:\n"+"\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\tfile.close()\n"+"\tprint \"Successfully Proved\"\n"+"else:\n"+"\tprint \"Failed To Prove\""
@@ -16439,7 +16634,7 @@ def query2z3_cond(constraint_list,conclusion,vfact):
         finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"+"\n\tsys.exit(1)\n"
         finalProgram+="\ntry:\n"
         #finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
-	finalProgram+="\tif sat==_s.check():\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==_s.check():\n"+"\t\t_s.check()\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
+	finalProgram+="\tresult=_s.check()\n\tif sat==result:\n"+"\t\tprint \"Counter Example\"\n"+"\t\tprint _s.model()\n"+"\telif unsat==result:\n"+"\t\tresult\n"+"\t\ttry:\n"+"\t\t\tif os.path.isfile(\'j2llogs.logs\'):\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\t\telse:\n"+"\t\t\t\tfile = open(\'j2llogs.logs\', \'w\')\n"+"\t\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+str(_s.proof().children())+\"\\n\")\n"+"\t\t\t\tfile.close()\n"+"\t\texcept Exception as e:\n"+"\t\t\tfile = open(\'j2llogs.logs\', \'a\')\n"+"\t\t\tfile.write(\"\\n**************\\nProof Details\\n**************\\n\"+\"Error\"+\"\\n\")\n"+"\t\t\tfile.close()\n"+"\t\tprint \"Successfully Proved\"\n"+"\telse:\n"+"\t\tprint \"Failed To Prove\""
 	finalProgram+="\nexcept Exception as e:\n"+"\tprint \"Error(Z3Query)\""+"\n\tfile = open('j2llogs.logs', 'a')\n"+"\n\tfile.write(str(e))\n"+"\n\tfile.close()\n"
 	writtingFile( "z3query.py" , finalProgram )
 	writeLogFile( "j2llogs.logs" , "\nQuery to z3 \n"+str(finalProgram)+"\n" )
@@ -17506,7 +17701,7 @@ def programTransformation(function_body,functionMap,medthodname):
     #print '#######2' 
     
     
-    pa_update_statements = organizeDeclaration(pa_update_statements)
+    #pa_update_statements = organizeDeclaration(pa_update_statements)
     
     #pa_update_statements = getVariablesInit(pa_update_statements)
     
@@ -24759,12 +24954,12 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
     localvarmap=getVariables(function_body)
     
     
-    #print 'Program Body'
+    print 'Program Body'
     
     generator = c_generator.CGenerator()
     
     
-    #print(generator.visit(tempory))
+    print(generator.visit(tempory))
     #print(generator.visit(function_body))
     
     
@@ -24782,11 +24977,11 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
     #print '!!!!!!!!!!!!!!!!!!'
 
     
-    #print "Function Name:"
-    #print membermethod.getMethodname()
-    #print "Return Type:"
-    #print membermethod.getreturnType()
-    #print "Input Variables:"
+    print "Function Name:"
+    print membermethod.getMethodname()
+    print "Return Type:"
+    print membermethod.getreturnType()
+    print "Input Variables:"
     var_list="{"
     for x in membermethod.getInputvar():
 
@@ -24799,8 +24994,8 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
 	else:
 	    var_list+=' '+x+':'+membermethod.getInputvar()[x].getVariableType()
     var_list+='}'
-    #print var_list
-    #print "Local Variables:"
+    print var_list
+    print "Local Variables:"
     var_list="{"
     for x in membermethod.getLocalvar():
         if membermethod.getLocalvar()[x].getDimensions() is not None and len(membermethod.getLocalvar()[x].getDimensions())>0:
@@ -24812,7 +25007,7 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
 	else:
             var_list+=' '+x+':'+membermethod.getLocalvar()[x].getVariableType()
     var_list+='}'
-    #print var_list
+    print var_list
     allvariable={}
     program_dec_start=""
     program_dec_end=""
@@ -34812,7 +35007,8 @@ class javaClass(object):
 java_basic_datatype=['byte','short','int','long','float','double','boolean','char']
 
 
-#file_name='benchmark/test.java'       	
+#file_name='benchmark/test.java'
+#file_name = 'cav_experiment/benchmarks/cbmc-java/'
 
 def translate_Java(file_name):
 	program=translate2JavaObject(file_name)
@@ -35141,3 +35337,234 @@ def getExponent(statement):
         print expo+1
     else:
         print -1*expo*5
+
+
+
+def testing():
+    #program = ['-1', 'prog', [['-1', 'fun', ['main'], ['-1', 'seq', ['-1', '=', ['RET'], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store',['IntStack']], ['0']], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store',['IntStack']], ['1']], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store',['IntStack']], ['2']], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store',['IntStack']], ['3']], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store',['IntStack']], ['4']], ['0']], ['-1', 'seq', ['-1', '=', ['size',['IntStack']], ['0']], ['-1', '=', ['RET'], ['1']]]]]]]]]]]]
+
+    #program = ['-1', 'prog', [['-1', 'fun', ['main'], ['-1', 'seq', ['-1', '=', ['RET'], ['0']], ['-1', 'seq', ['-1', '=', ['d1array', ['store', ['IntStack']], ['size', ['IntStack']]], ['value']], ['-1', 'seq', ['-1', '=', ['size', ['IntStack']], ['+', ['size', ['IntStack']], ['1']]], ['-1', '=', ['RET'], ['1']]]]]]]]
+    
+    program = ['-1', 'prog', [['-1', 'fun', ['main'], ['-1', 'seq', ['-1', '=', ['RET'], ['0']], ['-1', 'seq', ['-1', '=', ['result'], ['d1array', ['store' , ['IntStack']], ['-', ['size' , ['IntStack']], ['1']]]], ['-1', 'seq', ['-1', '=', ['size', ['IntStack']], ['-', ['size' , ['IntStack']], ['1']]], ['-1', '=', ['RET'], ['result']]]]]]]]
+    
+    vprogram ={'main': {'d1array': ['_y3', 'array', 'int', 'int'], 'store': ['_y2', 'IntStack' ,'array'], 'RET': ['_y1', 'int'], 'IntStack': ['_y5', 'class'], 'size': ['_y4', 'IntStack','int'], 'result': ['_y6', 'int']}}
+    translate1(program,vprogram,1)
+
+
+def constrauctTrace4Test(ite_no):
+    #Example1
+    equations = [['i1', 0, '_n1', ['y8', ['+', ['_n1'], ['1']]], ['ite', ['<', ['x8', ['_n1']], ['50']], ['+', ['y8', ['_n1']], ['1']], ['-', ['y8', ['_n1']], ['1']]]], ['i1', 0, '_n1', ['x8', ['+', ['_n1'], ['1']]], ['ite', ['==', ['ite', ['<', ['ite', ['<', ['x8', ['_n1']], ['50']], ['+', ['y8', ['_n1']], ['1']], ['-', ['y8', ['_n1']], ['1']]], ['0']], ['1'], ['0']], ['0']], ['+', ['x8', ['_n1']], ['1']], ['x8', ['_n1']]]], ['i1', 0, '_n1', ['break_1_flag8', ['+', ['_n1'], ['1']]], ['ite', ['<', ['ite', ['<', ['x8', ['_n1']], ['50']], ['+', ['y8', ['_n1']], ['1']], ['-', ['y8', ['_n1']], ['1']]], ['0']], ['1'], ['0']]], ['i0', 0, ['y8', ['0']], ['0']], ['i0', 0, ['x8', ['0']], ['0']], ['i0', 0, ['break_1_flag8', ['0']], ['0']], ['s0', ['or', ['<=', ['1'], ['0']], ['!=', ['break_1_flag8', ['_N1']], ['0']]]], ['s1', ['implies', ['<', ['_n1'], ['_N1']], ['and', ['>', ['1'], ['0']], ['==', ['break_1_flag8', ['_n1']], ['0']]]]]]
+    #Example2
+    #equations = [['i1', 0, '_n1', ['x8', ['+', ['_n1'], ['1']]], ['ite', ['==', ['%', ['_n1'],['2']],['0']], ['+', ['x8', ['_n1']], ['1']], ['**', ['x8', ['_n1']], ['2']]]], ['i0', 0, ['x8', ['0']], ['0']]]
+    #for equation in equations:
+    #    print wff2string1(equation)
+    constrauctTrace4Main(equations,ite_no)
+
+
+
+def constrauctTrace4Main(equations,ite_no):
+    equations_const_map={'1':['+',['*',['_n'],['_z1']],['_z2']],'2':['+',['+',['*',['*',['_n'],['_n']],['_z1']],['*',['_z2'],['_n']]],['_z3']]}
+    equa_trace_map_main={}
+    equa_degree_map_main={}
+    subs_map={}
+    
+    for equation in equations:
+        if equation[0]=='i0':
+            left_expr=expr2string1(equation[2])
+            element_list=[]
+            element_list.append(equation[2])
+            element_list.append(equation[3])
+            subs_map[left_expr]=element_list
+        elif equation[0]=='i1':
+            left_expr=expr2string1(equation[3])
+            if 'break_' not in left_expr:
+                domain = expr_replace(copy.deepcopy(equation[3]),eval("['+',['"+equation[2]+"'],['1']]"),eval("['"+equation[2]+"']"))
+                d_degree = 0
+                d_degree = constrauctTrace4Degree(equation[4],d_degree,domain)
+                equa_degree_map_main[expr2string1(equation[3])]=d_degree
+    
+    temp_subs_map={}
+    for i in range(int(ite_no)):
+        value=i            
+        if i==0:
+            for equation in equations:
+                if equation[0]=='i1':
+                    left_expr=expr2string1(equation[3])
+                    if 'break_' not in left_expr:
+                        equa_trace_map=constrauctTrace4Rec(equation,value,subs_map)
+                        #subs_map={}
+                        for e in equa_trace_map:
+                            temp_subs_map[expr2string1(equa_trace_map[e][0])]=equa_trace_map[e]
+                            if e in equa_trace_map_main.keys():
+                                list_e=equa_trace_map_main[e]
+                                list_e.append(equa_trace_map[e])
+                                equa_trace_map_main[e]=list_e
+                            else:
+                                list_e=[]
+                                list_e.append(equa_trace_map[e])
+                                equa_trace_map_main[e]=list_e
+        else:
+            
+            subs_map={}
+            for x_key in temp_subs_map:
+                subs_map[x_key]=temp_subs_map[x_key]
+            temp_subs_map={}
+            
+            for equation in equations:
+                if equation[0]=='i1':
+                    left_expr=expr2string1(equation[3])
+                    if 'break_' not in left_expr:
+                        equa_trace_map=constrauctTrace4Rec(equation,value,subs_map)
+                        for e in equa_trace_map:
+                            temp_subs_map[expr2string1(equa_trace_map[e][0])]=equa_trace_map[e]
+                            if e in equa_trace_map_main.keys():
+                                list_e=equa_trace_map_main[e]
+                                list_e.append(equa_trace_map[e])
+                                equa_trace_map_main[e]=list_e
+                            else:
+                                list_e=[]
+                                list_e.append(equa_trace_map[e])
+                                equa_trace_map_main[e]=list_e
+    
+
+    for e in equa_trace_map_main.keys():
+        key = equa_degree_map_main[e]
+        list_of_var=[]
+        list_of_equations=[]
+        for x in range(key+1):
+            list_of_var.append(simplify('_z'+str(x+1)))
+        for e1 in equa_trace_map_main[e]:
+            sol_eq = equations_const_map[str(key)]
+            sol_eq = expr_replace(sol_eq,eval("['_n']"),eval("['"+str(e1[2])+"']"))
+            list_of_equations.append(simplify(expr2string1(sol_eq)+'-'+expr2string1(e1[1])))
+        print '--------------------'
+        print 'Degree:--'+str(key)
+        print 'List Of Equation Generated--'
+        print list_of_equations
+        print '--------------------'
+        solution_set = linsolve(list_of_equations,list_of_var)
+        if solution_set is not EmptySet():
+            if key==1:
+                soln_1,soln_2 = next(iter(solution_set))
+                sol_eq = equations_const_map[str(key)]
+                sol_eq = expr_replace(sol_eq,eval("['_z1']"),eval("['"+str(soln_1)+"']"))
+                sol_eq = expr_replace(sol_eq,eval("['_z2']"),eval("['"+str(soln_2)+"']"))
+                print e.replace('+1','')
+                print 'Solution is'
+                print expr2string1(sol_eq)
+            elif key==2:
+                soln_1,soln_2,soln_3 = next(iter(solution_set))
+                sol_eq = equations_const_map[str(key)]
+                sol_eq = expr_replace(sol_eq,eval("['_z1']"),eval("['"+str(soln_1)+"']"))
+                sol_eq = expr_replace(sol_eq,eval("['_z2']"),eval("['"+str(soln_2)+"']"))
+                sol_eq = expr_replace(sol_eq,eval("['_z3']"),eval("['"+str(soln_3)+"']"))
+                print e.replace('+1','')
+                print 'Solution is'
+                print expr2string1(sol_eq)
+        else:
+            print e.replace('+1','')
+            print 'No Solution'
+
+
+                    
+
+
+
+
+
+def constrauctTrace4Rec(equation,value,subs_map):
+    update_equ={}
+    equa_trace_map={}
+    if equation[0]=='i1':
+        left_expr=expr2string1(equation[3])
+        if 'break_' not in left_expr:
+            new_e = copy.deepcopy(equation)
+            new_e[3] = expr_replace(new_e[3],eval("['+',['"+equation[2]+"'],['1']]"),eval("['"+str(value+1)+"']"))
+            new_e[4] = expr_replace(new_e[4],eval("['"+equation[2]+"']"),eval("['"+str(value)+"']"))
+            update_equ[left_expr]=new_e
+    for key in update_equ:
+        e=update_equ[key]
+        for sub in subs_map:
+            e[3] = expr_replace(e[3],subs_map[sub][0],subs_map[sub][1])
+            e[4] = expr_replace(e[4],subs_map[sub][0],subs_map[sub][1])
+        if e[4][0]=='ite':
+            ret_value = constrauctTrace4Cond(e[4])
+            if ret_value is not None:
+                final_exp=expr2string1(ret_value)
+                if 'ite' not in final_exp and 'and' not in final_exp and 'or' not in final_exp:
+                    equa_trace_map_temp = []
+                    equa_trace_map_temp.append(e[3])
+                    #equa_trace_map_temp.append(value)
+                    equa_trace_map_temp.append(eval("['"+str(simplify(final_exp))+"']"))
+                    equa_trace_map_temp.append(value)
+                    equa_trace_map[key]=equa_trace_map_temp
+        else:
+            final_exp=expr2string1(e[4])
+            if 'ite' not in final_exp and 'and' not in final_exp and 'or' not in final_exp:
+                    equa_trace_map_temp = []
+                    equa_trace_map_temp.append(e[3])
+                    #equa_trace_map_temp.append(e[4])
+                    equa_trace_map_temp.append(eval("['"+str(simplify(final_exp))+"']"))
+                    equa_trace_map_temp.append(value)
+                    equa_trace_map[key]=equa_trace_map_temp
+    return equa_trace_map
+    
+        
+def constrauctTrace4Cond(e):
+    if e[0]=='ite':
+        if e[1][0]=='ite':
+            value=constrauctTrace4Cond(e[1])
+            if value is not None:
+                conclusion=[]
+                conclusion.append('s0')
+                conclusion.append(value)
+                status=query2z3_cond([],wff2z3_update(conclusion),[])
+                #print status
+                if 'Successfully Proved' in status:
+                    if e[2][0]=='ite':
+                        return constrauctTrace4Cond(e[2])
+                    else:
+                        return e[2]
+                elif 'Counter Example' in status:
+                    if e[3][0]=='ite':
+                        return constrauctTrace4Cond(e[3])
+                    else:
+                        return e[3]
+                else:
+                    return None
+        else:
+            conclusion=[]
+            conclusion.append('s0')
+            conclusion.append(e[1])
+            status=query2z3_cond([],wff2z3_update(conclusion),[])
+            #print status
+            if 'Successfully Proved' in status:
+                if e[2][0]=='ite':
+                    return constrauctTrace4Cond(e[2])
+                else:
+                    return e[2]
+            elif 'Counter Example' in status:
+                if e[3][0]=='ite':
+                    return constrauctTrace4Cond(e[3])
+                else:
+                    return e[3]
+            else:
+                return None
+    else:
+        return e
+    
+    
+    
+    
+def constrauctTrace4Degree(e,d,domain):
+    if e[0]=='ite':
+        d = constrauctTrace4Degree(e[2],d,domain)
+        d = constrauctTrace4Degree(e[3],d,domain)
+        return d
+    else:
+        d_degree=degree(simplify(expr2string1(e)),gen=simplify(expr2string1(domain)))
+        if d_degree>d:
+            d=d_degree
+        return d
+
+    
