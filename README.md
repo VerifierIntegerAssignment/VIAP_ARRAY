@@ -50,6 +50,23 @@ PATH_TO_VIAP/viap_tool.py [OPTIONS] file
 -Result UNKNOWN otherwise.
 ```
 
+## Publications
+
+1. [A Formalization of Programs in First-Order Logic with a Discrete Linear Order](http://www.sciencedirect.com/science/article/pii/S000437021630011X?via%3Dihub),Artificial Intelligence(2016)
+
+1. [Verifying Constant-Time Implementations](https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/almeida),
+Jose Bacelar Almeida, Manuel Barbosa, Gilles Barthe, Francois Dupressoir, Michael Emmi,
+25th USENIX Security Symposium
+(2016)
+Fangzhen Lin. 
+
+1. [Statistical Similarity of Binaries](http://dl.acm.org/citation.cfm?id=2908126),
+Yaniv David, Nimrod Partush, Eran Yahav,
+37th ACM SIGPLAN Conference on Programming Language Design and Implementation
+(PLDI 2016)
+
+
+
 
 ### Using The VIAP Verifier
 
@@ -57,7 +74,7 @@ Next, we illustrate how to verify the following simple C program using the VIAP
 verifier:
 
 ```C
-// benchmarks/multidimensional/
+// benchmarks/multidimensional/transpose.c
 extern void __VERIFIER_error() __attribute__ ((__noreturn__));
 void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: __VERIFIER_error(); } }
 int main()
