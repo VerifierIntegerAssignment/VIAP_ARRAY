@@ -9,7 +9,16 @@ quantifiers on natural numbers following the method proposed recently by [Profes
 
 Many more to come..
 
-See below for system requirements, installation, usage, and everything else.
+## Publications
+
+1. [A Formalization of Programs in First-Order Logic with a Discrete Linear Order](http://www.sciencedirect.com/science/article/pii/S000437021630011X?via%3Dihub),Fangzhen Lin,Artificial Intelligence(2016)
+
+1. [VIAP - automated system for verifying integer assignment programs with loops](https://github.com/VerifierIntegerAssignment/sv-comp/blob/master/viap-automated-system.pdf),Pritom Rajkhowa, Fangzhen Lin, 19th International Symposium on Symbolic and Numeric Algorithms for Scientific Computing,SYNASC 2017, Timisoara, Romania, September 21-24, 2017
+
+1. [VIAP-Automated System for Verifying Integer Assignment Programs with Loops(Competition Contribution)](https://github.com/VerifierIntegerAssignment/sv-comp-1/blob/master/viap-automated-system.pdf), Pritom Rajkhowa, Fangzhen Lin, 7th International Competition on Software Verification (2018)(not part of TACAS proceeding)
+
+
+# See below for system requirements, installation, usage, and everything else.
 
 ### Support
 
@@ -20,13 +29,7 @@ See below for system requirements, installation, usage, and everything else.
 
 * To stay informed about updates, you can either watch [VIAP](https://verifierintegerassignment.github.io/)'s Github page.
 
-## Publications
 
-1. [A Formalization of Programs in First-Order Logic with a Discrete Linear Order](http://www.sciencedirect.com/science/article/pii/S000437021630011X?via%3Dihub),Fangzhen Lin,Artificial Intelligence(2016)
-
-1. [VIAP - automated system for verifying integer assignment programs with loops](https://github.com/VerifierIntegerAssignment/sv-comp/blob/master/viap-automated-system.pdf),Pritom Rajkhowa, Fangzhen Lin, 19th International Symposium on Symbolic and Numeric Algorithms for Scientific Computing,SYNASC 2017, Timisoara, Romania, September 21-24, 2017
-
-1. [VIAP-Automated System for Verifying Integer Assignment Programs with Loops(Competition Contribution)](https://github.com/VerifierIntegerAssignment/sv-comp-1/blob/master/viap-automated-system.pdf), Pritom Rajkhowa, Fangzhen Lin, 7th International Competition on Software Verification (2018)(not part of TACAS proceeding)
 
 
 ### System Requirements and Installation
