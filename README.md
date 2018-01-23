@@ -24,7 +24,7 @@ Ubuntu 16.04 LTS distribution.
 ## Download 
 
 
-#Clone over HTTPS:
+# Clone over HTTPS:
 
  $ git clone https://github.com/VerifierIntegerAssignment/VIAP_ARRAY.git
 
