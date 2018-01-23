@@ -1,4 +1,4 @@
-# VIAP_ARRAY
+# VIAP
 <img src="VIAP_logo.png" width=400 alt="SMACK Logo" align="right">
 
 P2L translates a program to first-order logic with
