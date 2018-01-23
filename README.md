@@ -35,6 +35,58 @@ VIAP software verifier is run using the `viap_tool.py` tool in the viap director
 For a given input C program, the tool checks for violations of user-provided
 assertions. 
 
+#### Running Command
+
+PATH_TO_VIAP/viap_tool.py [OPTIONS] file
+
+
+### Using The VIAP Verifier
+
+Next, we illustrate how to verify the following simple C program using the VIAP
+verifier:
+
+```C
+// benchmarks/multidimensional/
+extern void __VERIFIER_error() __attribute__ ((__noreturn__));
+void __VERIFIER_assert(int cond) { if(!(cond)) { ERROR: __VERIFIER_error(); } }
+int main()
+{
+
+	int i;
+	int k;
+	int j;
+	int n;
+        int m;
+	int A[n][m];
+	int C[m][n];
+
+	i=0;
+	j=0;
+
+	while(i < n){
+		  j=0;
+           while(j < m){
+                C[j][i] = A[i][j];
+		  		j=j+1;
+          }
+	i=i+1;
+    }
+
+	for ( i = 0 ; i < m ; i++ ){
+          for ( j = 0 ; j < n ; j++ ){
+                __VERIFIER_assert(C[i][j] == A[i][j]);
+          }
+    }
+
+}
+
+```
+Note that this example can also be found in the benchmarks/multidimensional
+directory. VIAP defines a number of functions (one for each basic type)
+for introducing nondeterministic (i.e., unconstrained) values, such as
+`__VERIFIER_nondet_int` used in this example.
+
+
 
 
 
