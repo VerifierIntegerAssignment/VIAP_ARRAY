@@ -18,5 +18,6 @@ See below for system requirements, installation, usage, and everything else.
 
 ### System Requirements and Installation
 
-In practice we have run SMACK on standard Ubuntu 16.04 LTS distributions.
+In practice we have run VIAP on standard Ubuntu 16.04 LTS distribution. VIAP is provided as a set of binaries and libraries for
+Ubuntu 16.04 LTS distribution. 
 
