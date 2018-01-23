@@ -21,3 +21,12 @@ See below for system requirements, installation, usage, and everything else.
 In practice we have run VIAP on standard Ubuntu 16.04 LTS distribution. VIAP is provided as a set of binaries and libraries for
 Ubuntu 16.04 LTS distribution. 
 
+## Download 
+
+
+#Clone over HTTPS:
+
+ $ git clone https://github.com/VerifierIntegerAssignment/VIAP_ARRAY.git
+
+
+
