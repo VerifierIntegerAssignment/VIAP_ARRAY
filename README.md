@@ -14,5 +14,9 @@ See below for system requirements, installation, usage, and everything else.
 * As a last resort, send mail to 
   [Pritom Rajkhowa](mailto:pritom.rajkhowa@gmail.com), [Fangzhen Lin](mailto:flin@cs.ust.hk), or both.
 
-* To stay informed about updates, you can either watch [VIAP](https://verifierintegerassignment.github.io/)'s Github page,
+* To stay informed about updates, you can either watch [VIAP](https://verifierintegerassignment.github.io/)'s Github page.
+
+### System Requirements and Installation
+
+In practice we have run SMACK on standard Ubuntu 16.04 LTS distributions.
 
