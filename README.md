@@ -27,6 +27,14 @@ Ubuntu 16.04 LTS distribution.
 ##### Clone over HTTPS:
 
  $ git clone https://github.com/VerifierIntegerAssignment/VIAP_ARRAY.git
+ 
+ #### Running VIAP
+
+
+VIAP software verifier is run using the `viap_tool.py` tool in the viap directory.
+For a given input C program, the tool checks for violations of user-provided
+assertions. 
+
 
 
 
