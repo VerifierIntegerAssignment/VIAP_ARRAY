@@ -86,6 +86,11 @@ directory. VIAP defines a number of functions (one for each basic type)
 for introducing nondeterministic (i.e., unconstrained) values, such as
 `__VERIFIER_nondet_int` used in this example.
 
+#### How to run above Example 
+
+$viap/viap_tool.py --spec=propertyfile/ReachSafety.prp benchmarks/multidimensional/transpose.c
+
+#### Output 
 
 
 
