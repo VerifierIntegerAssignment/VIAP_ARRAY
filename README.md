@@ -16,6 +16,15 @@ See below for system requirements, installation, usage, and everything else.
 
 * To stay informed about updates, you can either watch [VIAP](https://verifierintegerassignment.github.io/)'s Github page.
 
+## Publications
+
+1. [A Formalization of Programs in First-Order Logic with a Discrete Linear Order](http://www.sciencedirect.com/science/article/pii/S000437021630011X?via%3Dihub),Fangzhen Lin,Artificial Intelligence(2016)
+
+1. [Viap - automated system for verifying integer assignment programs with loops](https://github.com/VerifierIntegerAssignment/sv-comp/blob/master/viap-automated-system.pdf),Pritom Rajkhowa, Fangzhen Lin, 19th International Symposium on Symbolic and Numeric Algorithms for Scientific Computing,SYNASC 2017, Timisoara, Romania, September 21-24, 2017
+
+1. [VIAP-Automated System for Verifying Integer Assignment Programs with Loops(Competition Contribution)](http://dl.acm.org/citation.cfm?id=2908126), Pritom Rajkhowa, Fangzhen Lin, 7th International Competition on Software Verification (2018)(not part of TACAS proceeding)
+
+
 ### System Requirements and Installation
 
 In practice we have run VIAP on standard Ubuntu 16.04 LTS distribution. VIAP is provided as a set of binaries and libraries for
@@ -50,20 +59,7 @@ PATH_TO_VIAP/viap_tool.py [OPTIONS] file
 -Result UNKNOWN otherwise.
 ```
 
-## Publications
 
-1. [A Formalization of Programs in First-Order Logic with a Discrete Linear Order](http://www.sciencedirect.com/science/article/pii/S000437021630011X?via%3Dihub),Artificial Intelligence(2016)
-
-1. [Verifying Constant-Time Implementations](https://www.usenix.org/conference/usenixsecurity16/technical-sessions/presentation/almeida),
-Jose Bacelar Almeida, Manuel Barbosa, Gilles Barthe, Francois Dupressoir, Michael Emmi,
-25th USENIX Security Symposium
-(2016)
-Fangzhen Lin. 
-
-1. [Statistical Similarity of Binaries](http://dl.acm.org/citation.cfm?id=2908126),
-Yaniv David, Nimrod Partush, Eran Yahav,
-37th ACM SIGPLAN Conference on Programming Language Design and Implementation
-(PLDI 2016)
 
 
 
