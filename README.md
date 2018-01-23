@@ -39,6 +39,17 @@ assertions.
 
 PATH_TO_VIAP/viap_tool.py [OPTIONS] file
 
+#### Output contains the string:
+```
+-Result TRUE when the program is safe
+```
+```
+-Result FALSE when a counterexample is found and a file named errorWitness.graphml that contains the witness of error-path is generated in the VIAP root folder
+```
+```
+-Result UNKNOWN otherwise.
+```
+
 
 ### Using The VIAP Verifier
 
