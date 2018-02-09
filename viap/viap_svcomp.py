@@ -3405,11 +3405,15 @@ def translate1(p,v,flag):
             #print a
             #print '--------------------'
             #print('Output for '+fn+':')
+            
+
+            
             f,o,a,cm = rec_solver(f,o,a)
             #cm=[]          
             #print f
             #print o
             #print a
+
             
             organizeFreeVariable(f,o,a,v)
             
@@ -3418,6 +3422,7 @@ def translate1(p,v,flag):
             
     
             f,o,a,assert_list,assume_list,assert_key=getAssertAssume(f,o,a,cm)
+            
             
             #assert_list=[]
             
@@ -4679,6 +4684,28 @@ def solnsubstitution(axioms,key,substituter):
                         else:
                             update_axioms.append(axiom)
     	return update_axioms
+
+
+
+    
+def solnsubstitution_Array(axioms,key,substituter):
+	update_axioms=[]
+    	for axiom in axioms:
+    		if axiom[0]!='i0' and axiom[0]!='i1':
+               		update_axioms.append(expr_array_replace(axiom,key,substituter))
+    		else:
+                        if axiom[0]=='i1':
+                            axiom[4]=expr_array_replace(axiom[4],key,substituter)
+                            update_axioms.append(axiom)
+                        elif axiom[0]=='i0':
+                            axiom[3]=expr_array_replace(axiom[3],key,substituter)
+                            update_axioms.append(axiom)
+                        else:
+                            update_axioms.append(axiom)
+    	return update_axioms
+
+
+
 
 
 
@@ -7612,7 +7639,6 @@ def prove_auto_process(program,property,program_analysis,program_analysis_decl):
                                                     
                                             #print "Failed to Prove"
                                     else:
-                                        #status=prove_assert_tactic4_update1(axiom,witnessXml)
                                         
                                         max_axiom = getMaxLength(axiom.getOther_axioms())
                                         if max_axiom>4000:
@@ -7629,7 +7655,11 @@ def prove_auto_process(program,property,program_analysis,program_analysis_decl):
                                             if "Successfully Proved" in status:
                                                 main_status="True"
                                             else:
-                                                main_status= "Unknown"
+                                                status=prove_assert_tactic4_update5(axiom,witnessXml)
+                                                if "Successfully Proved" in status:
+                                                    main_status="True"
+                                                else:
+                                                    main_status= "Unknown"
                                     if main_status is "Unknown" or main_status is None:
                                         print "Unknown"
                                         return
@@ -11667,6 +11697,498 @@ def prove_assert_tactic4_update4_Rec(axiom,array_list,call_var_list,instant_eq,a
 
 
 
+def prove_assert_tactic4_update5(axiom,witnessXml):
+    
+        global fun_call_map
+
+        condition_list=[]
+
+	array_fun_map={}
+        
+        array_fun_map_query={}
+        
+        array_fun_map_parameter={}
+	
+	array_var_map={}
+        
+        fixedValue=None
+        
+        #Array Variables Basecase Value Map
+        
+        array_var_base_map={}
+        
+	post_condition={}
+	
+        array_degree_map={}
+	
+	array_list=[]
+	
+	counter_var_list=[]
+	
+	instant_eq=[]
+	
+	t_instant_eq=[]
+	
+	addition_eq=[]
+        
+        more_addition_eq=[]
+	
+	o_instant_eq={}
+	
+	call_var_list=[]
+	
+	array_fun=None
+	
+	array_init_map={}
+	
+	#Base Cases Query List
+	
+	base_case_query=[]
+	       
+	#Conclusions Query List
+	
+	conl_case_query=[]
+	 
+	#List of Assumptions
+	 
+	assum_list=[]
+	
+	#Variable Constant Map
+	       
+        var_const_map={}
+	
+	#List of Constraints Derived from Axoims 
+	
+	constraint_list=[]
+	
+	#Elements Return by Recursive Function 
+	
+	assum_list_ret=None
+	
+	conl_case_query_ret=None
+	
+	var_const_map_ret=None
+	
+	pre_condition=[]
+	
+	#Additional Equation
+	
+	add_equation_d=[]
+	
+	#main free variable map
+	
+	main_free_var_map={}
+	
+	for w in axiom.getAssumes():
+                #if w[0]!='s0':
+		if w[0]=='i1':
+			var_cstr_map={}
+			rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+			list_var_str=qualifier_list(var_cstr_map.keys())
+			list_cstr_str=cstr_list(var_cstr_map.values())
+			if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+				rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+			if list_var_str is not None and list_cstr_str is not None:
+				if w[0] == 'i1':
+					pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+				else:
+					pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+			else:
+	                	pre_condition.append(rhs)
+		elif w[0]=='c1':
+			var_cstr_map={}
+			rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+			list_var_str=qualifier_list(var_cstr_map.keys())
+			list_cstr_str=cstr_list(var_cstr_map.values())
+			if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+				rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+			if list_var_str is not None and list_cstr_str is not None:
+				if w[0] == 'c1':
+					pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+				else:
+					pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+			else:
+	                	pre_condition.append(rhs)
+                
+		
+		elif w[0]=='s0':
+                    condition_map_temp={}
+                    updateAssumption(w[1],condition_map_temp)
+                    for x in condition_map_temp.keys():
+                        pre_condition.append(x)
+		else:
+			if w[0]!='i0':
+				var_cstr_map={}
+				rhs=expr2z3_update_postCond(w[-1],var_cstr_map)
+				list_var_str=qualifier_list(var_cstr_map.keys())
+				list_cstr_str=cstr_list(var_cstr_map.values())
+				if 'Or' not in rhs and 'And' not in rhs and 'If' not in rhs and '/' not in rhs:
+					rhs=convert_pow_op_fun(simplify_expand_sympy(rhs))
+				if list_var_str is not None and list_cstr_str is not None:
+					if w[0] == 'i1':
+						pre_condition.append("ForAll(["+list_var_str+"],Implies("+list_cstr_str+","+rhs+"))")
+					else:
+						pre_condition.append('ForAll(['+list_var_str+'],'+rhs+")")
+				else:
+                			pre_condition.append(rhs)
+		
+	
+	
+	str_value,word=axiom.getAsserts()
+        
+	
+	for variable in axiom.getVariables():
+            variableclass=axiom.getVariables()[variable]
+            if variableclass.getDimensions() is not None:
+                array_degree_map[variable]=len(variableclass.getDimensions())
+            else:
+                array_degree_map[variable]=0
+	frame_axioms=eqset2constraintlist_update(axiom.getFrame_axioms())
+	
+	for x in frame_axioms:
+		constraint_list.append(x)
+	out_axioms=eqset2constraintlist_update(axiom.getOutput_equations())
+	#for x in out_axioms:
+	#	constraint_list.append(x)
+	
+	
+	for x in axiom.getOutput_equations():
+                if x=='FIXEDVAL':
+                    if axiom.getOutput_equations()[x][2][0]=='ite' and is_number(axiom.getOutput_equations()[x][2][2][0])==True:
+                        fixedValue=axiom.getOutput_equations()[x][2][2][0]
+		if isArrayFunction(x)==True:
+			array_fun =  copy.deepcopy(axiom.getOutput_equations()[x][1])
+			array_fun[0] = x
+			array_init_map[x[1]]=array_fun
+			
+
+	
+	for [x,k,l] in axiom.getVfact():
+		if k==0 and l[0]=='array' and isArrayFinal(x)==False and not(x=='main'):
+                        if x in array_degree_map.keys() and str(array_degree_map[x]) in array_init_map.keys():
+                            array_list.append(x)
+                            #array_fun_map[x]=array_init_map[str(array_degree_map[x])]
+        var_list=axiom.getConst_var_map().keys()
+         
+        f_count=0
+        for x in axiom.getOutput_equations():
+        	if isArrayFunction(x):
+        		var_e1=eval("['_x1']")
+        		for e_array in array_list:
+        			if axiom.getOutput_equations()[x][1][0][1]==str(array_degree_map[e_array]) and '_PROVE' not in e_array:
+        				new_x1 = copy.deepcopy(axiom.getOutput_equations()[x])
+        				var_array=eval("['"+e_array+"']")
+        				f_count=f_count+1
+        				new_x1[1]=expr_replace(new_x1[1],var_e1,var_array)
+        				new_x1[2]=expr_replace(new_x1[2],var_e1,var_array)
+        				o_instant_eq[x+'_'+str(f_count)]=new_x1
+		else:
+			o_instant_eq[x]=axiom.getOutput_equations()[x]
+                        
+        
+
+        
+        
+        
+        for e in axiom.getOther_axioms():
+        	if e[0]=='i0' and isArrayFunction(e[2][0]):
+        		for e_array in array_list:
+                                if e[2][0][1]==str(array_degree_map[e_array]) and '_PROVE' not in e_array:
+        				new_e1 = copy.deepcopy(e)
+					var_e1=eval("['_x1']")
+        				var_array=eval("['"+e_array+"']")
+        				new_e1[2]=expr_replace(new_e1[2],var_e1,var_array)
+        				new_e1[3]=expr_replace(new_e1[3],var_e1,var_array)
+                                        new_e1[3]=simplify_ind_equation(new_e1[3],array_list)
+                                        if e_array not in array_fun_map.keys() and '_n' not in expr2string1(new_e1[3]):
+                                            array_fun_map[e_array]=new_e1[3]
+                                        array_var_base_map[expr2string1(new_e1[2])]=new_e1[3]
+        				instant_eq.append(new_e1)        	
+        	elif e[0]=='i1' and isArrayFunction(e[3][0]):
+                        
+          		for e_array in array_list:
+                                if e[3][0][1]==str(array_degree_map[e_array]) and '_PROVE' not in e_array:
+            		      		new_e1 = copy.deepcopy(e)
+			        	status,array_value=findArrayInEq(new_e1[4],array_list)
+                                        status=findArrayInEqSp(new_e1[4],e_array)
+                                        if status==True:
+                                            array_value=e_array
+			        	if array_value is not None:
+        					inst_str=eval("['=',['_x1'],['"+str(array_value)+"']]")
+        				var_e1=eval("['_x1']")
+         				var_array=eval("['"+e_array+"']")
+        				if e_array==array_value:
+						
+						free_var_map={}
+                                                free_var_list=[]
+                                                                                                        
+                                                new_e1[3]=expr_replace(new_e1[3],var_e1,var_array)
+                                                new_e1[4]=expr_replace(new_e1[4],var_e1,var_array)
+                                            
+                                                #getAllFreeVariable2(new_e1[4],free_var_list)
+                                                
+                                                getAllFreeVariable4(new_e1[4],free_var_map)
+
+                                                if len(free_var_map)>0:
+                                                    for var in free_var_map.keys():
+                                                        inst_map = free_var_map[var]
+                                                        for f_var in inst_map.keys():
+                                                            new_e2 = copy.deepcopy(e)
+                                                            new_e2[3]=expr_replace(new_e2[3],var_e1,var_array)
+                                                            new_e2[4]=expr_replace(new_e2[4],var_e1,var_array)
+                                                            new_e2[3]=expr_replace(new_e2[3],eval("['"+var+"']"),inst_map[f_var])
+                                                            new_e2[4]=expr_replace(new_e2[4],eval("['"+var+"']"),inst_map[f_var])
+                                                            new_e2[4]=simplify_ind_equation(new_e2[4],array_list)
+                                                            #new_e2[4] = simplifyAxioms(new_e2[4])
+                                                            instant_eq.append(new_e2)						
+					else:
+						new_e1[3]=expr_replace(new_e1[3],var_e1,var_array)
+						new_e1[4]=expr_replace(expr_else(new_e1[4]),var_e1,var_array)
+			        		instant_eq.append(new_e1)
+        	else:
+        		instant_eq.append(e)
+                        
+        
+	equation_map={}
+        equation_base_map={}
+        Const_var_map={}
+
+
+        parser = c_parser.CParser()
+        for var in axiom.getConst_var_map().keys():
+            ast = parser.parse("void test(){"+axiom.getConst_var_map()[var]+";}")
+            statement_temp=ast.ext[0].body.block_items[0]
+            constant=eval(expressionCreator_C(statement_temp))
+            Const_var_map[var]=constant
+        
+        for e in instant_eq:
+            if (e[0]=='i0') and isArrayFunction(e[2][0]):
+                equation_base_map[expr2string1(e[2])]=e
+            elif (e[0]=='i1') and isArrayFunction(e[3][0]):
+                equation_map[expr2string1(e[3])]=e
+                
+        for key in equation_map.keys():
+            e=equation_map[key]
+            rec_e1 = copy.deepcopy(e[3])
+            rec_e2 = copy.deepcopy(e[3])
+            soln_e1 = copy.deepcopy(e[3])
+            rec_e1=expr_replace(rec_e1,eval("['+',['"+e[2]+"'],['1']]"),eval("['"+e[2]+"']"))
+            rec_e2=expr_replace(rec_e2,eval("['+',['"+e[2]+"'],['1']]"),eval("['0']"))
+            if rec_e1==e[4]:
+                soln_e1 = expr_replace(soln_e1,eval("['+',['"+e[2]+"'],['1']]"),eval("['"+axiom.getConst_var_map()[e[2]]+"']"))
+                e_base=equation_base_map[expr2string1(rec_e2)]
+                instant_eq=solnsubstitution(instant_eq,soln_e1,e_base[3])
+                instant_eq=solnsubstitution_Array(instant_eq,soln_e1,e_base[3])
+                instant_eq.remove(e)
+                instant_eq.remove(e_base)
+                word = expr_array_replace(word,soln_e1,e_base[3])
+            
+        for e in instant_eq:
+            if (e[0]=='i0') and isArrayFunction(e[2][0]):
+                print wff2string1(e)
+            elif (e[0]=='i1') and isArrayFunction(e[3][0]):
+                print wff2string1(e)
+            else:
+                print wff2string1(e)
+        fun_map={}
+        para_map={}
+        smallest_map={}
+        condition_map={}
+        getAllArrayFunctions(word,fun_map)
+        for e in instant_eq:
+            if (e[0]=='i1') and isArrayFunction(e[3][0]) and e[3][0] in fun_map:
+                args=expr_args(e[3])
+                count=0
+                for arg in args:
+                    count=count+1
+                    getFunctionIndex(arg,para_map,count)
+        for e in instant_eq:
+            if (e[0]=='i1') and e[3][0] in para_map:
+                condition_list=[]
+                left_e=copy.deepcopy(e[3])
+                left_e=expr_replace(left_e,eval("['+',['"+e[2]+"'],['1']]"),eval("['"+e[2]+"']"))
+                getConditionsForInduction(e[4],condition_list,left_e)
+                if e[2] in condition_map.keys():
+                    condition_map[e[2]]=condition_map[e[2]]+condition_list
+                else:
+                    condition_map[e[2]]=condition_list
+        
+        
+        for e in instant_eq:
+            if e[0]=='i1':
+                if e[3][0] in para_map:
+                    left_e = copy.deepcopy(e[3])
+                    left_e=expr_replace(left_e,eval("['+',['"+e[2]+"'],['1']]"),eval("['"+axiom.getConst_var_map()[e[2]]+"']"))
+                    constraint_list.append(expr2string1(left_e)+'>=0')
+    
+        for e in instant_eq:
+            if e[0]=='s0':
+                if e[1][0]=='>=' or e[1][0]=='<=':
+                    smallest_macro = copy.deepcopy(e)
+                    smallest_macro[1][0]='=='
+                    smallest_macro[0]='c1'
+                    temp_post_condition=[]
+                    temp_post_condition.append(wff2z3_update_postCond(smallest_macro))
+                    status=tactic1_update(axiom.getFrame_axioms(),o_instant_eq,instant_eq,pre_condition,temp_post_condition,axiom.getVfact(),axiom.getInputvariable(),constraint_list,witnessXml)
+                    if 'Successfully Proved' in status:
+                        constraint_list.append(expr2string1(smallest_macro[1]))
+                        if '_N' in expr2string1(smallest_macro[1][1]):
+                            smallest_map[expr2string1(smallest_macro[1][1])]=smallest_macro
+                        else:
+                            smallest_map[expr2string1(smallest_macro[2][1])]=smallest_macro        
+        
+        if len(para_map)==1:
+            variable=None
+            con_var=None
+            variable_con_map={}
+            update_facts=copy.deepcopy(axiom.getVfact())
+            for var in Const_var_map.keys():
+                if expr_find(word[1],Const_var_map[var])==True:
+                    word[1] = expr_replace(word[1],Const_var_map[var],eval("['+',['"+var+"'],['1']]"))
+                    variable = var 
+                    con_var = var.replace('n','k')
+                    variable_con_map[variable] = con_var
+                    update_facts.append(eval("['"+con_var+"',0,['int']]"))
+                    constraint_list.append(con_var+">=0")
+
+            word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
+            
+            base_word = copy.deepcopy(word)
+            
+            assum_word = copy.deepcopy(word[1])
+            
+            ind_word = copy.deepcopy(word[1])
+            
+            
+            for variable in variable_con_map:
+                con_var=variable_con_map[variable]
+                base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
+                assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
+                ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
+                
+            for var in condition_map:
+               condition_list=condition_map[var]
+               update_cond = conditionCreator(condition_list)
+               base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
+               assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
+
+            base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
+            temp_post_condition=[]
+            temp_post_condition.append(wff2z3_update(base_word))
+            writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+            writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+            status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+            writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+            #print status
+            if 'Successfully Proved' in status:
+                
+                assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
+                temp_post_condition=[]
+                temp_post_condition.append(wff2z3_update(base_word))
+                writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+                status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                
+                if 'Successfully Proved' in status:
+                    return status
+                else:
+                    return "Failed to prove"
+            else:
+                return "Failed to prove"
+        else:
+            temp_para_map=copy.deepcopy(para_map)
+            temp_word=copy.deepcopy(word)
+            for x in temp_para_map:
+                
+                word=copy.deepcopy(temp_word)
+                
+                para_map={}
+                para_map[x] = temp_para_map[x]
+                variable=None
+                con_var=None
+                variable_con_map={}
+                update_facts=copy.deepcopy(axiom.getVfact())
+                for var in Const_var_map.keys():
+                    if expr_find(word[1],Const_var_map[var])==True:
+                        word[1] = expr_replace(word[1],Const_var_map[var],eval("['+',['"+var+"'],['1']]"))
+                        variable = var 
+                        con_var = var.replace('n','k')
+                        variable_con_map[variable] = con_var
+                        update_facts.append(eval("['"+con_var+"',0,['int']]"))
+                        constraint_list.append(con_var+">=0")
+                
+                for var in condition_map:
+                    
+                    condition_list=condition_map[var]
+
+                    for update_cond in condition_list:
+                        
+                        
+                        word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
+            
+                        base_word = copy.deepcopy(word)
+            
+                        assum_word = copy.deepcopy(word[1])
+            
+                        ind_word = copy.deepcopy(word[1])
+            
+            
+                        for variable in variable_con_map:
+                            con_var=variable_con_map[variable]
+                            base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
+                            assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
+                            ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
+
+                        
+                        
+                        base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
+                        assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
+
+                        base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
+                        temp_post_condition=[]
+                                                
+                        temp_post_condition.append(wff2z3_update(base_word))
+                        writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                        writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+                        status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                        writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                        #print status
+                        if 'Successfully Proved' in status:
+                
+                            assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
+                            temp_post_condition=[]
+                            temp_post_condition.append(wff2z3_update(base_word))
+                            writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                            writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+                            status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                            writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                
+                            if 'Successfully Proved' in status:
+                                return status
+            return "Failed to prove"
+                
+
+
+def conditionCreator(condition_list):
+    if len(condition_list)>1:
+        list=[]
+        list.append('And')
+        list.append(condition_list[0])
+        list.append(conditionCreator(condition_list[1:]))
+        return list
+    else:
+        return condition_list[0]
+    
+    
+def replaceIndexWithFun(e,para_map,fun_map):
+    if isArrayFunction(e[:1][0])==True and e[:1][0] in fun_map.keys():
+        para_list=expr_args(e)
+        for x in para_map:
+            para_list[int(para_map[x])-1]=eval("['"+x+"',"+str(para_list[int(para_map[x])-1])+"]")
+        return e[:1]+para_list
+    else:
+        return e[:1]+list(replaceIndexWithFun(x,para_map,fun_map) for x in expr_args(e))
 
 
 
@@ -11674,7 +12196,69 @@ def prove_assert_tactic4_update4_Rec(axiom,array_list,call_var_list,instant_eq,a
 
 
 
+def getConditionsForInduction(e,condition_list,left_e):
+    if type(e) is list:
+        if e[:1]==['ite']:
+            args=expr_args(e)
+            if args[1]==left_e and args[1][:1]!=['ite'] and args[2]!=left_e and args[2][:1]!=['ite']:
+                if args[0][:1]!=['ite']:
+                    condition_list.append(expr_complement(copy.deepcopy(args[0])))
+                else:
+                    getConditionsForInduction(args[0],condition_list,left_e)
+            elif args[1]!=left_e and args[1][:1]!=['ite'] and args[2]==left_e and args[2][:1]!=['ite']:
+                if args[0][:1]!=['ite']:
+                    condition_list.append(args[0])
+                else:
+                    getConditionsForInduction(args[0],condition_list,left_e)
+            elif args[1]==left_e and args[1][:1]!=['ite'] and args[2]!=left_e and args[2][:1]==['ite']:
+                if args[0][:1]!=['ite']:
+                    condition_list.append(expr_complement(copy.deepcopy(args[0])))
+                else:
+                    getConditionsForInduction(args[0],condition_list,left_e)
+                getConditionsForInduction(args[1],condition_list,left_e)
+            elif args[1]!=left_e and args[1][:1]==['ite'] and args[2]==left_e and args[2][:1]!=['ite']:
+                if args[0][:1]!=['ite']:
+                    condition_list.append(args[0])
+                else:
+                    getConditionsForInduction(args[0],condition_list,left_e)
+                getConditionsForInduction(args[2],condition_list,left_e)
+            else:
+                if args[0][:1]!=['ite']:
+                    condition_list.append(args[0])
+                else:
+                    getConditionsForInduction(args[0],condition_list,left_e)
+                getConditionsForInduction(args[1],condition_list,left_e)
+                getConditionsForInduction(args[2],condition_list,left_e)
+        else:
+            for x in expr_args(e):
+                getConditionsForInduction(x,condition_list,left_e)
 
+
+
+def getFunctionIndex(e,para_map,count):
+    args=expr_args(e)
+    op=expr_op(e)
+    if len(args)>0:
+        if op!='and' and op!='or' and op!='not' and op!='implies' and op not in _infix_op and isArrayFunction(op)!=True:
+            para_map[op]=count
+            return e[:1]+list(getFunctionIndex(x,para_map,count) for x in expr_args(e))
+        else:
+            return e[:1]+list(getFunctionIndex(x,para_map,count) for x in expr_args(e))
+    else:
+        return e
+
+
+
+
+def getAllArrayFunctions(e,fun_map):
+    if isArrayFunction(e[:1][0])==True:
+        para_list=[]
+        for x in expr_args(e):
+            para_list.append(x)
+        fun_map[e[:1][0]]=para_list
+        return e[:1]+list(getAllArrayFunctions(x,fun_map) for x in expr_args(e))
+    else:
+        return e[:1]+list(getAllArrayFunctions(x,fun_map) for x in expr_args(e))
 
 
 
@@ -14059,6 +14643,27 @@ def expr_prime(e,e1,var): #e,e1,e2: expr
 		return e1[:1]+temp
 	else:
 		return e[:1]+list(expr_prime(x,e1,var) for x in expr_args(e))
+
+
+
+
+
+def expr_array_replace(e,e1,e2): #e,e1,e2: expr
+	if isArrayFunction(e[:1][0])==True:
+                args=expr_args(e)
+                if e[:1][0]==e1[0] and e1[1][0]==e2[1][0] and args[0][0]==e2[1][0]:
+                    temp=[]
+                    count=0
+                    for x in args:
+                        if count< len(expr_args(e2)):
+                            temp.append(x)
+                        count=count+1
+                    return e2[:1]+temp
+                else:
+                    return e[:1]+list(expr_array_replace(x,e1,e2) for x in expr_args(e))
+	else:
+		return e[:1]+list(expr_array_replace(x,e1,e2) for x in expr_args(e))
+
 
 
 def getAllFreeVariable(e,e1,free_var_map):
@@ -25046,6 +25651,8 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
                 	else:
                 		program_dec_start+=",['-1','seq',['-1','=',expres('"+str(var.getVariablename())+"'),"+"expres('"+str(var.getInitialvalue())+"')]"
                 	program_dec_end+="]"
+
+    
     for x in membermethod.getInputvar():
         allvariable[x]=membermethod.getInputvar()[x]
     for x in membermethod.getLocalvar():
@@ -25119,6 +25726,9 @@ def translate2IntForm(function_name,function_type,function_body,parametermap,tem
         str_program=programToinductiveDefination_C(expressions , allvariable)
     else:
         str_program=program_dec_start+','+programToinductiveDefination_C(expressions , allvariable)+program_dec_end
+    
+
+
     program=eval(str_program)
     return program,variablesarray,membermethod.getMethodname(),membermethod.getInputvar(),opvariablesarray,membermethod.getAnalysis_module(),input_value_extract
 
@@ -26821,6 +27431,8 @@ def programToinductiveDefination_C(expressions, allvariable):
                                     degree=0
        				    stmt,degree=createArrayList_C(expression.getExpression().lvalue,degree)
                                     var=str(eval("expres('d"+str(degree)+'array'+"',["+stmt+"])"))
+                                    
+                                    
                                 elif type(expression.getExpression().lvalue) is c_ast.FuncCall:
                                 	parameter=''
 				        statement=expression.getExpression().lvalue
@@ -26865,6 +27477,7 @@ def programToinductiveDefination_C(expressions, allvariable):
                                         programsstart="['-1','=',"+str(var)+","+str(expressionCreator_C(expression.getExpression().rvalue))+"]"+programsend
                                     else:
                                         programsstart+=",['-1','=',"+str(var)+","+str(expressionCreator_C(expression.getExpression().rvalue))+"]"+programsend
+
                         elif type(expression.getExpression()) is c_ast.FuncCall:
                         	parameter=''
                         	statement=expression.getExpression()
@@ -27244,6 +27857,8 @@ def createArrayList_C(statement,degree):
 			stmt,degree=createArrayList_C(statement.name,degree)
 			if type(statement.subscript) is c_ast.ID:
 				stmt+=",expres('"+statement.subscript.name+"')"
+                        elif type(statement.subscript) is c_ast.BinaryOp:
+                                stmt+=","+expressionCreator_C(statement.subscript)
 			else:
 				stmt+=",expres('"+statement.subscript.value+"')"
 			return stmt,degree
@@ -31817,6 +32432,7 @@ def getPreDefinedFun(statements,degree,dec_map):
                                                         
                                                             dec_map['_'+str(assert_count)+'_'+'PROVE']='_'+str(assert_count)+'_'+'PROVE'
                                                         
+
                                     update_statements.append(new_statement)
                                 elif statement.name.name=='__VERIFIER_assume':
                                     new_statement=None
@@ -32525,9 +33141,6 @@ def getAssertAssume(f,o,a,cm):
                     if x[3][0].find('array')>0:
                         map_var={}
                         getAll_PROVE_ASSUME(x[4],map_var)
-                        #print '------------'
-                        #print expr2string1(x[4])
-                        #print '------------'
                         if len(map_var.keys())>0:
                             for e_array in map_var.keys():
                                 new_e1 = copy.deepcopy(x)
@@ -34390,9 +35003,6 @@ def checkingArrayIndexName(statement):
 
 
 def checkingArrayNameStmt(statement):
-    print '%%%%%%%%%%%%%%@@@@@@@'
-    statement.show()
-    print '%%%%%%%%%%%%%%@@@@@@@'
     if type(statement) is c_ast.BinaryOp:
         if checkingArrayNameStmt(statement.left)==True:
             return True

@@ -1,0 +1,67 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_two_index_04_false-unreach-call.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int a[100000];
+  int b[100000];
+  int i;
+  i = 1;
+  int j;
+  j = 0;
+  while (i < 100000)
+  {
+    a[j] = b[i];
+    i = i + 4;
+    j = j + 1;
+  }
+
+  i = 1;
+  j = 0;
+  while (i < 100000)
+  {
+    _1_PROVE[i] = a[j] != b[(4 * j) + 1];
+    i = i + 4;
+    j = j + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ a:array b:array i:int _1_PROVE:array RET:int j:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+a1 = a
+b1 = b
+
+2. Output equations:
+i1 = ((4*_N2)+1)
+d1array1(_x1,_x2) = d1array6(_x1,_x2,_N2)
+main = 0
+j1 = (_N2+0)
+
+3. Other axioms:
+d1array3(_x1,_x2,(_n1+1)) = ite(((_x1=a) and (_x2=(_n1+0))),d1array3(b,((4*_n1)+1),_n1),d1array3(_x1,_x2,_n1))
+d1array3(_x1,_x2,0) = d1array(_x1,_x2)
+(_N1>=((-(1)/4)+25000))
+(_n1<_N1) -> (((4*_n1)+1)<100000)
+d1array6(_x1,_x2,(_n2+1)) = d1array6(_x1,_x2,_n2)
+d1array6(_x1,_x2,0) = d1array3(_x1,_x2,_N1)
+(_N2>=((-(1)/4)+25000))
+(_n2<_N2) -> (((4*_n2)+1)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array6(a,(_n2+0),_N2)!=d1array6(b,((4*(_n2+0))+1),_N2))
+VIAP_STANDARD_OUTPUT_False

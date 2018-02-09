@@ -1,0 +1,131 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/standard_partition_true-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int A[100000];
+  int a;
+  a = 0;
+  int b;
+  b = 0;
+  int c;
+  c = 0;
+  int B[100000];
+  int C[100000];
+  while (a < 100000)
+  {
+    if (A[a] >= 0)
+    {
+      B[b] = A[a];
+      b = b + 1;
+    }
+
+    a = a + 1;
+  }
+
+  a = 0;
+  while (a < 100000)
+  {
+    if (A[a] < 0)
+    {
+      C[c] = A[a];
+      c = c + 1;
+    }
+
+    a = a + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < b)
+  {
+    _1_PROVE[x] = B[x] >= 0;
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ A:array a:int c:int b:int _1_PROVE:array C:array RET:int B:array x:int}
+
+
+Output in normal notation:
+1. Frame axioms:
+A1 = A
+C1 = C
+B1 = B
+
+2. Output equations:
+a1 = (_N2+0)
+c1 = c8(_N2)
+b1 = b4(_N1)
+d1array1(_x1,_x2) = d1array10(_x1,_x2,_N3)
+main = 0
+x1 = (_N3+0)
+
+3. Other axioms:
+d1array4(_x1,_x2,(_n1+1)) = ite((d1array4(A,(_n1+0),_n1)>=0),ite(((_x1=B) and (_x2=b4(_n1))),d1array4(A,(_n1+0),_n1),d1array4(_x1,_x2,_n1)),d1array4(_x1,_x2,_n1))
+b4((_n1+1)) = ite((d1array4(A,(_n1+0),_n1)>=0),(b4(_n1)+1),b4(_n1))
+d1array4(_x1,_x2,0) = d1array(_x1,_x2)
+b4(0) = 0
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+c8((_n2+1)) = ite((d1array8(A,(_n2+0),_n2)<0),(c8(_n2)+1),c8(_n2))
+d1array8(_x1,_x2,(_n2+1)) = ite((d1array8(A,(_n2+0),_n2)<0),ite(((_x1=C) and (_x2=c8(_n2))),d1array8(A,(_n2+0),_n2),d1array8(_x1,_x2,_n2)),d1array8(_x1,_x2,_n2))
+c8(0) = 0
+d1array8(_x1,_x2,0) = d1array4(_x1,_x2,_N1)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+d1array10(_x1,_x2,(_n3+1)) = d1array10(_x1,_x2,_n3)
+d1array10(_x1,_x2,0) = d1array8(_x1,_x2,_N2)
+(_N3>=(b4(_N1)-0))
+(_n3<_N3) -> ((_n3+0)<b4(_N1))
+
+4. Assumption :
+
+5. Assertion :
+(d1array10(B,(_n3+0),_N3)>=0)
+
+Axiomes Added
+
+d1array4(A,_x2,_N1) = ite((d1array(A,(_n1+0))>=0),d1array(A,_x2),d1array(A,_x2))
+d1array4(C,_x2,_N1) = ite((d1array4(A,(_n1+0),_N1)>=0),d1array4(C,_x2,_N1),d1array4(C,_x2,_N1))
+d1array8(C,c8(_n2),_N2) = ite((ite((d1array8(A,(_n2+0),_N2)>=0),d1array8(A,(_n2+0),_N2),d1array8(A,(_n2+0),_N2))<0),ite((d1array8(A,(_n2+0),_N2)>=0),d1array8(A,(_n2+0),_N2),d1array8(A,(_n2+0),_N2)),ite((d1array8(A,c8(_n2),_N2)>=0),d1array8(C,c8(_n2),_N2),d1array8(C,c8(_n2),_N2)))
+d1array8(C,c8(_n2),_N2) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0))),ite((d1array(A,c8(_n2))>=0),d1array(C,c8(_n2)),d1array(C,c8(_n2))))
+d1array10(C,c8(_n2),_N3) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0))),ite((d1array(A,c8(_n2))>=0),d1array(C,c8(_n2)),d1array(C,c8(_n2))))
+d1array10(B,b4(_n1),_N3) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array(B,b4(_n1))),ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array(B,b4(_n1))))
+d1array8(B,b4(_n1),_N2) = ite((ite((d1array8(A,(_n2+0),_N2)>=0),d1array8(A,(_n2+0),_N2),d1array8(A,(_n2+0),_N2))<0),ite((d1array8(A,(_n1+0),_N2)>=0),d1array8(A,(_n1+0),_N2),d1array8(B,b4(_n1),_N2)),ite((d1array8(A,(_n1+0),_N2)>=0),d1array8(A,(_n1+0),_N2),d1array8(B,b4(_n1),_N2)))
+d1array8(A,_x2,_N2) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n1+0))>=0),d1array(A,_x2),d1array(A,_x2)),ite((d1array(A,(_n1+0))>=0),d1array(A,_x2),d1array(A,_x2)))
+d1array10(A,_x2,_N3) = ite((ite((d1array10(A,(_n2+0),_N3)>=0),d1array10(A,(_n2+0),_N3),d1array10(A,(_n2+0),_N3))<0),ite((d1array10(A,(_n1+0),_N3)>=0),d1array10(A,_x2,_N3),d1array10(A,_x2,_N3)),ite((d1array10(A,(_n1+0),_N3)>=0),d1array10(A,_x2,_N3),d1array10(A,_x2,_N3)))
+d1array10(A,_x2,_N3) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n1+0))>=0),d1array(A,_x2),d1array(A,_x2)),ite((d1array(A,(_n1+0))>=0),d1array(A,_x2),d1array(A,_x2)))
+d1array4(A,_x2,_N1) = ite((d1array4(A,(_n1+0),_N1)>=0),d1array4(A,_x2,_N1),d1array4(A,_x2,_N1))
+d1array4(B,b4(_n1),_N1) = ite((d1array4(A,(_n1+0),_N1)>=0),d1array4(A,(_n1+0),_N1),d1array4(B,b4(_n1),_N1))
+d1array10(C,c8(_n2),_N3) = ite((ite((d1array10(A,(_n2+0),_N3)>=0),d1array10(A,(_n2+0),_N3),d1array10(A,(_n2+0),_N3))<0),ite((d1array10(A,(_n2+0),_N3)>=0),d1array10(A,(_n2+0),_N3),d1array10(A,(_n2+0),_N3)),ite((d1array10(A,c8(_n2),_N3)>=0),d1array10(C,c8(_n2),_N3),d1array10(C,c8(_n2),_N3)))
+d1array4(C,_x2,_N1) = ite((d1array(A,(_n1+0))>=0),d1array(C,_x2),d1array(C,_x2))
+d1array4(B,b4(_n1),_N1) = ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array(B,b4(_n1)))
+d1array8(A,_x2,_N2) = ite((ite((d1array8(A,(_n2+0),_N2)>=0),d1array8(A,(_n2+0),_N2),d1array8(A,(_n2+0),_N2))<0),ite((d1array8(A,(_n1+0),_N2)>=0),d1array8(A,_x2,_N2),d1array8(A,_x2,_N2)),ite((d1array8(A,(_n1+0),_N2)>=0),d1array8(A,_x2,_N2),d1array8(A,_x2,_N2)))
+d1array10(B,b4(_n1),_N3) = ite((ite((d1array10(A,(_n2+0),_N3)>=0),d1array10(A,(_n2+0),_N3),d1array10(A,(_n2+0),_N3))<0),ite((d1array10(A,(_n1+0),_N3)>=0),d1array10(A,(_n1+0),_N3),d1array10(B,b4(_n1),_N3)),ite((d1array10(A,(_n1+0),_N3)>=0),d1array10(A,(_n1+0),_N3),d1array10(B,b4(_n1),_N3)))
+d1array8(B,b4(_n1),_N2) = ite((ite((d1array(A,(_n2+0))>=0),d1array(A,(_n2+0)),d1array(A,(_n2+0)))<0),ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array(B,b4(_n1))),ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array(B,b4(_n1))))
+d1array4(B,b4(_n1),(_n1+1)) = ite((d1array(A,(_n1+0))>=0),d1array(A,(_n1+0)),d1array4(B,b4(_n1),_n1))
+b4((_n1+1)) = ite((d1array(A,(_n1+0))>=0),(b4(_n1)+1),b4(_n1))
+d1array4(B,_x2,0) = d1array(B,_x2)
+b4(0) = 0
+(_N1>=(-(0)+100000))
+(_n1<_N1) -> ((_n1+0)<100000)
+c8((_n2+1)) = ite((d1array(A,(_n2+0))<0),(c8(_n2)+1),c8(_n2))
+d1array8(C,c8(_n2),(_n2+1)) = ite((d1array(A,(_n2+0))<0),d1array(A,(_n2+0)),d1array8(C,c8(_n2),_n2))
+c8(0) = 0
+d1array8(C,_x2,0) = d1array(C,_x2)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+(_N3>=(b4(_N1)-0))
+(_n3<_N3) -> ((_n3+0)<b4(_N1))
+VIAP_STANDARD_OUTPUT_True
