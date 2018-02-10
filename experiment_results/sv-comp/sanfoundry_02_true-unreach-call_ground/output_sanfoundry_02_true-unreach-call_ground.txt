@@ -1,0 +1,127 @@
+pritom@pritom-VirtualBox:~/Downloads/test/viap$ ./viap_tool.py --spec=ReachSafety.prp array-examples/sanfoundry_02_true-unreach-call_ground.i
+Program Body
+{
+  int RET;
+  RET = 0;
+  int _1_PROVE[1000000];
+  int _2_PROVE[1000000];
+  int array[100000];
+  int i;
+  int largest1_var;
+  int largest2_var;
+  int temp;
+  largest1_var = array[0];
+  largest2_var = array[1];
+  if (largest1_var < largest2_var)
+  {
+    temp = largest1_var;
+    largest1_var = largest2_var;
+    largest2_var = temp;
+  }
+
+  i = 2;
+  while (i < 100000)
+  {
+    if (array[i] >= largest1_var)
+    {
+      largest2_var = largest1_var;
+      largest1_var = array[i];
+    }
+    else
+      if (array[i] > largest2_var)
+    {
+      largest2_var = array[i];
+    }
+
+
+    i = i + 1;
+  }
+
+  int x;
+  x = 0;
+  while (x < 100000)
+  {
+    _1_PROVE[x] = array[x] <= largest1_var;
+    x = x + 1;
+  }
+
+  x = 0;
+  while (x < 100000)
+  {
+    _2_PROVE[x] = (array[x] <= largest2_var) || (array[x] == largest1_var);
+    x = x + 1;
+  }
+
+  RET = 0;
+}
+
+Function Name:
+main
+Return Type:
+int
+Input Variables:
+{}
+Local Variables:
+{ _1_PROVE:array temp:int i:int largest2_var:int largest1_var:int RET:int x:int array:array _2_PROVE:array}
+
+
+
+Output in normal notation:
+1. Frame axioms:
+array1 = array
+
+2. Output equations:
+largest1_var1 = largest1_var9(_N1)
+temp1 = ite((d1array(array,0)<d1array(array,1)),d1array(array,0),temp)
+i1 = (_N1+2)
+d1array1(_x1,_x2) = d1array13(_x1,_x2,_N3)
+main = 0
+x1 = (_N3+0)
+largest2_var1 = largest2_var9(_N1)
+
+3. Other axioms:
+largest1_var9((_n1+1)) = ite((d1array(array,(_n1+2))>=largest1_var9(_n1)),d1array(array,(_n1+2)),largest1_var9(_n1))
+largest2_var9((_n1+1)) = ite((d1array(array,(_n1+2))>=largest1_var9(_n1)),largest1_var9(_n1),ite((d1array(array,(_n1+2))>largest2_var9(_n1)),d1array(array,(_n1+2)),largest2_var9(_n1)))
+largest1_var9(0) = ite((d1array(array,0)<d1array(array,1)),d1array(array,1),d1array(array,0))
+largest2_var9(0) = ite((d1array(array,0)<d1array(array,1)),d1array(array,0),d1array(array,1))
+(_N1>=(-(2)+100000))
+(_n1<_N1) -> ((_n1+2)<100000)
+d1array11(_x1,_x2,(_n2+1)) = d1array11(_x1,_x2,_n2)
+d1array11(_x1,_x2,0) = d1array(_x1,_x2)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+d1array13(_x1,_x2,(_n3+1)) = d1array13(_x1,_x2,_n3)
+d1array13(_x1,_x2,0) = d1array11(_x1,_x2,_N2)
+(_N3>=(-(0)+100000))
+(_n3<_N3) -> ((_n3+0)<100000)
+
+4. Assumption :
+
+5. Assertion :
+(d1array11(array,(_n2+0),_N2)<=largest1_var9(_N1))
+((d1array13(array,(_n3+0),_N3)<=largest2_var9(_N1)) or (d1array13(array,(_n3+0),_N3)==largest1_var9(_N1)))
+
+Axiomes Added
+
+d1array13(array,_x2,_N3) = d1array(array,_x2)
+d1array11(array,_x2,_N2) = d1array11(array,_x2,_N2)
+d1array11(array,_x2,_N2) = d1array(array,_x2)
+d1array13(array,_x2,_N3) = d1array13(array,_x2,_N3)
+largest1_var9((_n1+1)) = ite((d1array(array,(_n1+2))>=largest1_var9(_n1)),d1array(array,(_n1+2)),largest1_var9(_n1))
+largest2_var9((_n1+1)) = ite((d1array(array,(_n1+2))>=largest1_var9(_n1)),largest1_var9(_n1),ite((d1array(array,(_n1+2))>largest2_var9(_n1)),d1array(array,(_n1+2)),largest2_var9(_n1)))
+largest1_var9(0) = ite((d1array(array,0)<d1array(array,1)),d1array(array,1),d1array(array,0))
+largest2_var9(0) = ite((d1array(array,0)<d1array(array,1)),d1array(array,0),d1array(array,1))
+(_N1>=(-(2)+100000))
+(_n1<_N1) -> ((_n1+2)<100000)
+(_N2>=(-(0)+100000))
+(_n2<_N2) -> ((_n2+0)<100000)
+(_N3>=(-(0)+100000))
+(_n3<_N3) -> ((_n3+0)<100000)
+
+Axiomes Added
+
+d1array13(array,_x2,_N3) = d1array(array,_x2)
+d1array11(array,_x2,_N2) = d1array11(array,_x2,_N2)
+d1array11(array,_x2,_N2) = d1array(array,_x2)
+d1array13(array,_x2,_N3) = d1array13(array,_x2,_N3)
+VIAP_STANDARD_OUTPUT_True
