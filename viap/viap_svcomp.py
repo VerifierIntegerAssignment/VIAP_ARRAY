@@ -12020,6 +12020,7 @@ def prove_assert_tactic4_update5(axiom,witnessXml):
                     left_e = copy.deepcopy(e[3])
                     left_e=expr_replace(left_e,eval("['+',['"+e[2]+"'],['1']]"),eval("['"+axiom.getConst_var_map()[e[2]]+"']"))
                     constraint_list.append(expr2string1(left_e)+'>=0')
+                    constraint_list.append(expr2string1(left_e)+'<='+axiom.getConst_var_map()[e[2]])
     
         for e in instant_eq:
             if e[0]=='s0':
@@ -12037,80 +12038,16 @@ def prove_assert_tactic4_update5(axiom,witnessXml):
                         else:
                             smallest_map[expr2string1(smallest_macro[2][1])]=smallest_macro        
         
-        if len(para_map)==1:
-            variable=None
-            con_var=None
-            variable_con_map={}
-            update_facts=copy.deepcopy(axiom.getVfact())
-            for var in Const_var_map.keys():
-                if expr_find(word[1],Const_var_map[var])==True:
-                    word[1] = expr_replace(word[1],Const_var_map[var],eval("['+',['"+var+"'],['1']]"))
-                    variable = var 
-                    con_var = var.replace('n','k')
-                    variable_con_map[variable] = con_var
-                    update_facts.append(eval("['"+con_var+"',0,['int']]"))
-                    constraint_list.append(con_var+">=0")
-
-            word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
-            
-            base_word = copy.deepcopy(word)
-            
-            assum_word = copy.deepcopy(word[1])
-            
-            ind_word = copy.deepcopy(word[1])
-            
-            
-            for variable in variable_con_map:
-                con_var=variable_con_map[variable]
-                base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
-                assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
-                ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
+        if len(para_map)>=1:
+            if len(para_map)==1:
                 
-            for var in condition_map:
-               condition_list=condition_map[var]
-               update_cond = conditionCreator(condition_list)
-               base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
-               assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
-
-            base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
-            temp_post_condition=[]
-            temp_post_condition.append(wff2z3_update(base_word))
-            writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
-            writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
-            status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
-            writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
-            #print status
-            if 'Successfully Proved' in status:
-                
-                assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
-                temp_post_condition=[]
-                temp_post_condition.append(wff2z3_update(base_word))
-                writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
-                writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
-                status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
-                writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
-                
-                if 'Successfully Proved' in status:
-                    return status
-                else:
-                    return "Failed to prove"
-            else:
-                return "Failed to prove"
-        else:
-            temp_para_map=copy.deepcopy(para_map)
-            temp_word=copy.deepcopy(word)
-            for x in temp_para_map:
-                
-                word=copy.deepcopy(temp_word)
-                
-                para_map={}
-                para_map[x] = temp_para_map[x]
                 variable=None
                 con_var=None
                 variable_con_map={}
                 update_facts=copy.deepcopy(axiom.getVfact())
                 for var in Const_var_map.keys():
-                    if expr_find(word[1],Const_var_map[var])==True:
+                    #if expr_find(word[1],Const_var_map[var])==True:
+                    if expr_find(word[1],eval("['"+var+"']"))==True:
                         word[1] = expr_replace(word[1],Const_var_map[var],eval("['+',['"+var+"'],['1']]"))
                         variable = var 
                         con_var = var.replace('n','k')
@@ -12118,56 +12055,265 @@ def prove_assert_tactic4_update5(axiom,witnessXml):
                         update_facts.append(eval("['"+con_var+"',0,['int']]"))
                         constraint_list.append(con_var+">=0")
                 
-                for var in condition_map:
-                    
-                    condition_list=condition_map[var]
-
-                    for update_cond in condition_list:
-                        
-                        
-                        word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
-            
-                        base_word = copy.deepcopy(word)
-            
-                        assum_word = copy.deepcopy(word[1])
-            
-                        ind_word = copy.deepcopy(word[1])
-            
-            
-                        for variable in variable_con_map:
-                            con_var=variable_con_map[variable]
-                            base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
-                            assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
-                            ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
-
-                        
-                        
-                        base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
-                        assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
-
-                        base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
-                        temp_post_condition=[]
-                                                
-                        temp_post_condition.append(wff2z3_update(base_word))
-                        writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
-                        writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
-                        status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
-                        writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
-                        #print status
-                        if 'Successfully Proved' in status:
                 
-                            assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
+                
+                word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
+                
+                        
+                base_word = copy.deepcopy(word)
+            
+                assum_word = copy.deepcopy(word[1])
+            
+                ind_word = copy.deepcopy(word[1])
+                
+                
+            
+                for variable in variable_con_map:
+                    #con_var=variable_con_map[variable]
+                    base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
+                    assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
+                    ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
+                
+                for var in condition_map:
+                    condition_list=condition_map[var]
+                    update_cond = conditionCreator(condition_list)
+                    base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
+                    assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
+
+                base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
+                temp_post_condition=[]
+                temp_post_condition.append(wff2z3_update(base_word))
+                writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+                status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                #print status
+                if 'Successfully Proved' in status:
+                
+                    assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
+                    
+                                
+                    update_word=[]
+                    update_word.append('c1')
+                    temp_update_word=[]
+                    temp_update_word.append('Implies')
+                    temp_update_word.append(assum_word)
+                    temp_update_word.append(ind_word)
+                    update_word.append(temp_update_word)
+                    
+                    temp_post_condition=[]
+                    temp_post_condition.append(wff2z3_update(update_word))
+                    writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                    writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(update_word)+'\n')
+                    status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                    writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                
+                    if 'Successfully Proved' in status:
+                        #print status
+                        return status
+                    else:
+                        return "Failed to prove"
+                else:
+                    return "Failed to prove"
+            else:
+                temp_para_map=copy.deepcopy(para_map)
+                temp_word=copy.deepcopy(word)
+                for x in temp_para_map:
+                
+                    word=copy.deepcopy(temp_word)
+                
+                    para_map={}
+                    para_map[x] = temp_para_map[x]
+                    variable=None
+                    con_var=None
+                    variable_con_map={}
+                    update_facts=copy.deepcopy(axiom.getVfact())
+                    for var in Const_var_map.keys():
+                        if expr_find(word[1],Const_var_map[var])==True:
+                            word[1] = expr_replace(word[1],Const_var_map[var],eval("['+',['"+var+"'],['1']]"))
+                            variable = var 
+                            con_var = var.replace('n','k')
+                            variable_con_map[variable] = con_var
+                            update_facts.append(eval("['"+con_var+"',0,['int']]"))
+                            constraint_list.append(con_var+">=0")
+                
+                    word[1] = replaceIndexWithFun(word[1],para_map,fun_map)
+
+                    
+                    for var in condition_map:
+                    
+                        condition_list=condition_map[var]
+
+                        for update_cond in condition_list:
+                        
+                        
+                                        
+                            base_word = copy.deepcopy(word)
+            
+                            assum_word = copy.deepcopy(word[1])
+            
+                            ind_word = copy.deepcopy(word[1])
+                                        
+            
+                            for variable in variable_con_map:
+                                con_var=variable_con_map[variable]
+                                base_word[1] = expr_replace(base_word[1],eval("['"+variable+"']"),eval("['0']"))
+                                assum_word = expr_replace(assum_word,eval("['"+variable+"']"),eval("['-',['"+con_var+"'],['1']]"))
+                                ind_word = expr_replace(ind_word,eval("['"+variable+"']"),eval("['"+con_var+"']"))
+
+
+
+                            base_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['0']"))
+                            assum_word_cond= expr_replace(copy.deepcopy(update_cond),eval("['"+var+"']"),eval("['"+con_var+"']"))
+                            
+
+
+
+                            base_word[1] = eval("['Implies',"+str(base_word_cond)+","+str(base_word[1])+"]")
                             temp_post_condition=[]
+                                                
                             temp_post_condition.append(wff2z3_update(base_word))
                             writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
                             writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
                             status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
                             writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
-                
+                            #print status
                             if 'Successfully Proved' in status:
-                                return status
-            return "Failed to prove"
+                                
+                                assum_word = eval("['And',"+str(assum_word_cond)+","+str(assum_word)+"]")
+                                
+
+                                
+                                update_word=[]
+                                update_word.append('c1')
+                                temp_update_word=[]
+                                temp_update_word.append('Implies')
+                                temp_update_word.append(assum_word)
+                                temp_update_word.append(ind_word)
+                                update_word.append(temp_update_word)
+                                
+                                temp_post_condition=[]
+                                temp_post_condition.append(wff2z3_update(update_word))
+                                writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                                writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(update_word)+'\n')
+                                status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                                writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
                 
+                                if 'Successfully Proved' in status:
+                                    return status
+                return "Failed to prove"
+        else:
+            var_const_ind_map={}
+            
+            getIndexParameter(word[1],var_const_ind_map,Const_var_map)
+            
+            base_word = copy.deepcopy(word)
+            
+            assum_word = copy.deepcopy(word[1])
+            
+            ind_word = copy.deepcopy(word[1])
+            
+            key_list=var_const_ind_map.keys()
+            
+            if len(key_list)>0:
+                
+                update_facts=copy.deepcopy(axiom.getVfact())
+                
+                con_var='_k'+str(key_list[0])
+                
+                update_facts.append(eval("['"+con_var+"',0,['int']]"))
+                constraint_list.append(con_var+">=0")
+
+                list_variables=var_const_ind_map[key_list[0]]
+                for variable in list_variables:
+                    base_word[1] = expr_replace(base_word[1],variable,eval("['0']"))
+                    if '_N' in variable[0]:
+                            assum_word = expr_replace(assum_word,variable,eval("['"+con_var+"']"))
+                            ind_word = expr_replace(ind_word,variable,eval("['+',['"+con_var+"'],['1']]"))
+                    else:
+                            assum_word = expr_replace(assum_word,variable,eval("['-',['"+con_var+"'],['1']]"))
+                            ind_word = expr_replace(ind_word,variable,eval("['"+con_var+"']"))
+
+                temp_post_condition=[]
+                temp_post_condition.append(wff2z3_update(base_word))
+                writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(base_word)+'\n')
+                status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                #print status
+                if 'Successfully Proved' in status:
+                    update_word=[]
+                    update_word.append('c1')
+                    temp_update_word=[]
+                    temp_update_word.append('Implies')
+                    temp_update_word.append(assum_word)
+                    temp_update_word.append(ind_word)
+                    update_word.append(temp_update_word)
+                    
+                    temp_post_condition=[]
+                    temp_post_condition.append(wff2z3_update(update_word))
+                    writeLogFile( "j2llogs.logs" , getTimeStamp()+"\nCommand--Prove \n"+"\nParameters--\n"+"\n Pre Condition--"+str(pre_condition)+"\n Post Condition--"+str(temp_post_condition)+"\n Strategy--Automatically Deriving Addition Axoimes\n")
+                    writeLogFile( "j2llogs.logs" ,'\nQuery --\n\n'+wff2z3_update(update_word)+'\n')
+                    status = tactic1_update(axiom.getFrame_axioms(),axiom.getOutput_equations(),instant_eq,pre_condition,temp_post_condition,update_facts,axiom.getInputvariable(),constraint_list,witnessXml)
+                    writeLogFile( "j2llogs.logs" ,'\nResult --'+status+'\n')
+                    if 'Successfully Proved' in status:
+                        #print status
+                        return status
+            return "Failed to prove"            
+
+
+
+
+                    
+                    
+
+def getIndexParameter(e,var_const_ind_map,Const_var_map):
+    if isArrayFunction(e[:1][0])==True:
+        para_list=expr_args(e)
+        for x in range(0,len(para_list)):
+            #para_list[x] = getIndexParameter(para_list[x],var_const_ind_map,Const_var_map)
+            list_para = getListOfPara(para_list[x],Const_var_map)
+            if list_para is not None:
+                if x in var_const_ind_map.keys():
+                    temp_var_const_ind_map=var_const_ind_map[x]
+                    var_const_ind_map[x]= temp_var_const_ind_map+list_para
+                else:
+                    var_const_ind_map[x]= list_para
+        return e[:1]+para_list
+    elif e[:1][0]!='and' and e[:1][0]!='or' and e[:1][0]!='not' and e[:1][0]!='implies' and e[:1][0] not in _infix_op and isArrayFunction(e[:1][0])!=True:        
+        para_list=expr_args(e)
+        for x in range(0,len(para_list)):
+            #para_list[x] = getIndexParameter(para_list[x],var_const_ind_map,Const_var_map)
+            list_para = getListOfPara(para_list[x],Const_var_map)
+            if list_para is not None:
+                if x+1 in var_const_ind_map.keys():
+                    temp_var_const_ind_map=var_const_ind_map[x+1]
+                    var_const_ind_map[x+1]= temp_var_const_ind_map+list_para
+                else:
+                    var_const_ind_map[x+1]= list_para
+        return e[:1]+para_list
+
+    else:
+        return e[:1]+list(getIndexParameter(x,var_const_ind_map,Const_var_map) for x in expr_args(e))
+
+
+def getListOfPara(e,Const_var_map):
+    list_para=[]
+    for var in Const_var_map:
+        var_exp=eval("['"+var+"']")
+        if expr_find(e,Const_var_map[var])==True:
+            if Const_var_map[var] not in list_para:
+                list_para.append(Const_var_map[var])
+        if expr_find(e,var_exp)==True:
+            if var_exp not in list_para:
+                list_para.append(var_exp)
+    if len(list_para)>0:
+        return list_para
+    else:
+        return None
+
+
+
 
 
 def conditionCreator(condition_list):
